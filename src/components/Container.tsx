@@ -32,9 +32,15 @@ function NavItem({
   );
 }
 
-function NavBar({ children }: { children: React.ReactNode }) {
+function NavBar({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
   return (
-    <div>
+    <div className={cn("flex flex-row gap-3", className)}>
       {children}
       <ThemeToggler />
     </div>
@@ -57,10 +63,10 @@ export default function Container({
         <meta name="description" content={m.description} />
         <link rel="icon" href={m.image} />
       </Head>
-      <div>
-        <NavBar>
+      <div className="m-5">
+        <NavBar className="pb-5">
           <NavItem title="Home" href="/" />
-          <NavItem title="Projects" href="/projects" />
+          <NavItem title="Projects" href="/projects" className="ml-auto" />
           <NavItem title="Blog" href="/blog" />
           <NavItem title="Resume" href="/resume" />
         </NavBar>
