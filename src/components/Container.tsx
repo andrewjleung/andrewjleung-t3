@@ -47,6 +47,9 @@ function NavBar({
   );
 }
 
+// This component is meant to wrap every page. It has customizable metadata
+// however so that individual pages can have a say. Individual pages with
+// consistent layouts can define their own custom layouts separately.
 export default function Container({
   children,
   metadata = INITIAL_METADATA,
@@ -63,7 +66,7 @@ export default function Container({
         <meta name="description" content={m.description} />
         <link rel="icon" href={m.image} />
       </Head>
-      <div className="m-5">
+      <div className={cn("m-5")}>
         <NavBar className="pb-5">
           <NavItem title="Home" href="/" />
           <NavItem title="Projects" href="/projects" className="ml-auto" />
