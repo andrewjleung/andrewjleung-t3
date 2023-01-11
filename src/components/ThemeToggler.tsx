@@ -69,9 +69,12 @@ export default function ThemeToggler() {
   if (!mounted || resolvedTheme === undefined) return <></>;
 
   return (
-    <button onClick={toggleTheme}>
-      <div className="flex h-7 w-7 items-center justify-center rounded-md hover:bg-gray-100 dark:hover:bg-gray-700">
-        <TogglerIcon theme={resolvedTheme} size={16} />
+    <button
+      onClick={toggleTheme}
+      className="flex h-7 w-7 items-center justify-center"
+    >
+      <div className="flex h-6 w-6 items-center justify-center rounded-md duration-100 ease-in-out hover:h-7 hover:w-7 hover:border-2 hover:bg-gray-100 active:bg-transparent dark:hover:bg-gray-700 dark:active:bg-transparent">
+        <TogglerIcon theme={resolvedTheme} size={18} />
       </div>
     </button>
   );
