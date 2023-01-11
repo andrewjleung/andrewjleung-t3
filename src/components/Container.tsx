@@ -3,6 +3,10 @@ import Link from "next/link";
 import React from "react";
 import cn from "classnames";
 import ThemeToggler from "./ThemeToggler";
+import SpotifyNowPlayingWidget from "./SpotifyNowPlaying";
+import { Inter } from "@next/font/google";
+
+const font = Inter({ weight: "300", subsets: ["latin"] });
 
 type Metadata = {
   title: string;
@@ -26,7 +30,7 @@ function NavItem({
   className?: string;
 }) {
   return (
-    <Link href={href} className={cn("", className)}>
+    <Link href={href} className={cn("hover:bg-gray-200", className)}>
       {title}
     </Link>
   );
@@ -42,7 +46,20 @@ function NavBar({
   return (
     <div className={cn("flex flex-row items-center gap-3", className)}>
       {children}
-      <ThemeToggler />
+    </div>
+  );
+}
+
+function Footer({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <div className={cn("flex flex-row items-center", className)}>
+      {children}
     </div>
   );
 }
@@ -65,15 +82,26 @@ export default function Container({
         <title>{m.title}</title>
         <meta name="description" content={m.description} />
         <link rel="icon" href={m.image} />
+        {/* TODO: add more metadata */}
       </Head>
-      <div className={cn("m-5")}>
-        <NavBar className="pb-5">
+      <div
+        className={cn(
+          font.className,
+          "mx-auto flex min-h-screen max-w-3xl flex-col px-6"
+        )}
+      >
+        <NavBar className="mt-6 pb-5">
           <NavItem title="Home" href="/" />
-          <NavItem title="Projects" href="/projects" className="ml-auto" />
+          <NavItem title="Projects" href="/projects" />
           <NavItem title="Blog" href="/blog" />
           <NavItem title="Resume" href="/resume" />
+          <ThemeToggler className="ml-auto" />
         </NavBar>
-        {children}
+        <div className="mb-auto">{children}</div>
+        <Footer className="mb-6">
+          <SpotifyNowPlayingWidget />
+          <div className="ml-auto">world</div>
+        </Footer>
       </div>
     </>
   );

@@ -2,7 +2,14 @@
 module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        spotify: "#1db954",
+      },
+      borderWidth: {
+        1: "1px",
+      },
+    },
   },
   plugins: [],
   darkMode: "class",
