@@ -1,8 +1,5 @@
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
-import SunIcon from "../public/sun.svg";
-import MoonIcon from "../public/moon.svg";
-import Image from "next/image";
 
 function TogglerIcon({ theme, size }: { theme: string; size: number }) {
   if (theme === "dark") {
@@ -69,13 +66,13 @@ export default function ThemeToggler() {
   if (!mounted || resolvedTheme === undefined) return <></>;
 
   return (
-    <button
-      onClick={toggleTheme}
-      className="flex h-7 w-7 items-center justify-center"
-    >
-      <div className="flex h-6 w-6 items-center justify-center rounded-md duration-100 ease-in-out hover:h-7 hover:w-7 hover:border-2 hover:bg-gray-100 active:bg-transparent dark:hover:bg-gray-700 dark:active:bg-transparent">
+    <div className="flex h-7 w-7 items-center justify-center">
+      <div
+        onClick={toggleTheme}
+        className="flex h-6 w-6 cursor-pointer items-center justify-center rounded-md duration-100 ease-in-out hover:h-7 hover:w-7 hover:border-2 hover:bg-gray-100 active:bg-transparent dark:hover:bg-gray-700 dark:active:bg-transparent"
+      >
         <TogglerIcon theme={resolvedTheme} size={18} />
       </div>
-    </button>
+    </div>
   );
 }
