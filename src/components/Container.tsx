@@ -3,10 +3,9 @@ import Link from "next/link";
 import React from "react";
 import cn from "classnames";
 import ThemeToggler from "./ThemeToggler";
-import SpotifyNowPlayingWidget from "./SpotifyNowPlaying";
 import { Inter } from "@next/font/google";
 
-const font = Inter({ weight: "300", subsets: ["latin"] });
+const inter300 = Inter({ weight: "300", subsets: ["latin"] });
 
 type Metadata = {
   title: string;
@@ -30,7 +29,7 @@ function NavItem({
   className?: string;
 }) {
   return (
-    <Link href={href} className={cn("hover:bg-gray-200", className)}>
+    <Link href={href} className={cn("py-1", className)}>
       {title}
     </Link>
   );
@@ -44,7 +43,7 @@ function NavBar({
   className?: string;
 }) {
   return (
-    <div className={cn("flex flex-row items-center gap-3", className)}>
+    <div className={cn("flex flex-row items-center gap-5", className)}>
       {children}
     </div>
   );
@@ -61,6 +60,12 @@ function Footer({
     <div className={cn("flex flex-row items-center", className)}>
       {children}
     </div>
+  );
+}
+
+function Line() {
+  return (
+    <div className="hidden grow border-b-1 dark:border-gray-700 sm:block"></div>
   );
 }
 
@@ -86,8 +91,8 @@ export default function Container({
       </Head>
       <div
         className={cn(
-          font.className,
-          "mx-auto flex min-h-screen max-w-3xl flex-col px-6"
+          inter300.className,
+          "mx-auto flex min-h-screen max-w-4xl flex-col px-6"
         )}
       >
         <NavBar className="mt-6 pb-5">
@@ -97,10 +102,11 @@ export default function Container({
           <NavItem title="Resume" href="/resume" />
           <ThemeToggler className="ml-auto" />
         </NavBar>
-        <div className="mb-auto">{children}</div>
-        <Footer className="mb-6">
-          <SpotifyNowPlayingWidget />
-          <div className="ml-auto">world</div>
+        {children}
+        <Footer className="mt-auto mb-6">
+          <div className="mx-auto whitespace-nowrap text-xs text-gray-400 sm:ml-auto sm:mr-0">
+            © {new Date().getFullYear()} Andrew Leung. All rights reserved.
+          </div>
         </Footer>
       </div>
     </>

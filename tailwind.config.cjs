@@ -3,11 +3,15 @@ module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      borderWidth: {
+        1: "1px",
+      },
       colors: {
         spotify: "#1db954",
       },
-      borderWidth: {
-        1: "1px",
+      backgroundColor: {},
+      fontSize: {
+        "2xs": "0.625rem",
       },
     },
   },

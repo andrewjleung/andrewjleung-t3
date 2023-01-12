@@ -10,11 +10,11 @@ function TogglerIcon({ theme, size }: { theme: string; size: number }) {
         width={size}
         height={size}
         viewBox="0 0 24 24"
-        stroke-width="2"
+        strokeWidth="2"
         stroke="currentColor"
         fill="none"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       >
         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
         <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z"></path>
@@ -30,11 +30,11 @@ function TogglerIcon({ theme, size }: { theme: string; size: number }) {
       width={size}
       height={size}
       viewBox="0 0 24 24"
-      stroke-width="2"
+      strokeWidth="2"
       stroke="currentColor"
       fill="none"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
       className="text-gray-400"
     >
       <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -66,14 +66,18 @@ export default function ThemeToggler({ className }: { className?: string }) {
   }
 
   if (!mounted || resolvedTheme === undefined) {
-    return <div className="h-7 w-7"></div>;
+    return (
+      <div className="align-center flex h-8 w-8 items-center ">
+        <div className="h-7 w-7 cursor-pointer rounded-md border-1 bg-gray-50 dark:bg-gray-800"></div>
+      </div>
+    );
   }
 
   return (
-    <div className={cn("flex h-7 w-7 items-center justify-center", className)}>
+    <div className={cn("flex h-8 w-8 items-center justify-center", className)}>
       <div
         onClick={toggleTheme}
-        className="flex h-6 w-6 cursor-pointer items-center justify-center rounded-md border-1 bg-gray-50 duration-100 ease-in-out hover:h-7 hover:w-7 hover:border-2 hover:bg-gray-100 active:bg-transparent dark:bg-gray-800 dark:hover:bg-gray-700 dark:active:bg-transparent"
+        className="flex h-7 w-7 cursor-pointer items-center justify-center rounded-md border-1 bg-gray-50 duration-100 ease-in-out hover:h-8 hover:w-8 hover:border-2 hover:bg-gray-100 active:bg-transparent dark:bg-gray-800 dark:hover:bg-gray-700 dark:active:bg-transparent"
       >
         <TogglerIcon theme={resolvedTheme} size={16} />
       </div>
