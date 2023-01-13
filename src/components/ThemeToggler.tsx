@@ -67,7 +67,7 @@ export default function ThemeToggler({ className }: { className?: string }) {
 
   if (!mounted || resolvedTheme === undefined) {
     return (
-      <div className="align-center flex h-8 w-8 items-center ">
+      <div className={cn("align-center flex h-8 w-8 items-center", className)}>
         <div className="h-7 w-7 cursor-pointer rounded-md border-1 bg-gray-50 dark:bg-gray-800"></div>
       </div>
     );
@@ -77,7 +77,7 @@ export default function ThemeToggler({ className }: { className?: string }) {
     <div className={cn("flex h-8 w-8 items-center justify-center", className)}>
       <div
         onClick={toggleTheme}
-        className="flex h-7 w-7 cursor-pointer items-center justify-center rounded-md border-1 bg-gray-50 duration-100 ease-in-out hover:h-8 hover:w-8 hover:border-2 hover:bg-gray-100 active:bg-transparent dark:bg-gray-800 dark:hover:bg-gray-700 dark:active:bg-transparent"
+        className="flex h-7 w-7 cursor-pointer items-center justify-center rounded-md border-1 bg-gray-50 duration-100 ease-in-out hover:h-8 hover:w-8 hover:border-2 hover:bg-gray-100 active:bg-transparent dark:bg-gray-900 dark:hover:bg-gray-800 dark:active:bg-transparent"
       >
         <TogglerIcon theme={resolvedTheme} size={16} />
       </div>
