@@ -87,7 +87,7 @@ function Bit({ children }: { children: React.ReactNode }) {
 }
 
 export default function Musings({ result }: { result: BitsQuery }) {
-  const { theme } = useTheme();
+  const { resolvedTheme } = useTheme();
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -95,7 +95,8 @@ export default function Musings({ result }: { result: BitsQuery }) {
   }, []);
 
   // TODO: Render a proper skeleton.
-  if (!isMounted || theme === undefined) return <div>foo</div>;
+  if (!isMounted || resolvedTheme === undefined)
+    return <Container>foo</Container>;
 
   return (
     <Container>
@@ -103,7 +104,7 @@ export default function Musings({ result }: { result: BitsQuery }) {
         <Bit key={bit.id}>
           <BitTitle title={bit.title} />
           <BitTags tags={bit.tags} />
-          <BitContent content={bit.content} theme={theme} />
+          <BitContent content={bit.content} theme={resolvedTheme} />
         </Bit>
       ))}
     </Container>
