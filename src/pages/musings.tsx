@@ -14,6 +14,7 @@ import vsDark from "prism-react-renderer/themes/vsDark";
 import vsLight from "prism-react-renderer/themes/vsLight";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
+import cn from "classnames";
 
 type Language = React.ComponentProps<typeof Highlight>["language"];
 const language: z.ZodType<Language> = z.enum(["typescript", "python"]);
@@ -30,7 +31,7 @@ function Code({ node, theme }: { node: Code; theme: string }) {
       theme={codeTheme}
     >
       {({ className, style, tokens, getLineProps, getTokenProps }) => (
-        <pre className={className} style={style}>
+        <pre className={cn(className, "border-1  py-2 px-3")} style={style}>
           {tokens.map((line, i) => (
             <div key={i}>
               <span className="select-none pr-3 text-gray-400 dark:text-gray-600">
@@ -83,10 +84,10 @@ function BitTags({ tags }: { tags: Bit["tags"] }) {
 }
 
 function Bit({ children }: { children: React.ReactNode }) {
-  return <div>{children}</div>;
+  return <div className="rounded-2xl border-1 p-4">{children}</div>;
 }
 
-export default function Musings({ result }: { result: BitsQuery }) {
+function Bits({ bits }: { bits: BitsQuery["allBits"] }) {
   const { resolvedTheme } = useTheme();
   const [isMounted, setIsMounted] = useState(false);
 
@@ -95,18 +96,25 @@ export default function Musings({ result }: { result: BitsQuery }) {
   }, []);
 
   // TODO: Render a proper skeleton.
-  if (!isMounted || resolvedTheme === undefined)
-    return <Container>foo</Container>;
+  if (!isMounted || resolvedTheme === undefined) return <div>Loading...</div>;
 
   return (
-    <Container>
-      {result.allBits.map((bit) => (
+    <div>
+      {bits.map((bit) => (
         <Bit key={bit.id}>
           <BitTitle title={bit.title} />
           <BitTags tags={bit.tags} />
           <BitContent content={bit.content} theme={resolvedTheme} />
         </Bit>
       ))}
+    </div>
+  );
+}
+
+export default function Musings({ result }: { result: BitsQuery }) {
+  return (
+    <Container>
+      <Bits bits={result.allBits} />
     </Container>
   );
 }
@@ -120,5 +128,6 @@ export const getStaticProps: GetStaticProps = async () => {
       result,
     },
     // TODO: Setup on-demand revalidation: https://nextjs.org/docs/basic-features/data-fetching/incremental-static-regeneration
+    revalidate: 60,
   };
 };
