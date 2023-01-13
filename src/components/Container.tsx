@@ -92,7 +92,7 @@ export default function Container({
       <div
         className={cn(
           inter300.className,
-          "prose dark:md:prose-xl-dark mx-auto flex min-h-screen max-w-4xl flex-col px-6 dark:prose-dark"
+          "prose mx-auto flex min-h-screen max-w-4xl flex-col px-6 dark:prose-invert"
         )}
       >
         <NavBar className="mt-6 pb-6">
