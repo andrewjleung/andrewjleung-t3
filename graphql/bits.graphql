@@ -1,0 +1,17 @@
+query Bits {
+  _allBitsMeta {
+    count
+  }
+  allBits(orderBy: _createdAt_ASC) {
+    id
+    title
+    content {
+      value
+    }
+    _firstPublishedAt
+    tags {
+      id
+      tag
+    }
+  }
+}

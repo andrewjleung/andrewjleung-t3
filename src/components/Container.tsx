@@ -95,15 +95,16 @@ export default function Container({
           "mx-auto flex min-h-screen max-w-4xl flex-col px-6"
         )}
       >
-        <NavBar className="mt-6 pb-5">
+        <NavBar className="mt-6 pb-6">
           <NavItem title="Home" href="/" />
           <NavItem title="Projects" href="/projects" />
           <NavItem title="Blog" href="/blog" />
           <NavItem title="Resume" href="/resume" />
+          <NavItem title="Musings" href="/musings" />
           <ThemeToggler className="ml-auto" />
         </NavBar>
         {children}
-        <Footer className="mt-auto mb-6">
+        <Footer className="mt-auto mb-6 pt-6">
           <div className="mx-auto whitespace-nowrap text-xs text-gray-400 sm:ml-auto sm:mr-0">
             © {new Date().getFullYear()} Andrew Leung. All rights reserved.
           </div>

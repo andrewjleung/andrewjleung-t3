@@ -1,28 +1,25 @@
-# Create T3 App
+# andrewjleung.me
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+> Obfuscate, overbear, over-engineer.
 
-## What's next? How do I make an app with this?
+This is the new repo for my personal site/portfolio/blogging space, made with [create-t3-app](https://create.t3.gg/) for no reason really other than that I wanted to play with these technologies.
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+Overall, this app "uses" the following technologies:
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+- Next.js
+- tRPC
+- Prisma
+- DatoCMS
+- GraphQL
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+## Why tRPC?
 
-## Learn More
+It's cool, and my personal website is low stakes. If I ever want to introduce more sophisticated interactions, it'll be quite nice to use. I know, my reasoning is not bulletproof, but I'm just trying to have fun with it.
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+## Why Prisma?
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+See the above.
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+## Why GraphQL? Aren't you using tRPC?
 
-## How do I deploy this?
-
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+In its current state, I'm not really using much of either to be honest. However, GraphQL is used here to query content from DatoCMS with end-to-end type-safety, albeit relying on [code generation](https://the-guild.dev/graphql/codegen).
