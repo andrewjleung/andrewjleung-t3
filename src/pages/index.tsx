@@ -57,10 +57,17 @@ const Home: NextPage = ({}) => {
   return (
     <Container>
       <Panel top>
-        <div className={cn(inter500.className, "pb-20 text-6xl")}>
-          <span className="">Andrew Leung</span> is making{" "}
-          <span className="">software</span>, <span className="">music</span>,
-          and...
+        <div
+          className={cn(
+            inter500.className,
+            "pb-20 text-6xl motion-safe:animate-fade-up"
+          )}
+        >
+          <span className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+            Andrew Leung
+          </span>{" "}
+          is making <span>software</span>, <span>music</span>, and
+          <span className="">...</span>
         </div>
       </Panel>
       <Panel>

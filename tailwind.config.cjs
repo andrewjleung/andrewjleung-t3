@@ -3,6 +3,15 @@ module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      animation: {
+        "fade-up": "fade-up 1.5s",
+      },
+      keyframes: {
+        "fade-up": {
+          "0%": { opacity: 0, transform: "translateY(25%)" },
+          "100%": { opacity: 1, transform: "translateY(0)" },
+        },
+      },
       borderWidth: {
         1: "1px",
       },
@@ -12,6 +21,11 @@ module.exports = {
       backgroundColor: {},
       fontSize: {
         "2xs": "0.625rem",
+      },
+    },
+    variants: {
+      extend: {
+        animation: ["motion-safe"],
       },
     },
   },

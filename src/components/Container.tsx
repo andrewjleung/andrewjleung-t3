@@ -29,7 +29,7 @@ function NavItem({
   className?: string;
 }) {
   return (
-    <Link href={href} className={cn("py-1", className)}>
+    <Link href={href} className={cn("py-1 no-underline", className)}>
       {title}
     </Link>
   );
@@ -75,9 +75,11 @@ function Line() {
 export default function Container({
   children,
   metadata = INITIAL_METADATA,
+  className,
 }: {
   children: React.ReactNode;
   metadata?: Metadata;
+  className?: string;
 }) {
   const m = { ...INITIAL_METADATA, ...metadata };
 
@@ -92,7 +94,8 @@ export default function Container({
       <div
         className={cn(
           inter300.className,
-          "prose mx-auto flex min-h-screen max-w-4xl flex-col px-6 dark:prose-invert"
+          "prose mx-auto min-h-screen max-w-4xl flex-col px-6 dark:prose-invert",
+          className
         )}
       >
         <NavBar className="mt-6 pb-6">
