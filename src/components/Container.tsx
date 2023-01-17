@@ -95,7 +95,7 @@ export default function Container({
         className={cn(
           inter300.className,
           // TODO: Make prose only apply to child content so that the rest of the container can fit the full width!
-          "prose mx-auto flex min-h-screen max-w-4xl flex-col px-6 dark:prose-invert",
+          "flex min-h-screen flex-col bg-white px-6 dark:bg-neutral-900",
           className
         )}
       >
@@ -107,7 +107,7 @@ export default function Container({
           <NavItem title="Musings" href="/musings" />
           <ThemeToggler className="ml-auto" />
         </NavBar>
-        {children}
+        <div className="mx-auto w-full">{children}</div>
         <Footer className="mt-auto mb-6 pt-6">
           <div className="mx-auto whitespace-nowrap text-xs text-gray-400 sm:ml-auto sm:mr-0">
             © {new Date().getFullYear()} Andrew Leung. All rights reserved.
