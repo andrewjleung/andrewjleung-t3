@@ -24,34 +24,68 @@ function Code({ node, theme }: { node: Code; theme: string }) {
   const codeTheme = theme === "dark" ? vsDark : vsLight;
 
   return (
-    <Highlight
-      {...defaultProps}
-      code={node.code}
-      language={language.parse(node.language || "unknown")}
-      theme={codeTheme}
-    >
-      {({ className, style, tokens, getLineProps, getTokenProps }) => (
-        <pre className={cn(className, "border-1  py-2 px-3")} style={style}>
-          {tokens.map((line, i) => (
-            <div key={i}>
-              <span className="select-none pr-3 text-gray-400 dark:text-gray-600">
-                {i + 1}
-              </span>
-              <span {...getLineProps({ line, key: i })}>
-                {line.map((token, key) => (
-                  <span key={key} {...getTokenProps({ token, key })} />
-                ))}
-              </span>
-            </div>
-          ))}
-        </pre>
-      )}
-    </Highlight>
+    <div className="relative">
+      <div
+        className="absolute top-3 right-3 cursor-pointer text-gray-300 transition duration-100 ease-in-out hover:text-blue-300 active:text-gray-300 dark:hover:text-blue-400 dark:active:text-gray-300"
+        onClick={() => {
+          // TODO: Make responsive (right now it overlaps the code).
+          // TODO: Add some feedback for copying to clipboard.
+          navigator.clipboard.writeText(node.code).catch((err) => {
+            console.log(err);
+          });
+        }}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          strokeWidth="2"
+          stroke="currentColor"
+          fill="none"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+          <rect x="8" y="8" width="12" height="12" rx="2"></rect>
+          <path d="M16 8v-2a2 2 0 0 0 -2 -2h-8a2 2 0 0 0 -2 2v8a2 2 0 0 0 2 2h2"></path>
+        </svg>
+      </div>
+      <Highlight
+        {...defaultProps}
+        code={node.code}
+        language={language.parse(node.language || "unknown")}
+        theme={codeTheme}
+      >
+        {({ className, style, tokens, getLineProps, getTokenProps }) => (
+          <pre className={cn(className, "border-1  py-2 px-3")} style={style}>
+            {tokens.map((line, i) => (
+              <div key={i}>
+                <span className="select-none pr-3 text-gray-400 dark:text-gray-600">
+                  {i + 1}
+                </span>
+                <span {...getLineProps({ line, key: i })}>
+                  {line.map((token, key) => (
+                    <span key={key} {...getTokenProps({ token, key })} />
+                  ))}
+                </span>
+              </div>
+            ))}
+          </pre>
+        )}
+      </Highlight>
+    </div>
   );
 }
 
-function BitTitle({ title }: { title: Bit["title"] }) {
-  return <div className="text-3xl">{title}</div>;
+function BitTitle({
+  title,
+  className,
+}: {
+  title: Bit["title"];
+  className?: string;
+}) {
+  return <div className={cn("text-4xl", className)}>{title}</div>;
 }
 
 function BitContent({
@@ -62,29 +96,50 @@ function BitContent({
   theme: string;
 }) {
   return (
-    <StructuredText
-      // TODO: Figure out how to type this.
-      data={content?.value as StructuredTextGraphQlResponse}
-      customNodeRules={[
-        renderRule(isCode, ({ node }) => {
-          return <Code node={node} theme={theme} />;
-        }),
-      ]}
-    />
+    <div className="">
+      <StructuredText
+        // TODO: Figure out how to type this.
+        data={content?.value as StructuredTextGraphQlResponse}
+        customNodeRules={[
+          renderRule(isCode, ({ node }) => {
+            return <Code node={node} theme={theme} />;
+          }),
+        ]}
+      />
+    </div>
   );
 }
-function BitTags({ tags }: { tags: Bit["tags"] }) {
+
+function BitTags({
+  tags,
+  className,
+}: {
+  tags: Bit["tags"];
+  className?: string;
+}) {
   return (
-    <>
+    <div className={cn("flex flex-row gap-1", className)}>
       {tags.map((tag) => (
-        <span key={tag.id}>#{tag.tag}</span>
+        <span
+          key={tag.id}
+          className="rounded-full bg-gray-100 px-2 dark:bg-gray-800"
+        >
+          #{tag.tag}
+        </span>
       ))}
-    </>
+    </div>
   );
 }
 
 function Bit({ children }: { children: React.ReactNode }) {
-  return <div className="rounded-2xl border-1 p-4">{children}</div>;
+  return (
+    <div className="group relative">
+      <div className="absolute h-full w-full rounded-lg bg-blue-300 transition duration-300 group-hover:blur-lg group-hover:duration-200"></div>
+      <div className="relative rounded-lg border-1 bg-white px-5 pt-5 shadow-md dark:bg-black">
+        {children}
+      </div>
+    </div>
+  );
 }
 
 function Bits({ bits }: { bits: BitsQuery["allBits"] }) {
@@ -99,11 +154,11 @@ function Bits({ bits }: { bits: BitsQuery["allBits"] }) {
   if (!isMounted || resolvedTheme === undefined) return <div>Loading...</div>;
 
   return (
-    <div>
+    <div className="flex flex-col gap-6">
       {bits.map((bit) => (
         <Bit key={bit.id}>
-          <BitTitle title={bit.title} />
-          <BitTags tags={bit.tags} />
+          <BitTitle title={bit.title} className="mb-2" />
+          <BitTags tags={bit.tags} className="mb-4" />
           <BitContent content={bit.content} theme={resolvedTheme} />
         </Bit>
       ))}
@@ -114,6 +169,7 @@ function Bits({ bits }: { bits: BitsQuery["allBits"] }) {
 export default function Musings({ result }: { result: BitsQuery }) {
   return (
     <Container>
+      {/* TODO: Set up filtering bits by tags. */}
       <Bits bits={result.allBits} />
     </Container>
   );

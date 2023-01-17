@@ -94,6 +94,7 @@ export default function Container({
       <div
         className={cn(
           inter300.className,
+          // TODO: Make prose only apply to child content so that the rest of the container can fit the full width!
           "prose mx-auto flex min-h-screen max-w-4xl flex-col px-6 dark:prose-invert",
           className
         )}

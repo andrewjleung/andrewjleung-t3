@@ -67,7 +67,9 @@ export default function ThemeToggler({ className }: { className?: string }) {
 
   if (!mounted || resolvedTheme === undefined) {
     return (
-      <div className={cn("align-center flex h-8 w-8 items-center", className)}>
+      <div
+        className={cn("flex h-8 w-8 items-center justify-center", className)}
+      >
         <div className="h-7 w-7 cursor-pointer rounded-md border-1 bg-gray-50 dark:bg-gray-800"></div>
       </div>
     );
