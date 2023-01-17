@@ -4,12 +4,13 @@ module.exports = {
   theme: {
     extend: {
       animation: {
-        "fade-up": "fade-up 1.5s",
+        "fade-up": "fade-up 2s",
       },
       keyframes: {
         "fade-up": {
           "0%": { opacity: 0, transform: "translateY(25%)" },
-          "100%": { opacity: 1, transform: "translateY(0)" },
+          "60%": { transform: "translateY(0)" },
+          "100%": { opacity: 1 },
         },
       },
       borderWidth: {
