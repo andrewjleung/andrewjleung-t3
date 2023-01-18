@@ -37,7 +37,7 @@ function Code({ node, theme }: { node: Code; theme: string }) {
   return (
     <div className="relative">
       <div
-        className="absolute top-2 right-2 cursor-pointer rounded-md text-gray-300 transition duration-100 ease-in-out hover:text-blue-300 active:text-gray-300 dark:text-white dark:hover:text-blue-400 dark:active:text-gray-300 lg:m-1"
+        className="absolute top-2 right-2 cursor-pointer rounded-md text-gray-300 transition duration-100 ease-in-out hover:text-blue-300 active:text-gray-300 dark:text-white dark:hover:text-blue-400 dark:active:text-gray-300 md:m-1"
         onClick={() => {
           // TODO: Make responsive (right now it overlaps the code).
           // TODO: Add some feedback for copying to clipboard.
@@ -182,8 +182,8 @@ function Bit({
   const { locale } = useRouter();
 
   return (
-    <div className={cn("flex flex-col py-6 lg:flex-row", className)}>
-      <div className="mb-3 flex w-full flex-row gap-2 lg:mr-2 lg:w-52 lg:flex-col">
+    <div className={cn("flex flex-col py-6 md:flex-row", className)}>
+      <div className="mb-3 flex w-full flex-row gap-2 md:mr-2 md:w-52 md:flex-col">
         <BitDate
           date={bit._firstPublishedAt || undefined}
           locale={locale}
@@ -191,7 +191,7 @@ function Bit({
         />
         <BitTags tags={bit.tags} />
       </div>
-      <div className="prose prose-sm w-full rounded-lg bg-white dark:bg-neutral-900 dark:prose-invert lg:prose-base">
+      <div className="prose prose-sm w-full rounded-lg bg-white dark:bg-neutral-900 dark:prose-invert md:prose-base">
         <BitContent content={bit.content} theme={theme} />
       </div>
     </div>
