@@ -10,8 +10,8 @@ import Highlight, { defaultProps } from "prism-react-renderer";
 import { Code } from "datocms-structured-text-utils";
 import { isCode } from "datocms-structured-text-utils";
 import { z } from "zod";
-import vsDark from "prism-react-renderer/themes/vsDark";
-import vsLight from "prism-react-renderer/themes/vsLight";
+import codeThemeDark from "prism-react-renderer/themes/vsDark";
+import codeThemeLight from "prism-react-renderer/themes/vsLight";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import cn from "classnames";
@@ -23,7 +23,7 @@ const language: z.ZodType<Language> = z.enum(["typescript", "python"]);
 type Bit = BitsQuery["allBits"][number];
 
 function Code({ node, theme }: { node: Code; theme: string }) {
-  const codeTheme = theme === "dark" ? vsDark : vsLight;
+  const codeTheme = theme === "dark" ? codeThemeDark : codeThemeLight;
   const [checked, setChecked] = useState(false);
 
   // Uncheck the copy box after 1 second.
@@ -37,7 +37,7 @@ function Code({ node, theme }: { node: Code; theme: string }) {
   return (
     <div className="relative">
       <div
-        className="absolute top-2 right-2 cursor-pointer rounded-md border-1 bg-white p-0.5 text-gray-300 transition duration-100 ease-in-out  hover:text-blue-300 active:bg-white active:text-gray-300 dark:bg-neutral-900 dark:hover:text-blue-400 dark:active:text-gray-300"
+        className="absolute top-2 right-2 cursor-pointer rounded-md text-gray-300 transition duration-100 ease-in-out hover:text-blue-300 active:text-gray-300 dark:text-white dark:hover:text-blue-400 dark:active:text-gray-300 lg:m-1"
         onClick={() => {
           // TODO: Make responsive (right now it overlaps the code).
           // TODO: Add some feedback for copying to clipboard.
@@ -50,14 +50,13 @@ function Code({ node, theme }: { node: Code; theme: string }) {
         {checked ? (
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="14"
-            height="14"
             viewBox="0 0 24 24"
             strokeWidth="2"
             stroke="currentColor"
             fill="none"
             strokeLinecap="round"
             strokeLinejoin="round"
+            className="h-4 w-4"
           >
             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
             <path d="M5 12l5 5l10 -10"></path>
@@ -65,14 +64,13 @@ function Code({ node, theme }: { node: Code; theme: string }) {
         ) : (
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="14"
-            height="14"
             viewBox="0 0 24 24"
             strokeWidth="2"
             stroke="currentColor"
             fill="none"
             strokeLinecap="round"
             strokeLinejoin="round"
+            className="h-4 w-4"
           >
             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
             <rect x="8" y="8" width="12" height="12" rx="2"></rect>
@@ -87,7 +85,7 @@ function Code({ node, theme }: { node: Code; theme: string }) {
         theme={codeTheme}
       >
         {({ className, style, tokens, getLineProps, getTokenProps }) => (
-          <pre className={cn(className, "border-1 py-2 px-3")} style={style}>
+          <pre className={cn(className, "rounded-md py-2 px-3")} style={style}>
             {tokens.map((line, i) => (
               <div key={i}>
                 <span className="select-none pr-3 text-gray-400 dark:text-gray-600">
@@ -159,7 +157,7 @@ function BitTags({
   className?: string;
 }) {
   return (
-    <div className={cn("flex flex-row flex-wrap gap-1 text-sm", className)}>
+    <div className={cn("flex flex-row flex-wrap gap-1 text-xs", className)}>
       {tags.map((tag) => (
         <span
           key={tag.id}
@@ -184,16 +182,16 @@ function Bit({
   const { locale } = useRouter();
 
   return (
-    <div className={cn("flex flex-col lg:flex-row", className)}>
-      <div className="mb-3 flex w-52 flex-col gap-2 pt-6 md:mr-2">
+    <div className={cn("flex flex-col py-6 lg:flex-row", className)}>
+      <div className="mb-3 flex w-full flex-row gap-2 lg:mr-2 lg:w-52 lg:flex-col">
         <BitDate
           date={bit._firstPublishedAt || undefined}
           locale={locale}
-          className=""
+          className="whitespace-nowrap"
         />
         <BitTags tags={bit.tags} />
       </div>
-      <div className="prose prose-sm w-full rounded-lg border-1 bg-white p-6 shadow-md dark:bg-neutral-900 dark:prose-invert lg:prose-base">
+      <div className="prose prose-sm w-full rounded-lg bg-white dark:bg-neutral-900 dark:prose-invert lg:prose-base">
         <BitContent content={bit.content} theme={theme} />
       </div>
     </div>
@@ -218,7 +216,12 @@ function Bits({
   if (!isMounted || resolvedTheme === undefined) return <div>Loading...</div>;
 
   return (
-    <div className={cn("flex flex-col gap-6", className)}>
+    <div
+      className={cn(
+        "flex flex-col divide-y-1 dark:divide-neutral-800",
+        className
+      )}
+    >
       {bits.map((bit) => (
         <Bit key={bit.id} bit={bit} theme={resolvedTheme} />
       ))}
