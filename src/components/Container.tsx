@@ -98,7 +98,7 @@ export default function Container({
           <NavItem title="Projects" href="/projects" />
           <NavItem title="Blog" href="/blog" />
           <NavItem title="Resume" href="/resume" />
-          <NavItem title="Musings" href="/musings" />
+          <NavItem title="Bits" href="/bits" />
           <ThemeToggler className="ml-auto" />
         </NavBar>
         <div className="mx-auto w-full">{children}</div>

@@ -198,13 +198,7 @@ function Bit({
   );
 }
 
-function Bits({
-  bits,
-  className,
-}: {
-  bits: BitsQuery["allBits"];
-  className?: string;
-}) {
+export default function Bits({ result }: { result: BitsQuery }) {
   const { resolvedTheme } = useTheme();
   const [isMounted, setIsMounted] = useState(false);
 
@@ -216,25 +210,18 @@ function Bits({
   if (!isMounted || resolvedTheme === undefined) return <div>Loading...</div>;
 
   return (
-    <div
-      className={cn(
-        "flex flex-col divide-y-1 dark:divide-neutral-800",
-        className
-      )}
-    >
-      {bits.map((bit) => (
-        <Bit key={bit.id} bit={bit} theme={resolvedTheme} />
-      ))}
-    </div>
-  );
-}
-
-export default function Musings({ result }: { result: BitsQuery }) {
-  return (
     <Container>
       {/* TODO: Set up filtering bits by tags. */}
       <div className="flex w-full justify-center">
-        <Bits bits={result.allBits} className="min-w-0" />
+        <div
+          className={cn(
+            "flex min-w-0 flex-col divide-y-1 dark:divide-neutral-800"
+          )}
+        >
+          {result.allBits.map((bit) => (
+            <Bit key={bit.id} bit={bit} theme={resolvedTheme} />
+          ))}
+        </div>
       </div>
     </Container>
   );
