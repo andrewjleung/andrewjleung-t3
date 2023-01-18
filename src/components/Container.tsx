@@ -63,12 +63,6 @@ function Footer({
   );
 }
 
-function Line() {
-  return (
-    <div className="hidden grow border-b-1 dark:border-gray-700 sm:block"></div>
-  );
-}
-
 // This component is meant to wrap every page. It has customizable metadata
 // however so that individual pages can have a say. Individual pages with
 // consistent layouts can define their own custom layouts separately.
@@ -95,7 +89,7 @@ export default function Container({
         className={cn(
           inter300.className,
           // TODO: Make prose only apply to child content so that the rest of the container can fit the full width!
-          "flex min-h-screen flex-col bg-white px-6 dark:bg-neutral-900",
+          "flex min-h-screen flex-col px-6",
           className
         )}
       >
@@ -109,7 +103,7 @@ export default function Container({
         </NavBar>
         <div className="mx-auto w-full">{children}</div>
         <Footer className="mt-auto mb-6 pt-6">
-          <div className="mx-auto whitespace-nowrap text-xs text-gray-400 sm:ml-auto sm:mr-0">
+          <div className="mx-auto whitespace-nowrap text-xs text-neutral-400 sm:ml-auto sm:mr-0">
             © {new Date().getFullYear()} Andrew Leung. All rights reserved.
           </div>
         </Footer>
