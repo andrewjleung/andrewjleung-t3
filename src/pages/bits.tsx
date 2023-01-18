@@ -194,7 +194,7 @@ function Bit({
         />
         <BitTags tags={bit.tags} />
       </div>
-      <div className="prose prose-sm w-full rounded-lg bg-white dark:bg-neutral-900 dark:prose-invert md:prose-base">
+      <div className="prose prose-sm w-full dark:prose-invert md:prose-base">
         <BitContent content={bit.content} theme={theme} />
       </div>
     </div>

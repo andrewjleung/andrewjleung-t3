@@ -5,12 +5,17 @@ module.exports = {
     extend: {
       animation: {
         "fade-up": "fade-up 2s",
+        "fade-in": "fade-in 2s",
       },
       keyframes: {
         "fade-up": {
           "0%": { opacity: 0, transform: "translateY(25%)" },
           "60%": { transform: "translateY(0)" },
           "100%": { opacity: 1 },
+        },
+        "fade-in": {
+          "0%": { opacity: 0 },
+          "100%": { opacity: 0.1 },
         },
       },
       borderWidth: {

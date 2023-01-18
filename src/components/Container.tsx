@@ -93,7 +93,7 @@ export default function Container({
           className
         )}
       >
-        <NavBar className="mt-6 pb-6">
+        <NavBar className="z-50 mt-6 pb-6">
           <NavItem title="Home" href="/" />
           <NavItem title="Projects" href="/projects" />
           <NavItem title="Blog" href="/blog" />
