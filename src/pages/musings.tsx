@@ -87,13 +87,13 @@ function Code({ node, theme }: { node: Code; theme: string }) {
         theme={codeTheme}
       >
         {({ className, style, tokens, getLineProps, getTokenProps }) => (
-          <pre className={cn(className, "border-1  py-2 px-3")} style={style}>
+          <pre className={cn(className, "border-1 py-2 px-3")} style={style}>
             {tokens.map((line, i) => (
               <div key={i}>
                 <span className="select-none pr-3 text-gray-400 dark:text-gray-600">
                   {i + 1}
                 </span>
-                <span {...getLineProps({ line, key: i })}>
+                <span {...getLineProps({ line, key: i })} className="pr-3">
                   {line.map((token, key) => (
                     <span key={key} {...getTokenProps({ token, key })} />
                   ))}
@@ -139,17 +139,15 @@ function BitContent({
   theme: string;
 }) {
   return (
-    <div className="">
-      <StructuredText
-        // TODO: Figure out how to type this.
-        data={content?.value as StructuredTextGraphQlResponse}
-        customNodeRules={[
-          renderRule(isCode, ({ node }) => {
-            return <Code node={node} theme={theme} />;
-          }),
-        ]}
-      />
-    </div>
+    <StructuredText
+      // TODO: Figure out how to type this.
+      data={content?.value as StructuredTextGraphQlResponse}
+      customNodeRules={[
+        renderRule(isCode, ({ node }) => {
+          return <Code node={node} theme={theme} />;
+        }),
+      ]}
+    />
   );
 }
 
@@ -233,7 +231,7 @@ export default function Musings({ result }: { result: BitsQuery }) {
     <Container>
       {/* TODO: Set up filtering bits by tags. */}
       <div className="flex w-full justify-center">
-        <Bits bits={result.allBits} className="w-fit" />
+        <Bits bits={result.allBits} className="min-w-0" />
       </div>
     </Container>
   );
