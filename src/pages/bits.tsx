@@ -85,7 +85,10 @@ function Code({ node, theme }: { node: Code; theme: string }) {
         theme={codeTheme}
       >
         {({ className, style, tokens, getLineProps, getTokenProps }) => (
-          <pre className={cn(className, "rounded-md py-2 px-3")} style={style}>
+          <pre
+            className={cn(className, "overflow-auto rounded-md py-2 px-3")}
+            style={style}
+          >
             {tokens.map((line, i) => (
               <div key={i}>
                 <span className="select-none pr-3 text-gray-400 dark:text-gray-600">
