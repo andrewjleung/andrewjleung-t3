@@ -2,6 +2,7 @@ import { type NextPage } from "next";
 import Container from "../components/Container";
 import { Inter } from "@next/font/google";
 import cn from "classnames";
+import Balancer from "react-wrap-balancer";
 
 const inter600 = Inter({ weight: "600", subsets: ["latin"] });
 
@@ -57,20 +58,21 @@ const Home: NextPage = ({}) => {
   return (
     <Container>
       <Panel top>
-        <div className="relative flex h-full w-full items-center justify-center">
-          <div className="invisible absolute h-full w-full rotate-45 skew-y-6 rounded-full bg-transparent bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-neutral-400 via-neutral-900 to-neutral-900 opacity-10 blur-2xl dark:visible"></div>
-          <div
-            className={cn(
-              inter600.className,
-              "relative max-w-screen-md pb-10 text-center text-5xl motion-safe:animate-fade-up md:text-6xl"
-            )}
-          >
-            <span className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
-              Andrew Leung
-            </span>{" "}
-            is making <span>software</span>, <span>music</span>, and
-            <span className="">...</span>
-          </div>
+        <div className="relative flex h-full w-full items-center md:justify-center">
+          <div className="invisible absolute h-full w-full rotate-45 skew-y-6 rounded-full bg-transparent bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-neutral-300 via-neutral-900 to-neutral-900 opacity-10 blur-2xl dark:visible"></div>
+          <Balancer>
+            <div
+              className={cn(
+                inter600.className,
+                "relative pb-1 text-5xl motion-safe:animate-fade-up md:text-center md:text-6xl"
+              )}
+            >
+              <span className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+                Andrew Leung
+              </span>{" "}
+              is making software, music, and...
+            </div>
+          </Balancer>
         </div>
       </Panel>
       <Panel>
