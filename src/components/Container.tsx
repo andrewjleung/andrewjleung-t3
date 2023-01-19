@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import cn from "classnames";
 import ThemeToggler from "./ThemeToggler";
 import { Inter } from "@next/font/google";
@@ -20,6 +20,26 @@ const INITIAL_METADATA: Metadata = {
   image: "/profile.png",
 };
 
+function MenuIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      strokeWidth="1"
+      stroke="currentColor"
+      fill="none"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+      <line x1="4" y1="6" x2="20" y2="6"></line>
+      <line x1="4" y1="12" x2="20" y2="12"></line>
+      <line x1="4" y1="18" x2="20" y2="18"></line>
+    </svg>
+  );
+}
+
 function NavItem({
   title,
   href,
@@ -36,7 +56,7 @@ function NavItem({
     <Link
       href={href}
       className={cn(
-        "text-black",
+        "w-fit text-black",
         isSelected
           ? "underline dark:text-white dark:no-underline"
           : "dark:text-neutral-500",
@@ -48,6 +68,35 @@ function NavItem({
   );
 }
 
+function NavMenuMobile({
+  children,
+  isOpen,
+  setIsOpen,
+  className,
+}: {
+  children: React.ReactNode;
+  isOpen: boolean;
+  setIsOpen: (open: boolean) => void;
+  className?: string;
+}) {
+  if (!isOpen) {
+    return null;
+  }
+
+  return (
+    <div
+      className="fixed top-0 left-0 h-screen w-screen"
+      onClick={() => {
+        setIsOpen(false);
+      }}
+    >
+      <div className="absolute mt-24 box-border flex w-full flex-col gap-3 bg-neutral-200 p-6 text-6xl dark:bg-neutral-800">
+        {children}
+      </div>
+    </div>
+  );
+}
+
 function NavBar({
   children,
   className,
@@ -55,11 +104,35 @@ function NavBar({
   children: React.ReactNode;
   className?: string;
 }) {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    // TODO: Move hash navigation to the center, then different pages to the left. Make it all collapse in smaller screens.
-    <div className={cn("flex flex-row items-center gap-5", className)}>
-      {children}
-    </div>
+    // TODO: Move hash navigation to the center, then dif//ferent pages to the left. Make it all collapse in smaller screens.
+    <>
+      <div
+        className={cn("flex flex-row items-center gap-5 md:hidden", className)}
+      >
+        <div className="text-black dark:text-neutral-500 dark:hover:text-white">
+          <div
+            onClick={() => {
+              setIsOpen((open) => !open);
+            }}
+          >
+            <MenuIcon className="h-8 w-8 cursor-pointer" />
+          </div>
+          <NavMenuMobile isOpen={isOpen} setIsOpen={setIsOpen}>
+            {children}
+          </NavMenuMobile>
+        </div>
+        <ThemeToggler className="ml-auto" />
+      </div>
+      <div
+        className={cn("hidden flex-row items-center gap-5 md:flex", className)}
+      >
+        {children}
+        <ThemeToggler className="ml-auto" />
+      </div>
+    </>
   );
 }
 
@@ -120,7 +193,6 @@ export default function Container({
           <NavItem title="Blog" href="/blog" />
           <NavItem title="Bits" href="/bits" />
           <NavItem title="Resume" href="/resume" />
-          <ThemeToggler className="ml-auto" />
         </NavBar>
         <div className={cn("mx-auto w-full", { "px-6": pathname !== "/" })}>
           {children}

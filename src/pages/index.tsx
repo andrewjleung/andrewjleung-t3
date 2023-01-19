@@ -179,7 +179,7 @@ function SectionNav({ children }: { children: React.ReactNode }) {
   return (
     <div
       className={cn(
-        "duration-400 fixed left-1/2 top-6 z-50 flex w-fit -translate-x-1/2 flex-row gap-4 rounded-full border-1 border-black py-2 px-4 transition-all ease-in motion-safe:animate-stretch dark:border-neutral-500",
+        "duration-400 fixed left-1/2 top-5 z-30 flex w-fit -translate-x-1/2 flex-row gap-4 rounded-full border-1 border-black py-2 px-4 transition-all ease-in dark:border-neutral-500 sm:motion-safe:animate-stretch",
         { "hover:px-8": panelNavCanAnimate }
       )}
     >
