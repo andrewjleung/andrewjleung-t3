@@ -4,6 +4,7 @@ import React from "react";
 import cn from "classnames";
 import ThemeToggler from "./ThemeToggler";
 import { Inter } from "@next/font/google";
+import { useRouter } from "next/router";
 
 const inter300 = Inter({ weight: "300", subsets: ["latin"] });
 
@@ -29,7 +30,7 @@ function NavItem({
   className?: string;
 }) {
   return (
-    <Link href={href} className={cn("py-1 no-underline", className)}>
+    <Link href={href} className={cn("no-underline", className)}>
       {title}
     </Link>
   );
@@ -43,7 +44,7 @@ function NavBar({
   className?: string;
 }) {
   return (
-    <div className={cn("flex flex-row items-center gap-5", className)}>
+    <div className={cn("flex flex-row items-center gap-5 ", className)}>
       {children}
     </div>
   );
@@ -76,6 +77,7 @@ export default function Container({
   className?: string;
 }) {
   const m = { ...INITIAL_METADATA, ...metadata };
+  const { pathname } = useRouter();
 
   return (
     <>
@@ -89,11 +91,15 @@ export default function Container({
         className={cn(
           inter300.className,
           // TODO: Make prose only apply to child content so that the rest of the container can fit the full width!
-          "flex min-h-screen flex-col px-6",
+          "flex min-h-screen flex-col",
           className
         )}
       >
-        <NavBar className="z-50 mt-6 pb-6">
+        <NavBar
+          className={cn("z-50 box-border w-full p-6", {
+            absolute: pathname === "/",
+          })}
+        >
           <NavItem title="Home" href="/" />
           <NavItem title="Projects" href="/projects" />
           <NavItem title="Blog" href="/blog" />
@@ -101,8 +107,10 @@ export default function Container({
           <NavItem title="Resume" href="/resume" />
           <ThemeToggler className="ml-auto" />
         </NavBar>
-        <div className="mx-auto w-full">{children}</div>
-        <Footer className="mt-auto mb-6 pt-6">
+        <div className={cn("mx-auto w-full", { "mx-6": pathname !== "/" })}>
+          {children}
+        </div>
+        <Footer className="mt-auto p-6">
           <div className="mx-auto whitespace-nowrap text-xs text-neutral-400 sm:ml-auto sm:mr-0">
             © {new Date().getFullYear()} Andrew Leung. All rights reserved.
           </div>

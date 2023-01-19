@@ -21,16 +21,11 @@ function Panel({
     throw new Error("Cannot be top and bottom.");
   }
 
+  const commonStyles = "flex items-center bg-transparent";
+
   if (top) {
     return (
-      <div
-        className={cn(
-          "flex h-[calc(100vh-4.75rem)] items-center pb-[4.75rem]",
-          className
-        )}
-      >
-        {children}
-      </div>
+      <div className={cn(commonStyles, "h-screen", className)}>{children}</div>
     );
   }
 
@@ -38,7 +33,8 @@ function Panel({
     return (
       <div
         className={cn(
-          "flex h-[calc(100vh-4rem)] items-center pt-[4rem]",
+          commonStyles,
+          "h-[calc(100vh-4rem)] pt-[4rem]",
           className
         )}
       >
@@ -48,9 +44,7 @@ function Panel({
   }
 
   return (
-    <div className={cn("flex h-screen items-center", className)}>
-      {children}
-    </div>
+    <div className={cn(commonStyles, "h-screen", className)}>{children}</div>
   );
 }
 
@@ -58,13 +52,13 @@ const Home: NextPage = ({}) => {
   return (
     <Container>
       <Panel top>
-        <div className="relative flex h-full w-full items-center md:justify-center">
-          <div className="invisible absolute h-full w-full rotate-45 skew-y-6 rounded-full bg-transparent bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-neutral-300 via-neutral-900 to-neutral-900 opacity-10 blur-2xl dark:visible"></div>
-          <Balancer>
+        <div className="relative flex h-full w-full items-center overflow-hidden sm:justify-center">
+          <div className="invisible absolute h-5/6 w-full max-w-full rotate-45 skew-y-6 rounded-full bg-transparent bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-neutral-300 via-neutral-900 to-neutral-900 opacity-15 blur-2xl dark:visible"></div>
+          <Balancer ratio={0.6}>
             <div
               className={cn(
                 inter600.className,
-                "relative pb-1 text-5xl motion-safe:animate-fade-up md:text-center md:text-6xl"
+                "relative pb-1 pl-6 text-5xl motion-safe:animate-fade-up sm:pl-0 sm:text-center sm:text-6xl"
               )}
             >
               <span className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
@@ -76,11 +70,11 @@ const Home: NextPage = ({}) => {
         </div>
       </Panel>
       <Panel>
-        <div className="text-5xl">Another thing.</div>
+        <div className="px-6 text-5xl">Another thing.</div>
       </Panel>
-      <Panel className="justify-end">Another thing.</Panel>
-      <Panel>Another thing.</Panel>
-      <Panel bottom className="justify-center">
+      <Panel className="justify-end px-6">Another thing.</Panel>
+      <Panel className="px-6">Another thing.</Panel>
+      <Panel bottom className="justify-center px-6">
         Another thing.
       </Panel>
     </Container>

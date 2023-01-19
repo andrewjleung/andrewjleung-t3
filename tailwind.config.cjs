@@ -28,6 +28,9 @@ module.exports = {
       fontSize: {
         "2xs": "0.625rem",
       },
+      opacity: {
+        15: "0.15",
+      },
     },
     variants: {
       extend: {

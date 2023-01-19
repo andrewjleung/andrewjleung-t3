@@ -215,7 +215,7 @@ export default function Bits({ result }: { result: BitsQuery }) {
   return (
     <Container>
       {/* TODO: Set up filtering bits by tags. */}
-      <div className="flex w-full justify-center">
+      <div className="flex w-full justify-center px-6">
         <div
           className={cn(
             "flex min-w-0 flex-col divide-y-1 dark:divide-neutral-800"
