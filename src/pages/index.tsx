@@ -3,11 +3,120 @@ import { Inter } from "@next/font/google";
 import cn from "classnames";
 import Balancer from "react-wrap-balancer";
 import useInterval from "../hooks/useInterval";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const inter600 = Inter({ weight: "700", subsets: ["latin"] });
 
-function HashNavItem({ id, title }: { id: string; title: string }) {
+function HandStopIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      strokeWidth="2"
+      stroke="currentColor"
+      fill="none"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+      <path d="M8 13v-7.5a1.5 1.5 0 0 1 3 0v6.5"></path>
+      <path d="M11 5.5v-2a1.5 1.5 0 1 1 3 0v8.5"></path>
+      <path d="M14 5.5a1.5 1.5 0 0 1 3 0v6.5"></path>
+      <path d="M17 7.5a1.5 1.5 0 0 1 3 0v8.5a6 6 0 0 1 -6 6h-2h.208a6 6 0 0 1 -5.012 -2.7a69.74 69.74 0 0 1 -.196 -.3c-.312 -.479 -1.407 -2.388 -3.286 -5.728a1.5 1.5 0 0 1 .536 -2.022a1.867 1.867 0 0 1 2.28 .28l1.47 1.47"></path>
+    </svg>
+  );
+}
+
+function BriefcaseIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      strokeWidth="2"
+      stroke="currentColor"
+      fill="none"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+      <rect x="3" y="7" width="18" height="13" rx="2"></rect>
+      <path d="M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2"></path>
+      <line x1="12" y1="12" x2="12" y2="12.01"></line>
+      <path d="M3 13a20 20 0 0 0 18 0"></path>
+    </svg>
+  );
+}
+
+function LightbulbIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      strokeWidth="2"
+      stroke="currentColor"
+      fill="none"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+      <polyline points="12 3 20 7.5 20 16.5 12 21 4 16.5 4 7.5 12 3"></polyline>
+      <line x1="12" y1="12" x2="20" y2="7.5"></line>
+      <line x1="12" y1="12" x2="12" y2="21"></line>
+      <line x1="12" y1="12" x2="4" y2="7.5"></line>
+    </svg>
+  );
+}
+
+function EmailIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      strokeWidth="2"
+      stroke="currentColor"
+      fill="none"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+      <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+      <polyline points="3 7 12 13 21 7"></polyline>
+    </svg>
+  );
+}
+
+function MapPinIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      strokeWidth="2"
+      stroke="currentColor"
+      fill="none"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+      <circle cx="12" cy="11" r="3"></circle>
+      <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z"></path>
+    </svg>
+  );
+}
+
+function SectionNavItem({
+  id,
+  title,
+  icon,
+}: {
+  id: string;
+  title: string;
+  icon: React.ReactNode;
+}) {
   const [isIntersecting, setIsIntersecting] = useState(false);
 
   useEffect(() => {
@@ -38,7 +147,7 @@ function HashNavItem({ id, title }: { id: string; title: string }) {
 
   return (
     <div
-      className="cursor-pointer no-underline"
+      className="cursor-pointer"
       onClick={() => {
         const element = document.getElementById(id);
         if (element !== null) {
@@ -48,12 +157,33 @@ function HashNavItem({ id, title }: { id: string; title: string }) {
     >
       <div
         className={cn(
-          "hover:bg-neutral-400",
-          isIntersecting ? "bg-neutral-500" : "bg-neutral-200"
+          "flex flex-row items-center rounded-full p-1",
+          isIntersecting
+            ? "border-neutral-400 bg-neutral-400 text-white dark:bg-transparent dark:text-white"
+            : "text-neutral-400 dark:text-neutral-500 dark:hover:text-neutral-400"
         )}
       >
-        {title}
+        {icon}
       </div>
+    </div>
+  );
+}
+
+function SectionNav({ children }: { children: React.ReactNode }) {
+  const [panelNavCanAnimate, setPanelNavCanAnimate] = useState(false);
+
+  useInterval(() => {
+    setPanelNavCanAnimate(true);
+  }, 3000); // TODO: Magic number, make a single source of truth for this and the `stretch` animation.
+
+  return (
+    <div
+      className={cn(
+        "duration-400 fixed left-1/2 top-6 z-50 flex w-fit -translate-x-1/2 flex-row gap-4 rounded-full border-1 border-neutral-400 py-2 px-4 transition-all ease-in motion-safe:animate-stretch dark:border-neutral-500",
+        { "hover:px-8": panelNavCanAnimate }
+      )}
+    >
+      {children}
     </div>
   );
 }
@@ -108,26 +238,30 @@ function Panel({
 }
 
 export default function Home({}) {
-  const [panelNavCanAnimate, setPanelNavCanAnimate] = useState(false);
-
-  useInterval(() => {
-    setPanelNavCanAnimate(true);
-  }, 3000); // TODO: Magic number, make a single source of truth for this and the `stretch` animation.
-
   return (
     <Container id="container">
-      <div
-        className={cn(
-          "duration-400 fixed left-1/2 top-6 z-50 flex -translate-x-1/2 flex-row gap-4 rounded-2xl border-1 py-2 px-4 transition-all motion-safe:animate-stretch",
-          { "hover:px-8": panelNavCanAnimate }
-        )}
-      >
-        <HashNavItem id="top-section" title="Top" />
-        <HashNavItem id="experience-section" title="Experience" />
-        <HashNavItem id="skills-section" title="Skill" />
-        <HashNavItem id="projects-section" title="Projects" />
-        <HashNavItem id="contact-section" title="Contact" />
-      </div>
+      <SectionNav>
+        <SectionNavItem
+          id="top-section"
+          title="Top"
+          icon={<HandStopIcon className="h-4 w-4 rotate-12" />}
+        />
+        <SectionNavItem
+          id="experience-section"
+          title="Experience"
+          icon={<BriefcaseIcon className="h-4 w-4" />}
+        />
+        <SectionNavItem
+          id="projects-section"
+          title="Projects"
+          icon={<LightbulbIcon className="h-4 w-4" />}
+        />
+        <SectionNavItem
+          id="contact-section"
+          title="Contact"
+          icon={<EmailIcon className="h-4 w-4" />}
+        />
+      </SectionNav>
       <Panel id="top-section" top>
         <div className="relative flex h-full w-full items-center overflow-hidden sm:justify-center">
           <div className="invisible absolute h-5/6 w-full max-w-full rotate-45 skew-y-6 rounded-full bg-transparent bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-neutral-300 via-neutral-900 to-neutral-900 opacity-15 blur-2xl dark:visible" />
@@ -143,20 +277,7 @@ export default function Home({}) {
               </div>
             </Balancer>
             <div className="flex flex-row items-center gap-2 whitespace-nowrap text-sm text-neutral-400 dark:text-neutral-500 sm:justify-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                strokeWidth="2"
-                stroke="currentColor"
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="inline h-4 w-4"
-              >
-                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                <circle cx="12" cy="11" r="3"></circle>
-                <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z"></path>
-              </svg>
+              <MapPinIcon className="inline h-4 w-4" />
               Remote or near Dallas–Fort Worth, TX
             </div>
           </div>
@@ -165,10 +286,7 @@ export default function Home({}) {
       <Panel id="experience-section">
         <div className="px-6 text-5xl">My experience.</div>
       </Panel>
-      <Panel id="skills-section" className="justify-end px-6">
-        My skills.
-      </Panel>
-      <Panel id="projects-section" className="px-6">
+      <Panel id="projects-section" className="flex justify-end px-6">
         My projects.
       </Panel>
       <Panel
