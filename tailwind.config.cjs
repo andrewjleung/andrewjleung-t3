@@ -9,13 +9,13 @@ module.exports = {
       },
       keyframes: {
         "fade-up": {
-          "0%": { opacity: 0, transform: "translateY(25%)" },
+          "0%": { opacity: 0, transform: "translateY(80%)" },
           "60%": { transform: "translateY(0)" },
           "100%": { opacity: 1 },
         },
         "fade-in": {
           "0%": { opacity: 0 },
-          "100%": { opacity: 0.1 },
+          "100%": { opacity: 1 },
         },
       },
       borderWidth: {
