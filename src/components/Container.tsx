@@ -36,8 +36,10 @@ function NavItem({
     <Link
       href={href}
       className={cn(
-        "text-black no-underline",
-        isSelected ? "dark:text-white" : "dark:text-neutral-500",
+        "text-black",
+        isSelected
+          ? "underline dark:text-white dark:no-underline"
+          : "dark:text-neutral-500",
         className
       )}
     >
