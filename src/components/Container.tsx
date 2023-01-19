@@ -72,10 +72,12 @@ export default function Container({
   children,
   metadata = INITIAL_METADATA,
   className,
+  id,
 }: {
   children: React.ReactNode;
   metadata?: Metadata;
   className?: string;
+  id?: string;
 }) {
   const m = { ...INITIAL_METADATA, ...metadata };
   const { pathname } = useRouter();
@@ -89,6 +91,7 @@ export default function Container({
         {/* TODO: add more metadata */}
       </Head>
       <div
+        id={id}
         className={cn(
           inter300.className,
           // TODO: Make prose only apply to child content so that the rest of the container can fit the full width!

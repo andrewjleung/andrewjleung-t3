@@ -5,7 +5,7 @@ module.exports = {
     extend: {
       animation: {
         "fade-up": "fade-up 2s",
-        "fade-in": "fade-in 2s",
+        stretch: "stretch 3s",
       },
       keyframes: {
         "fade-up": {
@@ -13,9 +13,13 @@ module.exports = {
           "60%": { transform: "translateY(0)" },
           "100%": { opacity: 1 },
         },
-        "fade-in": {
-          "0%": { opacity: 0 },
-          "100%": { opacity: 1 },
+        stretch: {
+          "0%": { padding: "0.5rem 1rem" },
+          "40%": { padding: "0.5rem 1rem" },
+          "50%": { padding: "0.5rem 0.5rem" },
+          "65%": { padding: "0.5rem 4rem" },
+          "75%": { padding: "0.5rem 4rem" },
+          "100%": { padding: "0.5rem 1rem" },
         },
       },
       borderWidth: {

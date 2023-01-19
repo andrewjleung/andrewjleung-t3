@@ -2,11 +2,40 @@ import Container from "../components/Container";
 import { Inter } from "@next/font/google";
 import cn from "classnames";
 import Balancer from "react-wrap-balancer";
-import theme from "../utils/theme";
+import useInterval from "../hooks/useInterval";
+import { useEffect, useState } from "react";
 
 const inter600 = Inter({ weight: "700", subsets: ["latin"] });
 
 function HashNavItem({ id, title }: { id: string; title: string }) {
+  const [isIntersecting, setIsIntersecting] = useState(false);
+
+  useEffect(() => {
+    const options = {
+      rootMargin: "0px",
+      threshold: 0.5,
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setIsIntersecting(true);
+        } else {
+          setIsIntersecting(false);
+        }
+      });
+    }, options);
+    const target = document.getElementById(id);
+
+    if (target !== null) {
+      observer.observe(target);
+    }
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [id]);
+
   return (
     <div
       className="cursor-pointer no-underline"
@@ -14,11 +43,17 @@ function HashNavItem({ id, title }: { id: string; title: string }) {
         const element = document.getElementById(id);
         if (element !== null) {
           element.scrollIntoView({ behavior: "smooth" });
-          window.location.hash = id;
         }
       }}
     >
-      {title}
+      <div
+        className={cn(
+          "hover:bg-neutral-400",
+          isIntersecting ? "bg-neutral-500" : "bg-neutral-200"
+        )}
+      >
+        {title}
+      </div>
     </div>
   );
 }
@@ -73,25 +108,41 @@ function Panel({
 }
 
 export default function Home({}) {
+  const [panelNavCanAnimate, setPanelNavCanAnimate] = useState(false);
+
+  useInterval(() => {
+    setPanelNavCanAnimate(true);
+  }, 3000); // TODO: Magic number, make a single source of truth for this and the `stretch` animation.
+
   return (
-    <Container>
+    <Container id="container">
+      <div
+        className={cn(
+          "duration-400 fixed left-1/2 top-6 z-50 flex -translate-x-1/2 flex-row gap-4 rounded-2xl border-1 py-2 px-4 transition-all motion-safe:animate-stretch",
+          { "hover:px-8": panelNavCanAnimate }
+        )}
+      >
+        <HashNavItem id="top-section" title="Top" />
+        <HashNavItem id="experience-section" title="Experience" />
+        <HashNavItem id="skills-section" title="Skill" />
+        <HashNavItem id="projects-section" title="Projects" />
+        <HashNavItem id="contact-section" title="Contact" />
+      </div>
       <Panel id="top-section" top>
         <div className="relative flex h-full w-full items-center overflow-hidden sm:justify-center">
           <div className="invisible absolute h-5/6 w-full max-w-full rotate-45 skew-y-6 rounded-full bg-transparent bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-neutral-300 via-neutral-900 to-neutral-900 opacity-15 blur-2xl dark:visible" />
           <div className="relative flex flex-col px-6 motion-safe:animate-fade-up sm:items-center sm:pl-0 sm:text-center">
-            <Balancer ratio={0.8} as="div">
-              <div
-                className={cn(inter600.className, "pb-1 text-5xl sm:text-6xl")}
-              >
-                <span className="">Andrew Leung</span>{" "}
-              </div>
-            </Balancer>
+            <div
+              className={cn(inter600.className, "pb-1 text-5xl sm:text-6xl")}
+            >
+              <span className="whitespace-nowrap">Andrew Leung</span>{" "}
+            </div>
             <Balancer ratio={1} as="div">
-              <div className="pb-1 text-xl text-neutral-400">
+              <div className="pb-1 text-xl text-neutral-600 dark:text-neutral-400">
                 Entry-level software engineer seeking full-time opportunities.
               </div>
             </Balancer>
-            <div className="flex flex-row items-center gap-2 whitespace-nowrap text-sm text-neutral-500 sm:justify-center">
+            <div className="flex flex-row items-center gap-2 whitespace-nowrap text-sm text-neutral-400 dark:text-neutral-500 sm:justify-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -126,16 +177,6 @@ export default function Home({}) {
         className="flex flex-col justify-center px-6"
       >
         What&apos;s next? Contact me!
-        {/* TODO: Clean this up and make it more robust/usable */}
-        <div
-          className="cursor-pointer hover:underline"
-          onClick={() => {
-            const destination = document.getElementById("top-section");
-            destination?.scrollIntoView({ behavior: "smooth" });
-          }}
-        >
-          Back to top
-        </div>
       </Panel>
     </Container>
   );
