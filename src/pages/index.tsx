@@ -159,8 +159,8 @@ function SectionNavItem({
         className={cn(
           "flex flex-row items-center rounded-full p-1",
           isIntersecting
-            ? "border-neutral-400 bg-neutral-400 text-white dark:bg-transparent dark:text-white"
-            : "text-neutral-400 dark:text-neutral-500 dark:hover:text-neutral-400"
+            ? "bg-black text-white dark:bg-transparent dark:text-white"
+            : "text-black dark:text-neutral-500 dark:hover:text-neutral-400"
         )}
       >
         {icon}
@@ -179,7 +179,7 @@ function SectionNav({ children }: { children: React.ReactNode }) {
   return (
     <div
       className={cn(
-        "duration-400 fixed left-1/2 top-6 z-50 flex w-fit -translate-x-1/2 flex-row gap-4 rounded-full border-1 border-neutral-400 py-2 px-4 transition-all ease-in motion-safe:animate-stretch dark:border-neutral-500",
+        "duration-400 fixed left-1/2 top-6 z-50 flex w-fit -translate-x-1/2 flex-row gap-4 rounded-full border-1 border-black py-2 px-4 transition-all ease-in motion-safe:animate-stretch dark:border-neutral-500",
         { "hover:px-8": panelNavCanAnimate }
       )}
     >
