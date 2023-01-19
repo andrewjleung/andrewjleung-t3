@@ -185,7 +185,7 @@ export default function Container({
         )}
       >
         <NavBar
-          className={cn("z-50 box-border w-full p-6", {
+          className={cn("z-30 box-border w-full p-6", {
             absolute: pathname === "/",
           })}
         >
