@@ -29,8 +29,18 @@ function NavItem({
   href: string;
   className?: string;
 }) {
+  const { pathname } = useRouter();
+  const isSelected = pathname === href;
+
   return (
-    <Link href={href} className={cn("no-underline", className)}>
+    <Link
+      href={href}
+      className={cn(
+        "text-black no-underline",
+        isSelected ? "dark:text-white" : "dark:text-neutral-500",
+        className
+      )}
+    >
       {title}
     </Link>
   );
@@ -45,7 +55,7 @@ function NavBar({
 }) {
   return (
     // TODO: Move hash navigation to the center, then different pages to the left. Make it all collapse in smaller screens.
-    <div className={cn("flex flex-row items-center gap-5 ", className)}>
+    <div className={cn("flex flex-row items-center gap-5", className)}>
       {children}
     </div>
   );
