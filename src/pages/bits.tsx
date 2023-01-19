@@ -186,7 +186,7 @@ function Bit({
 
   return (
     <div className={cn("flex flex-col py-6 md:flex-row", className)}>
-      <div className="mb-3 flex w-full flex-row gap-2 md:mr-2 md:w-52 md:flex-col">
+      <div className="mb-3 flex w-full flex-row gap-2 text-sm md:mr-2 md:w-52 md:flex-col lg:text-base">
         <BitDate
           date={bit._firstPublishedAt || undefined}
           locale={locale}
@@ -194,7 +194,7 @@ function Bit({
         />
         <BitTags tags={bit.tags} />
       </div>
-      <div className="prose prose-sm w-full dark:prose-invert md:prose-base">
+      <div className="prose prose-sm w-full dark:prose-invert lg:prose-base">
         <BitContent content={bit.content} theme={theme} />
       </div>
     </div>
@@ -215,7 +215,7 @@ export default function Bits({ result }: { result: BitsQuery }) {
   return (
     <Container>
       {/* TODO: Set up filtering bits by tags. */}
-      <div className="flex w-full justify-center px-6">
+      <div className="flex w-full justify-center">
         <div
           className={cn(
             "flex min-w-0 flex-col divide-y-1 dark:divide-neutral-800"

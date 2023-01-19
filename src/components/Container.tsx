@@ -44,6 +44,7 @@ function NavBar({
   className?: string;
 }) {
   return (
+    // TODO: Move hash navigation to the center, then different pages to the left. Make it all collapse in smaller screens.
     <div className={cn("flex flex-row items-center gap-5 ", className)}>
       {children}
     </div>
@@ -101,13 +102,12 @@ export default function Container({
           })}
         >
           <NavItem title="Home" href="/" />
-          <NavItem title="Projects" href="/projects" />
           <NavItem title="Blog" href="/blog" />
           <NavItem title="Bits" href="/bits" />
           <NavItem title="Resume" href="/resume" />
           <ThemeToggler className="ml-auto" />
         </NavBar>
-        <div className={cn("mx-auto w-full", { "mx-6": pathname !== "/" })}>
+        <div className={cn("mx-auto w-full", { "px-6": pathname !== "/" })}>
           {children}
         </div>
         <Footer className="mt-auto p-6">
