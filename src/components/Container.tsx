@@ -59,7 +59,7 @@ function NavItem({
         "w-fit text-black",
         isSelected
           ? "underline dark:text-white dark:no-underline"
-          : "dark:text-neutral-500",
+          : "dark:text-neutral-500 dark:hover:text-neutral-400",
         className
       )}
     >
