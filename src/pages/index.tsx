@@ -331,7 +331,7 @@ function IconLink({
     <Link
       href={href}
       className={cn(
-        "flex flex-row items-center gap-2 hover:text-neutral-400",
+        "flex flex-row items-center gap-2 dark:hover:text-neutral-400",
         className
       )}
     >
@@ -385,7 +385,7 @@ export default function Home({}) {
                 Remote or near Dallas–Fort Worth, TX
               </div>
             </div>
-            <div className="flex flex-row items-center gap-3 pt-4 text-sm text-black hover:text-neutral-400 dark:text-neutral-500">
+            <div className="flex flex-row items-center gap-3 pt-4 text-sm text-black dark:text-neutral-500">
               <IconLink
                 href="https://github.com/andrewjleung"
                 Icon={GitHubIcon}
