@@ -114,7 +114,7 @@ function GitHubIcon({ className }: { className?: string }) {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
-      strokeWidth="1"
+      strokeWidth="2"
       stroke="currentColor"
       fill="none"
       strokeLinecap="round"
@@ -132,7 +132,7 @@ function LinkedInIcon({ className }: { className?: string }) {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
-      strokeWidth="1"
+      strokeWidth="2"
       stroke="currentColor"
       fill="none"
       strokeLinecap="round"
@@ -154,7 +154,7 @@ function SpotifyIcon({ className }: { className?: string }) {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
-      strokeWidth="1"
+      strokeWidth="2"
       stroke="currentColor"
       fill="none"
       strokeLinecap="round"
@@ -175,7 +175,7 @@ function YouTubeIcon({ className }: { className?: string }) {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
-      strokeWidth="1"
+      strokeWidth="2"
       stroke="currentColor"
       fill="none"
       strokeLinecap="round"
@@ -318,6 +318,28 @@ function Panel({
   );
 }
 
+function IconLink({
+  Icon,
+  href,
+  className,
+}: {
+  Icon: React.FC<{ className?: string }>;
+  href: string;
+  className?: string;
+}) {
+  return (
+    <Link
+      href={href}
+      className={cn(
+        "flex flex-row items-center gap-2 hover:text-neutral-400",
+        className
+      )}
+    >
+      <Icon className="inline h-4 w-4" />
+    </Link>
+  );
+}
+
 export default function Home({}) {
   return (
     <Container id="container">
@@ -346,34 +368,44 @@ export default function Home({}) {
       <Panel id="top-section" top>
         <div className="relative flex h-full w-full items-center overflow-hidden sm:justify-center">
           <div className="invisible absolute h-5/6 w-full max-w-full rotate-45 skew-y-6 rounded-full bg-transparent bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-neutral-300 via-neutral-900 to-neutral-900 opacity-15 blur-2xl dark:visible" />
-          <div className="relative flex flex-col px-6 motion-safe:animate-fade-up sm:items-center sm:pl-0 sm:text-center">
-            <div
-              className={cn(inter600.className, "pb-1 text-5xl sm:text-6xl")}
-            >
-              <span className="whitespace-nowrap">Andrew Leung</span>{" "}
-            </div>
-            <Balancer ratio={1} as="div">
-              <div className="pb-1 text-xl text-neutral-500 dark:text-neutral-400">
-                Entry-level software engineer seeking full-time opportunities.
+          <div className="relative flex flex-col px-6 sm:items-center sm:pl-0 sm:text-center">
+            <div className="motion-safe:animate-fade-up-0">
+              <div
+                className={cn(inter600.className, "pb-1 text-5xl sm:text-6xl")}
+              >
+                <span className="whitespace-nowrap">Andrew Leung</span>{" "}
               </div>
-            </Balancer>
-            <div className="flex flex-row items-center gap-2 whitespace-nowrap text-sm text-neutral-400 dark:text-neutral-500 sm:justify-center">
-              <MapPinIcon className="inline h-4 w-4" />
-              Remote or near Dallas–Fort Worth, TX
+              <Balancer ratio={1} as="div">
+                <div className="pb-1 text-xl text-neutral-500 dark:text-neutral-400">
+                  Entry-level software engineer seeking full-time opportunities.
+                </div>
+              </Balancer>
+              <div className="flex flex-row items-center gap-2 whitespace-nowrap text-sm text-neutral-400 dark:text-neutral-500 sm:justify-center">
+                <MapPinIcon className="inline h-4 w-4" />
+                Remote or near Dallas–Fort Worth, TX
+              </div>
             </div>
-            <div className="text- flex gap-3 pt-4 text-neutral-400 dark:text-neutral-500">
-              <Link href="https://github.com/andrewjleung">
-                <GitHubIcon className="h-6 w-6 hover:text-neutral-400" />
-              </Link>
-              <Link href="https://www.linkedin.com/in/andrewjleung-">
-                <LinkedInIcon className="h-6 w-6 hover:text-neutral-400" />
-              </Link>
-              <Link href="https://open.spotify.com/artist/00zDjeTQDVOFlNttOnv9bc">
-                <SpotifyIcon className="h-6 w-6 hover:text-neutral-400" />
-              </Link>
-              <Link href="https://www.youtube.com/channel/UCVxaN-2GATE-3Ag9RTGrIXw">
-                <YouTubeIcon className="h-6 w-6 hover:text-neutral-400" />
-              </Link>
+            <div className="flex flex-row items-center gap-3 pt-6 text-sm text-neutral-400 hover:text-neutral-400 dark:text-neutral-500">
+              <IconLink
+                href="https://github.com/andrewjleung"
+                Icon={GitHubIcon}
+                className="motion-safe:animate-fade-up-2"
+              />
+              <IconLink
+                href="https://www.linkedin.com/in/andrewjleung-"
+                Icon={LinkedInIcon}
+                className="motion-safe:animate-fade-up-3"
+              />
+              <IconLink
+                href="https://open.spotify.com/artist/00zDjeTQDVOFlNttOnv9bc"
+                Icon={SpotifyIcon}
+                className="motion-safe:animate-fade-up-4"
+              />
+              <IconLink
+                href="https://www.youtube.com/channel/UCVxaN-2GATE-3Ag9RTGrIXw"
+                Icon={YouTubeIcon}
+                className="motion-safe:animate-fade-up-5"
+              />
             </div>
           </div>
         </div>

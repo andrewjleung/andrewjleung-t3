@@ -4,13 +4,53 @@ module.exports = {
   theme: {
     extend: {
       animation: {
-        "fade-up": "fade-up 2s",
+        "fade-up-0": "fade-up-0 4s",
+        "fade-up-1": "fade-up-1 3s",
+        "fade-up-2": "fade-up-2 3s",
+        "fade-up-3": "fade-up-3 3s",
+        "fade-up-4": "fade-up-4 3s",
+        "fade-up-5": "fade-up-5 3s",
         stretch: "stretch 3s",
       },
       keyframes: {
-        "fade-up": {
+        "fade-up-0": {
           "0%": { opacity: 0, transform: "translateY(80%)" },
+          "30%": { transform: "translateY(0)" },
+          "50%": { opacity: 1 },
+          "100%": { opacity: 1 },
+        },
+        "fade-up-1": {
+          "0%": { opacity: 0, transform: "translateY(80%)" },
+          "10%": { opacity: 0, transform: "translateY(80%)" },
+          "40%": { transform: "translateY(0)" },
+          "60%": { opacity: 1 },
+          "100%": { opacity: 1 },
+        },
+        "fade-up-2": {
+          "0%": { opacity: 0, transform: "translateY(80%)" },
+          "20%": { opacity: 0, transform: "translateY(80%)" },
+          "50%": { transform: "translateY(0)" },
+          "70%": { opacity: 1 },
+          "100%": { opacity: 1 },
+        },
+        "fade-up-3": {
+          "0%": { opacity: 0, transform: "translateY(80%)" },
+          "30%": { opacity: 0, transform: "translateY(80%)" },
           "60%": { transform: "translateY(0)" },
+          "80%": { opacity: 1 },
+          "100%": { opacity: 1 },
+        },
+        "fade-up-4": {
+          "0%": { opacity: 0, transform: "translateY(80%)" },
+          "40%": { opacity: 0, transform: "translateY(80%)" },
+          "70%": { transform: "translateY(0)" },
+          "90%": { opacity: 1 },
+          "100%": { opacity: 1 },
+        },
+        "fade-up-5": {
+          "0%": { opacity: 0, transform: "translateY(80%)" },
+          "50%": { opacity: 0, transform: "translateY(80%)" },
+          "80%": { transform: "translateY(0)" },
           "100%": { opacity: 1 },
         },
         stretch: {
