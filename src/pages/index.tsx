@@ -403,7 +403,7 @@ export default function Home({}) {
                 Remote or near Dallas–Fort Worth, TX
               </div>
             </div>
-            <div className="flex flex-row items-center gap-3 pt-3 text-sm text-black dark:text-neutral-500 sm:pt-4">
+            <div className="flex flex-row items-center gap-3 pt-4 text-sm text-black dark:text-neutral-500">
               <IconLink
                 href="https://github.com/andrewjleung"
                 Icon={GitHubIcon}
