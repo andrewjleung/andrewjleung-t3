@@ -5,6 +5,7 @@ import Balancer from "react-wrap-balancer";
 import useInterval from "../hooks/useInterval";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 const inter600 = Inter({ weight: "700", subsets: ["latin"] });
 
@@ -114,7 +115,7 @@ function GitHubIcon({ className }: { className?: string }) {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
-      strokeWidth="1.5"
+      strokeWidth="1"
       stroke="currentColor"
       fill="none"
       strokeLinecap="round"
@@ -132,7 +133,7 @@ function LinkedInIcon({ className }: { className?: string }) {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
-      strokeWidth="1.5"
+      strokeWidth="1"
       stroke="currentColor"
       fill="none"
       strokeLinecap="round"
@@ -154,7 +155,7 @@ function SpotifyIcon({ className }: { className?: string }) {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
-      strokeWidth="1.5"
+      strokeWidth="1"
       stroke="currentColor"
       fill="none"
       strokeLinecap="round"
@@ -175,7 +176,7 @@ function YouTubeIcon({ className }: { className?: string }) {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
-      strokeWidth="1.5"
+      strokeWidth="1"
       stroke="currentColor"
       fill="none"
       strokeLinecap="round"
@@ -335,7 +336,7 @@ function IconLink({
         className
       )}
     >
-      <Icon className="inline h-6 w-6" />
+      <Icon className="m-1 inline h-6 w-6" />
     </Link>
   );
 }
@@ -368,8 +369,16 @@ export default function Home({}) {
       <Panel id="top-section" top>
         <div className="relative flex h-full w-full items-center overflow-hidden sm:justify-center">
           <div className="invisible absolute h-5/6 w-full max-w-full rotate-45 skew-y-6 rounded-full bg-transparent bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-neutral-300 via-neutral-900 to-neutral-900 opacity-15 blur-2xl dark:visible" />
-          <div className="relative flex flex-col px-6 sm:items-center sm:pl-0 sm:text-center">
-            <div className="motion-safe:animate-fade-up-0">
+          <div className="relative flex flex-col pl-6 sm:items-center sm:pl-0 sm:text-center">
+            <div className="relative h-40 w-40 rounded-full">
+              <Image
+                className="rounded-full object-cover"
+                src="/profile.png"
+                alt="Me!"
+                fill
+              />
+            </div>
+            <div className="pt-4 motion-safe:animate-fade-up-0">
               <div
                 className={cn(inter600.className, "pb-1 text-5xl sm:text-6xl")}
               >

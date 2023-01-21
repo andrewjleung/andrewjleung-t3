@@ -112,7 +112,7 @@ function NavBar({
       <div
         className={cn("flex flex-row items-center gap-5 md:hidden", className)}
       >
-        <div className="text-black dark:text-neutral-500 dark:hover:text-white">
+        <div className="text-black transition-all duration-200 ease-out dark:text-neutral-500 dark:hover:text-white">
           <div
             onClick={() => {
               setIsOpen((open) => !open);
