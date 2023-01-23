@@ -17,6 +17,7 @@ import { useEffect, useState } from "react";
 import cn from "classnames";
 import { useRouter } from "next/router";
 import useInterval from "../hooks/useInterval";
+import Layout from "../components/Layout";
 
 type Language = React.ComponentProps<typeof Highlight>["language"];
 const language: z.ZodType<Language> = z.enum(["typescript", "python"]);
@@ -214,18 +215,20 @@ export default function Bits({ result }: { result: BitsQuery }) {
 
   return (
     <Container>
-      {/* TODO: Set up filtering bits by tags. */}
-      <div className="flex w-full justify-center">
-        <div
-          className={cn(
-            "flex min-w-0 flex-col divide-y-1 dark:divide-neutral-800"
-          )}
-        >
-          {result.allBits.map((bit) => (
-            <Bit key={bit.id} bit={bit} theme={resolvedTheme} />
-          ))}
+      <Layout>
+        {/* TODO: Set up filtering bits by tags. */}
+        <div className="flex w-full justify-center">
+          <div
+            className={cn(
+              "flex min-w-0 flex-col divide-y-1 dark:divide-neutral-800"
+            )}
+          >
+            {result.allBits.map((bit) => (
+              <Bit key={bit.id} bit={bit} theme={resolvedTheme} />
+            ))}
+          </div>
         </div>
-      </div>
+      </Layout>
     </Container>
   );
 }

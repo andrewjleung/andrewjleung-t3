@@ -78,7 +78,7 @@ export default function ThemeToggler({ className }: { className?: string }) {
     <div className={cn("flex h-8 w-8 items-center justify-center", className)}>
       <div
         onClick={toggleTheme}
-        className="flex h-7 w-7 cursor-pointer items-center justify-center rounded-md border-1 border-black text-black duration-100 ease-in-out hover:h-8 hover:w-8 hover:border-2 dark:border-neutral-500 dark:text-neutral-500 dark:hover:border-white dark:hover:text-white dark:active:bg-transparent"
+        className="flex h-7 w-7 cursor-pointer items-center justify-center rounded-md border-1 border-black text-black duration-100 ease-in-out hover:h-8 hover:w-8 dark:border-neutral-500 dark:text-neutral-500 dark:hover:border-white dark:hover:text-white dark:active:bg-transparent"
       >
         <TogglerIcon theme={resolvedTheme} size={16} />
       </div>

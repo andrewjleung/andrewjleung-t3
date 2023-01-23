@@ -108,10 +108,8 @@ function NavBar({
 
   return (
     // TODO: Move hash navigation to the center, then dif//ferent pages to the left. Make it all collapse in smaller screens.
-    <>
-      <div
-        className={cn("flex flex-row items-center gap-5 md:hidden", className)}
-      >
+    <div className={cn("flex w-full justify-center", className)}>
+      <div className="flex w-full max-w-screen-lg flex-row items-center gap-5 p-6 md:hidden">
         <div className="text-black transition-all duration-200 ease-out dark:text-neutral-500 dark:hover:text-white">
           <div
             onClick={() => {
@@ -127,12 +125,15 @@ function NavBar({
         <ThemeToggler className="ml-auto" />
       </div>
       <div
-        className={cn("hidden flex-row items-center gap-5 md:flex", className)}
+        className={cn(
+          "hidden w-full max-w-screen-lg flex-row items-center gap-5 p-6 md:flex",
+          className
+        )}
       >
         {children}
         <ThemeToggler className="ml-auto" />
       </div>
-    </>
+    </div>
   );
 }
 
@@ -144,8 +145,10 @@ function Footer({
   className?: string;
 }) {
   return (
-    <div className={cn("flex flex-row items-center", className)}>
-      {children}
+    <div className={cn("flex w-full justify-center", className)}>
+      <div className="flex w-full max-w-screen-lg flex-row items-center p-6">
+        {children}
+      </div>
     </div>
   );
 }
@@ -180,12 +183,12 @@ export default function Container({
         className={cn(
           inter300.className,
           // TODO: Make prose only apply to child content so that the rest of the container can fit the full width!
-          "flex min-h-screen flex-col",
+          "mx-auto flex min-h-screen flex-col",
           className
         )}
       >
         <NavBar
-          className={cn("z-30 box-border w-full p-6", {
+          className={cn("z-30", {
             absolute: pathname === "/",
           })}
         >
@@ -194,10 +197,10 @@ export default function Container({
           <NavItem title="Bits" href="/bits" />
           <NavItem title="Resume" href="/resume" />
         </NavBar>
-        <div className={cn("mx-auto w-full", { "px-6": pathname !== "/" })}>
+        <div className={cn("w-full", { "px-6": pathname !== "/" })}>
           {children}
         </div>
-        <Footer className="mt-auto p-6">
+        <Footer className="mt-auto">
           <div className="mx-auto whitespace-nowrap text-xs text-neutral-400 sm:ml-auto sm:mr-0">
             © {new Date().getFullYear()} Andrew Leung. All rights reserved.
           </div>

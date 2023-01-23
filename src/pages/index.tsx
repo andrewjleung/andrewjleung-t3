@@ -6,6 +6,7 @@ import useInterval from "../hooks/useInterval";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import Layout from "../components/Layout";
 
 const inter600 = Inter({ weight: "700", subsets: ["latin"] });
 
@@ -204,7 +205,7 @@ function SectionNavItem({
   useEffect(() => {
     const options = {
       rootMargin: "0px",
-      threshold: 0.5,
+      threshold: 0.5, // TODO: Tune this.
     };
 
     const observer = new IntersectionObserver((entries) => {
@@ -270,7 +271,7 @@ function SectionNav({ children }: { children: React.ReactNode }) {
   );
 }
 
-function Panel({
+function Section({
   id,
   top,
   bottom,
@@ -287,7 +288,7 @@ function Panel({
     throw new Error("Cannot be top and bottom.");
   }
 
-  const commonStyles = "flex items-center bg-transparent";
+  const commonStyles = "bg-transparent";
 
   if (top) {
     return (
@@ -303,7 +304,7 @@ function Panel({
         id={id}
         className={cn(
           commonStyles,
-          "h-[calc(100vh-4rem)] pt-[4rem]",
+          // "h-[calc(100vh-4rem)] pt-[4rem]",
           className
         )}
       >
@@ -313,7 +314,7 @@ function Panel({
   }
 
   return (
-    <div id={id} className={cn(commonStyles, "h-screen", className)}>
+    <div id={id} className={cn(commonStyles, className)}>
       {children}
     </div>
   );
@@ -344,94 +345,103 @@ function IconLink({
 export default function Home({}) {
   return (
     <Container id="container">
-      <SectionNav>
-        <SectionNavItem
-          id="top-section"
-          title="Top"
-          icon={<HandStopIcon className="h-4 w-4 rotate-12" />}
-        />
-        <SectionNavItem
-          id="experience-section"
-          title="Experience"
-          icon={<BriefcaseIcon className="h-4 w-4" />}
-        />
-        <SectionNavItem
-          id="projects-section"
-          title="Projects"
-          icon={<LightbulbIcon className="h-4 w-4" />}
-        />
-        <SectionNavItem
-          id="contact-section"
-          title="Contact"
-          icon={<EmailIcon className="h-4 w-4" />}
-        />
-      </SectionNav>
-      <Panel id="top-section" top>
-        <div className="relative flex h-full w-full items-center overflow-hidden sm:justify-center">
-          <div className="invisible absolute h-5/6 w-full max-w-full rotate-45 skew-y-6 rounded-full bg-transparent bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-neutral-300 via-neutral-900 to-neutral-900 opacity-15 blur-2xl dark:visible" />
-          <div className="relative flex flex-col pl-6 sm:items-center sm:pl-0 sm:text-center">
-            <div className="relative h-40 w-40 rounded-full">
+      <div className="invisible absolute h-full w-full rotate-45 skew-y-6 rounded-full bg-transparent bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-neutral-300 via-neutral-900 to-neutral-900 opacity-15 blur-2xl dark:visible" />
+      <Layout>
+        <SectionNav>
+          <SectionNavItem
+            id="top-section"
+            title="Top"
+            icon={<HandStopIcon className="h-4 w-4 rotate-12" />}
+          />
+          <SectionNavItem
+            id="experience-section"
+            title="Experience"
+            icon={<BriefcaseIcon className="h-4 w-4" />}
+          />
+          <SectionNavItem
+            id="projects-section"
+            title="Projects"
+            icon={<LightbulbIcon className="h-4 w-4" />}
+          />
+          <SectionNavItem
+            id="contact-section"
+            title="Contact"
+            icon={<EmailIcon className="h-4 w-4" />}
+          />
+        </SectionNav>
+        <Section id="top-section" top>
+          <div className="relative flex h-full w-full items-center overflow-hidden sm:justify-center">
+            <div className="relative flex flex-col pl-6 sm:items-center sm:pl-0 sm:text-center">
+              {/* <div className="relative h-40 w-40 rounded-xl">
               <Image
-                className="rounded-full object-cover"
+                className="rounded-xl object-cover"
                 src="/profile.png"
                 alt="Me!"
                 fill
               />
-            </div>
-            <div className="pt-4 motion-safe:animate-fade-up-0">
-              <div
-                className={cn(inter600.className, "pb-1 text-5xl sm:text-6xl")}
-              >
-                <span className="whitespace-nowrap">Andrew Leung</span>{" "}
-              </div>
-              <Balancer ratio={1} as="div">
-                <div className="pb-1 text-xl text-neutral-500 dark:text-neutral-400">
-                  Entry-level software engineer seeking full-time opportunities.
+            </div> */}
+              <div className="pt-8">
+                <div
+                  className={cn(
+                    inter600.className,
+                    "text-5xl motion-safe:animate-fade-up-0 sm:text-6xl"
+                  )}
+                >
+                  <span className="whitespace-nowrap">Andrew Leung</span>{" "}
                 </div>
-              </Balancer>
-              <div className="flex flex-row items-center gap-2 whitespace-nowrap text-sm text-neutral-400 dark:text-neutral-500 sm:justify-center">
-                <MapPinIcon className="inline h-4 w-4" />
-                Remote or near Dallas–Fort Worth, TX
+                <Balancer
+                  ratio={1}
+                  as="div"
+                  className="pt-2 text-xl text-neutral-500 motion-safe:animate-fade-up-1 dark:text-neutral-400"
+                >
+                  Entry-level software engineer seeking full-time opportunities.
+                </Balancer>
+                <div className="flex flex-row items-center gap-2 whitespace-nowrap pt-2 text-sm text-neutral-400 motion-safe:animate-fade-up-2 dark:text-neutral-500 sm:justify-center">
+                  <MapPinIcon className="inline h-4 w-4" />
+                  Remote or near Dallas–Fort Worth, TX
+                </div>
               </div>
             </div>
-            <div className="flex flex-row items-center gap-3 pt-4 text-sm text-black dark:text-neutral-500">
-              <IconLink
-                href="https://github.com/andrewjleung"
-                Icon={GitHubIcon}
-                className="motion-safe:animate-fade-up-2"
-              />
-              <IconLink
-                href="https://www.linkedin.com/in/andrewjleung-"
-                Icon={LinkedInIcon}
-                className="motion-safe:animate-fade-up-3"
-              />
-              <IconLink
-                href="https://open.spotify.com/artist/00zDjeTQDVOFlNttOnv9bc"
-                Icon={SpotifyIcon}
-                className="motion-safe:animate-fade-up-4"
-              />
-              <IconLink
-                href="https://www.youtube.com/channel/UCVxaN-2GATE-3Ag9RTGrIXw"
-                Icon={YouTubeIcon}
-                className="motion-safe:animate-fade-up-5"
-              />
+            <div className="absolute bottom-24 right-24">
+              <div className="flex flex-row items-center gap-3 pt-4 text-sm text-black dark:text-neutral-500">
+                <IconLink
+                  href="https://github.com/andrewjleung"
+                  Icon={GitHubIcon}
+                  className="motion-safe:animate-fade-up-2"
+                />
+                <IconLink
+                  href="https://www.linkedin.com/in/andrewjleung-"
+                  Icon={LinkedInIcon}
+                  className="motion-safe:animate-fade-up-3"
+                />
+                <IconLink
+                  href="https://open.spotify.com/artist/00zDjeTQDVOFlNttOnv9bc"
+                  Icon={SpotifyIcon}
+                  className="motion-safe:animate-fade-up-4"
+                />
+                <IconLink
+                  href="https://www.youtube.com/channel/UCVxaN-2GATE-3Ag9RTGrIXw"
+                  Icon={YouTubeIcon}
+                  className="motion-safe:animate-fade-up-5"
+                />
+              </div>
             </div>
           </div>
-        </div>
-      </Panel>
-      <Panel id="experience-section">
-        <div className="px-6 text-5xl">My experience.</div>
-      </Panel>
-      <Panel id="projects-section" className="flex justify-end px-6">
-        My projects.
-      </Panel>
-      <Panel
-        id="contact-section"
-        bottom
-        className="flex flex-col justify-center px-6"
-      >
-        What&apos;s next? Contact me!
-      </Panel>
+        </Section>
+        <Section id="experience-section">
+          <div className="px-6 text-5xl">My experience.</div>
+        </Section>
+        <Section id="projects-section" className="flex justify-end px-6">
+          My projects.
+        </Section>
+        <Section
+          id="contact-section"
+          bottom
+          className="flex flex-col justify-center px-6"
+        >
+          What&apos;s next? Contact me!
+        </Section>
+      </Layout>
     </Container>
   );
 }
