@@ -175,6 +175,7 @@ export default function Container({
       <Head>
         <title>{m.title}</title>
         <meta name="description" content={m.description} />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href={m.image} />
         {/* TODO: add more metadata */}
       </Head>

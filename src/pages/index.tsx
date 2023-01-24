@@ -8,7 +8,8 @@ import Link from "next/link";
 import Image from "next/image";
 import Layout from "../components/Layout";
 
-const inter600 = Inter({ weight: "700", subsets: ["latin"] });
+const inter700 = Inter({ weight: "700", subsets: ["latin"] });
+const inter800 = Inter({ weight: "800", subsets: ["latin"] });
 
 function HandStopIcon({ className }: { className?: string }) {
   return (
@@ -360,10 +361,73 @@ function IconLink({
   );
 }
 
+function Experiences({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="">
+      <div className="flex h-full w-fit flex-col">
+        <div className="h-2 w-2 scale-110 rounded-full dark:bg-neutral-600" />
+        <div className="ml-1 h-10 w-0.5 -translate-x-1/2 dark:bg-neutral-600" />
+        {children}
+        <div className="ml-1 h-10 w-0.5 -translate-x-1/2 dark:bg-neutral-600" />
+        <div className="h-2 w-2 scale-110 rounded-full dark:bg-neutral-600" />
+      </div>
+    </div>
+  );
+}
+
+function Experience({
+  id,
+  title,
+  company,
+  date,
+  description,
+  image,
+}: {
+  id: string;
+  title: string;
+  company: string;
+  date: string;
+  description: string;
+  image: string;
+}) {
+  return (
+    <div id="experience-1" className="flex flex-row items-center gap-8">
+      <div className="relative h-full">
+        <div className="absolute top-1/2 h-2 w-2 scale-110 rounded-full dark:bg-neutral-600" />
+        <div className="ml-1 h-full w-0.5 -translate-x-1/2 dark:bg-neutral-600" />
+      </div>
+      <div className="my-8 flex flex-row items-center gap-8">
+        <div className="relative h-24 w-24">
+          <Image
+            src="/profile.png"
+            fill
+            className="rounded-lg object-cover"
+            alt="Company"
+          />
+        </div>
+        <div className="">
+          <div className="text-sm dark:text-neutral-500">
+            Jan 2021 - Aug 2021
+          </div>
+          <div className={cn(inter800.className, "mt-2 text-2xl")}>Company</div>
+          <div className="text-lg italic dark:text-neutral-200">
+            Software Engineer
+          </div>
+          <Balancer as="div" className="mt-2 dark:text-neutral-400">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis ut
+            diam quam nulla porttitor massa id.
+          </Balancer>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Home({}) {
   return (
     <Container id="container">
-      <div className="invisible absolute top-1/2 left-1/2 h-5/6 w-full -translate-x-1/2 -translate-y-1/2 rotate-45 skew-y-6 rounded-full bg-transparent bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-neutral-300 via-neutral-900 to-neutral-900 opacity-15 blur-2xl motion-safe:animate-light-up dark:visible" />
+      <div className="invisible absolute top-[50vh] left-[50vw] h-5/6 w-full -translate-x-1/2 -translate-y-1/2 rotate-45 skew-y-6 rounded-full bg-transparent bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-neutral-300 via-neutral-900 to-neutral-900 opacity-15 blur-2xl motion-safe:animate-light-up dark:visible" />
       <Layout className="px-6">
         {/* <SectionNav>
           <SectionNavItem
@@ -401,7 +465,7 @@ export default function Home({}) {
               <div className="pt-8">
                 <div
                   className={cn(
-                    inter600.className,
+                    inter700.className,
                     "text-5xl motion-safe:animate-fade-up-0 sm:text-6xl"
                   )}
                 >
@@ -412,8 +476,8 @@ export default function Home({}) {
                   as="div"
                   className="mt-6 text-xl text-neutral-500 motion-safe:animate-fade-up-1 dark:text-neutral-400"
                 >
-                  Entry-level software engineer seeking full-time, full-stack
-                  opportunities. Lorem ipsum dolor sit amet, consectetur.
+                  Software engineer seeking full-time, full-stack opportunities.
+                  Looking to improve the lives of developers and users alike.
                 </Balancer>
                 <div className="mt-2 flex flex-row items-center gap-2 whitespace-nowrap text-sm text-neutral-400 motion-safe:animate-fade-up-2 dark:text-neutral-500 sm:justify-center">
                   <MapPinIcon className="inline h-4 w-4" />
@@ -452,8 +516,12 @@ export default function Home({}) {
             </div>
           </div>
         </Section>
-        <Section id="experience-section">
-          <div className="px-6 text-5xl">My experience.</div>
+        <Section id="experience-section" className="flex justify-center">
+          <Experiences>
+            <Experience />
+            <Experience />
+            <Experience />
+          </Experiences>
         </Section>
         <Section id="projects-section" className="flex justify-end px-6">
           My projects.
