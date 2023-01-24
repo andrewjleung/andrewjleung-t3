@@ -183,7 +183,7 @@ export default function Container({
         className={cn(
           inter300.className,
           // TODO: Make prose only apply to child content so that the rest of the container can fit the full width!
-          "mx-auto flex min-h-screen flex-col",
+          "mx-auto flex min-h-screen flex-col overflow-hidden",
           className
         )}
       >
@@ -197,9 +197,7 @@ export default function Container({
           <NavItem title="Bits" href="/bits" />
           <NavItem title="Resume" href="/resume" />
         </NavBar>
-        <div className={cn("w-full", { "px-6": pathname !== "/" })}>
-          {children}
-        </div>
+        <div className="relative h-full w-full overflow-x-clip">{children}</div>
         <Footer className="mt-auto">
           <div className="mx-auto whitespace-nowrap text-xs text-neutral-400 sm:ml-auto sm:mr-0">
             © {new Date().getFullYear()} Andrew Leung. All rights reserved.

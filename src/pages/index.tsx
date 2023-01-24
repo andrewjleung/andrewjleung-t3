@@ -191,6 +191,24 @@ function YouTubeIcon({ className }: { className?: string }) {
   );
 }
 
+function RightChevronIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      strokeWidth="2"
+      stroke="currentColor"
+      fill="none"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+      <path d="M9 6l6 6l-6 6"></path>
+    </svg>
+  );
+}
+
 function SectionNavItem({
   id,
   title,
@@ -333,7 +351,7 @@ function IconLink({
     <Link
       href={href}
       className={cn(
-        "flex flex-row items-center gap-2 dark:hover:text-neutral-400",
+        "flex flex-row items-center gap-2 dark:hover:text-white",
         className
       )}
     >
@@ -346,8 +364,8 @@ export default function Home({}) {
   return (
     <Container id="container">
       <div className="invisible absolute h-full w-full rotate-45 skew-y-6 rounded-full bg-transparent bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-neutral-300 via-neutral-900 to-neutral-900 opacity-15 blur-2xl dark:visible" />
-      <Layout>
-        <SectionNav>
+      <Layout className="px-6">
+        {/* <SectionNav>
           <SectionNavItem
             id="top-section"
             title="Top"
@@ -368,10 +386,10 @@ export default function Home({}) {
             title="Contact"
             icon={<EmailIcon className="h-4 w-4" />}
           />
-        </SectionNav>
+        </SectionNav> */}
         <Section id="top-section" top>
           <div className="relative flex h-full w-full items-center overflow-hidden sm:justify-center">
-            <div className="relative flex flex-col pl-6 sm:items-center sm:pl-0 sm:text-center">
+            <div className="relative flex flex-col sm:items-center sm:text-center">
               {/* <div className="relative h-40 w-40 rounded-xl">
               <Image
                 className="rounded-xl object-cover"
@@ -392,38 +410,44 @@ export default function Home({}) {
                 <Balancer
                   ratio={1}
                   as="div"
-                  className="pt-2 text-xl text-neutral-500 motion-safe:animate-fade-up-1 dark:text-neutral-400"
+                  className="mt-6 text-xl text-neutral-500 motion-safe:animate-fade-up-1 dark:text-neutral-400"
                 >
-                  Entry-level software engineer seeking full-time opportunities.
+                  Entry-level software engineer seeking full-time, full-stack
+                  opportunities. Lorem ipsum dolor sit amet, consectetur.
                 </Balancer>
-                <div className="flex flex-row items-center gap-2 whitespace-nowrap pt-2 text-sm text-neutral-400 motion-safe:animate-fade-up-2 dark:text-neutral-500 sm:justify-center">
+                <div className="mt-2 flex flex-row items-center gap-2 whitespace-nowrap text-sm text-neutral-400 motion-safe:animate-fade-up-2 dark:text-neutral-500 sm:justify-center">
                   <MapPinIcon className="inline h-4 w-4" />
                   Remote or near Dallas–Fort Worth, TX
                 </div>
-              </div>
-            </div>
-            <div className="absolute bottom-24 right-24">
-              <div className="flex flex-row items-center gap-3 pt-4 text-sm text-black dark:text-neutral-500">
-                <IconLink
-                  href="https://github.com/andrewjleung"
-                  Icon={GitHubIcon}
-                  className="motion-safe:animate-fade-up-2"
-                />
-                <IconLink
-                  href="https://www.linkedin.com/in/andrewjleung-"
-                  Icon={LinkedInIcon}
-                  className="motion-safe:animate-fade-up-3"
-                />
-                <IconLink
-                  href="https://open.spotify.com/artist/00zDjeTQDVOFlNttOnv9bc"
-                  Icon={SpotifyIcon}
-                  className="motion-safe:animate-fade-up-4"
-                />
-                <IconLink
-                  href="https://www.youtube.com/channel/UCVxaN-2GATE-3Ag9RTGrIXw"
-                  Icon={YouTubeIcon}
-                  className="motion-safe:animate-fade-up-5"
-                />
+                <div className="mt-8 flex flex-row items-center gap-3 text-sm text-black dark:text-neutral-500 sm:justify-center">
+                  <IconLink
+                    href="https://github.com/andrewjleung"
+                    Icon={GitHubIcon}
+                    className="motion-safe:animate-fade-up-2"
+                  />
+                  <IconLink
+                    href="https://www.linkedin.com/in/andrewjleung-"
+                    Icon={LinkedInIcon}
+                    className="motion-safe:animate-fade-up-3"
+                  />
+                  <IconLink
+                    href="https://open.spotify.com/artist/00zDjeTQDVOFlNttOnv9bc"
+                    Icon={SpotifyIcon}
+                    className="motion-safe:animate-fade-up-4"
+                  />
+                  <IconLink
+                    href="https://www.youtube.com/channel/UCVxaN-2GATE-3Ag9RTGrIXw"
+                    Icon={YouTubeIcon}
+                    className="motion-safe:animate-fade-up-5"
+                  />
+                  <Link
+                    href="/resume"
+                    className="ml-2 flex w-fit flex-row items-center gap-1 rounded-full border-1 border-black px-4 py-2 transition-all duration-200 motion-safe:animate-fade-up-6 motion-safe:animate-fade-up-5 dark:border-neutral-500 dark:hover:border-white dark:hover:text-white"
+                  >
+                    <span className="whitespace-nowrap text-sm">My resume</span>
+                    <RightChevronIcon className="h-4 w-4" />
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
