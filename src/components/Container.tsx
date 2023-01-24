@@ -195,7 +195,6 @@ export default function Container({
           <NavItem title="Home" href="/" />
           <NavItem title="Blog" href="/blog" />
           <NavItem title="Bits" href="/bits" />
-          <NavItem title="Resume" href="/resume" />
         </NavBar>
         <div className="relative h-full w-full">{children}</div>
         <Footer className="mt-auto">
