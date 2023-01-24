@@ -351,7 +351,7 @@ function IconLink({
     <Link
       href={href}
       className={cn(
-        "flex flex-row items-center gap-2 rounded-full hover:bg-black hover:text-white dark:hover:bg-transparent",
+        "flex flex-row items-center gap-2 dark:hover:bg-transparent",
         className
       )}
     >

@@ -85,12 +85,12 @@ function NavMenuMobile({
 
   return (
     <div
-      className="fixed top-0 left-0 h-screen w-screen"
+      className="fixed inset-0 h-screen w-screen backdrop-blur-2xl transition-all duration-300"
       onClick={() => {
         setIsOpen(false);
       }}
     >
-      <div className="absolute mt-24 box-border flex w-full flex-col gap-3 bg-neutral-200 p-6 text-6xl dark:bg-neutral-800">
+      <div className="absolute m-6 mt-24 box-border flex w-full flex-col gap-3 rounded-xl p-6 text-6xl">
         {children}
       </div>
     </div>
@@ -109,7 +109,7 @@ function NavBar({
   return (
     // TODO: Move hash navigation to the center, then dif//ferent pages to the left. Make it all collapse in smaller screens.
     <div className={cn("flex w-full justify-center", className)}>
-      <div className="flex w-full max-w-screen-lg flex-row items-center gap-5 p-6 md:hidden">
+      {/* <div className="flex w-full max-w-screen-lg flex-row items-center gap-5 p-6 md:hidden">
         <div className="text-black transition-all duration-200 ease-out dark:text-neutral-500 dark:hover:text-white">
           <div
             onClick={() => {
@@ -123,10 +123,10 @@ function NavBar({
           </NavMenuMobile>
         </div>
         <ThemeToggler className="ml-auto" />
-      </div>
+      </div> */}
       <div
         className={cn(
-          "hidden w-full max-w-screen-lg flex-row items-center gap-5 p-6 md:flex",
+          "flex w-full max-w-screen-lg flex-row items-center gap-5 p-6",
           className
         )}
       >
@@ -197,7 +197,7 @@ export default function Container({
           <NavItem title="Bits" href="/bits" />
           <NavItem title="Resume" href="/resume" />
         </NavBar>
-        <div className="relative h-full w-full overflow-x-clip">{children}</div>
+        <div className="relative h-full w-full">{children}</div>
         <Footer className="mt-auto">
           <div className="mx-auto whitespace-nowrap text-xs text-neutral-400 sm:ml-auto sm:mr-0">
             © {new Date().getFullYear()} Andrew Leung. All rights reserved.
