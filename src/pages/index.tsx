@@ -351,7 +351,7 @@ function IconLink({
     <Link
       href={href}
       className={cn(
-        "flex flex-row items-center gap-2 dark:hover:text-white",
+        "flex flex-row items-center gap-2 rounded-full hover:bg-black hover:text-white dark:hover:bg-transparent",
         className
       )}
     >
@@ -363,7 +363,7 @@ function IconLink({
 export default function Home({}) {
   return (
     <Container id="container">
-      <div className="invisible absolute h-full w-full rotate-45 skew-y-6 rounded-full bg-transparent bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-neutral-300 via-neutral-900 to-neutral-900 opacity-15 blur-2xl dark:visible" />
+      <div className="invisible absolute top-1/2 left-1/2 h-5/6 w-full -translate-x-1/2 -translate-y-1/2 rotate-45 skew-y-6 rounded-full bg-transparent bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-neutral-300 via-neutral-900 to-neutral-900 opacity-15 blur-2xl motion-safe:animate-light-up dark:visible" />
       <Layout className="px-6">
         {/* <SectionNav>
           <SectionNavItem
@@ -442,7 +442,7 @@ export default function Home({}) {
                   />
                   <Link
                     href="/resume"
-                    className="ml-2 flex w-fit flex-row items-center gap-1 rounded-full border-1 border-black px-4 py-2 transition-all duration-200 motion-safe:animate-fade-up-6 motion-safe:animate-fade-up-5 dark:border-neutral-500 dark:hover:border-white dark:hover:text-white"
+                    className="ml-2 flex w-fit flex-row items-center gap-1 rounded-full border-1 border-black px-4 py-2 transition-all duration-200 hover:bg-black hover:text-white motion-safe:animate-fade-up-6 motion-safe:animate-fade-up-5 dark:border-neutral-500 dark:hover:border-white dark:hover:bg-transparent dark:hover:text-white"
                   >
                     <span className="whitespace-nowrap text-sm">My resume</span>
                     <RightChevronIcon className="h-4 w-4" />
