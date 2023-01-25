@@ -369,13 +369,13 @@ function Experiences({
   className?: string;
 }) {
   return (
-    <div id="experiences" className="relative">
+    <div id="experiences" className={cn("relative", className)}>
       <div className="flex h-full w-fit flex-col">
-        <div className="h-2 w-2 scale-110 rounded-full dark:bg-neutral-600" />
-        <div className="ml-1 h-10 w-0.5 -translate-x-1/2 dark:bg-neutral-600" />
+        <div className="h-2 w-2 scale-110 rounded-full bg-neutral-300 dark:bg-neutral-800" />
+        <div className="ml-1 h-10 w-0.5 -translate-x-1/2 bg-neutral-300 dark:bg-neutral-800" />
         {children}
-        <div className="ml-1 h-10 w-0.5 -translate-x-1/2 dark:bg-neutral-600" />
-        <div className="h-2 w-2 scale-110 rounded-full dark:bg-neutral-600" />
+        <div className="ml-1 h-10 w-0.5 -translate-x-1/2 bg-neutral-300 dark:bg-neutral-800" />
+        <div className="h-2 w-2 scale-110 rounded-full bg-neutral-300 dark:bg-neutral-800" />
       </div>
     </div>
   );
@@ -387,7 +387,7 @@ function Experience({ id }: { id: string }) {
   useEffect(() => {
     const options = {
       rootMargin: "0px",
-      threshold: 1, // TODO: Tune this.
+      threshold: 0.8, // TODO: Tune this.
     };
 
     const observer = new IntersectionObserver((entries) => {
@@ -409,19 +409,22 @@ function Experience({ id }: { id: string }) {
   }, [id]);
 
   return (
-    <div id={id} className="group flex flex-row items-center gap-8">
-      <div className="relative h-full">
-        <div className="absolute top-1/2 z-10 h-2 w-2 scale-110 rounded-full transition-all duration-200 dark:bg-neutral-600 dark:group-hover:bg-indigo-500" />
-        <div className="ml-1 h-full w-0.5 -translate-x-1/2 dark:bg-neutral-600" />
+    <div id={id} className="group flex flex-row items-stretch gap-6 sm:gap-8">
+      <div className="relative">
+        <div className="absolute top-1/2 z-10 h-2 w-2 scale-110 rounded-full bg-neutral-300 transition-all duration-200 group-hover:bg-indigo-400 dark:bg-neutral-800 dark:group-hover:bg-indigo-500" />
+        <div className="ml-1 h-full w-0.5 -translate-x-1/2 bg-neutral-300 dark:bg-neutral-800" />
       </div>
       <div
-        className={cn("my-8 flex flex-row items-center gap-8", {
-          "motion-safe:animate-fade-up-0": isVisible,
-          invisible: !isVisible,
-        })}
+        className={cn(
+          "my-6 flex flex-row items-center gap-6 sm:my-8 sm:gap-8",
+          {
+            "motion-safe:animate-fade-up-0": isVisible,
+            invisible: !isVisible,
+          }
+        )}
       >
-        <div className="relative h-24 w-24">
-          <div className="absolute h-full w-full rounded-lg transition-all dark:bg-indigo-500 dark:group-hover:blur-md dark:group-hover:duration-200" />
+        <div className="relative h-20 w-20 sm:h-24 sm:w-24">
+          <div className="absolute h-full w-full rounded-lg bg-indigo-500 transition-all group-hover:blur-md group-hover:duration-200" />
           <Image
             src="/profile.png"
             fill
@@ -430,24 +433,26 @@ function Experience({ id }: { id: string }) {
           />
         </div>
         <div className="">
-          <div className="text-sm dark:text-neutral-500">
+          <div className="text-xs text-neutral-500 sm:text-sm">
             Jan 2021 - Aug 2021
           </div>
           <div
             className={cn(
               inter800.className,
-              "mt-2 from-indigo-400 to-pink-400 text-2xl dark:group-hover:bg-gradient-to-r dark:group-hover:bg-clip-text dark:group-hover:text-transparent dark:group-hover:duration-200"
+              "mt-2 from-indigo-500 to-pink-500 text-xl group-hover:bg-gradient-to-r group-hover:bg-clip-text group-hover:text-transparent group-hover:duration-200 dark:from-indigo-400 dark:to-pink-400 sm:text-2xl"
             )}
           >
             Company
           </div>
-          <div className="text-lg italic dark:text-neutral-200">
+          <div className="text-base italic dark:text-neutral-200 sm:text-lg">
             Software Engineer
           </div>
-          <Balancer as="div" className="mt-2 dark:text-neutral-400">
+          <Balancer
+            as="div"
+            className="mt-2 text-sm dark:text-neutral-400 sm:text-base"
+          >
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis ut
-            diam quam nulla porttitor massa id.
+            eiusmod tempor incididunt ut labore et dolore magna aliqua.
           </Balancer>
         </div>
       </div>
@@ -455,12 +460,30 @@ function Experience({ id }: { id: string }) {
   );
 }
 
+function Card({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <div
+      className={cn(
+        "h-52 w-72 rounded-xl border-1 border-black p-4 dark:border-neutral-700",
+        className
+      )}
+    >
+      {children}
+    </div>
+  );
+}
+
 export default function Home({}) {
   return (
     <Container id="container">
-      <div className="invisible absolute top-[50vh] left-[50vw] h-5/6 w-full -translate-x-1/2 -translate-y-1/2 rotate-45 skew-y-6 rounded-full bg-transparent bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-neutral-300 via-neutral-900 to-neutral-900 opacity-15 blur-2xl motion-safe:animate-light-up dark:visible" />
-      <Layout className="px-6">
-        {/* <SectionNav>
+      <div className="invisible absolute top-[50vh] left-[50vw] -z-10 h-5/6 w-full -translate-x-1/2 -translate-y-1/2 rotate-45 skew-y-6 rounded-full bg-transparent bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-neutral-400 via-neutral-900 to-neutral-900 opacity-10 blur-2xl motion-safe:animate-light-up dark:visible" />
+      {/* <SectionNav>
           <SectionNavItem
             id="top-section"
             title="Top"
@@ -482,7 +505,8 @@ export default function Home({}) {
             icon={<EmailIcon className="h-4 w-4" />}
           />
         </SectionNav> */}
-        <Section id="top-section" top>
+      <Section id="top-section" top>
+        <Layout className="px-6">
           <div className="relative flex h-full w-full items-center overflow-hidden sm:justify-center">
             <div className="relative flex flex-col sm:items-center sm:text-center">
               {/* <div className="relative h-40 w-40 rounded-xl">
@@ -546,25 +570,177 @@ export default function Home({}) {
               </div>
             </div>
           </div>
-        </Section>
-        <Section id="experience-section" className="flex justify-center">
-          <Experiences>
-            <Experience id="experience-1" />
-            <Experience id="experience-2" />
-            <Experience id="experience-3" />
-          </Experiences>
-        </Section>
-        <Section id="projects-section" className="mt-4 flex justify-end px-6">
-          My projects.
-        </Section>
-        <Section
-          id="contact-section"
-          bottom
-          className="flex flex-col justify-center px-6"
-        >
-          What&apos;s next? Contact me!
-        </Section>
-      </Layout>
+        </Layout>
+      </Section>
+      <Section
+        id="education-section"
+        className="relative mb-16 flex flex-col items-center"
+      >
+        <div className="invisible absolute top-1/2 left-0 -z-10 h-screen w-2/3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-transparent bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-neutral-500 via-neutral-900 to-neutral-900 opacity-10 blur-2xl motion-safe:animate-light-up dark:visible" />
+        <div className="invisible absolute top-1/2 right-0 -z-10 h-screen w-2/3 translate-x-1/2 -translate-y-1/2 rounded-full bg-transparent bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-neutral-500 via-neutral-900 to-neutral-900 opacity-10 blur-2xl motion-safe:animate-light-up dark:visible" />
+        <Layout className="px-6">
+          <div className="flex flex-col items-center text-center">
+            <div className={cn(inter700.className, "my-8 text-4xl")}>
+              Education
+            </div>
+            <div className="my-8 grid grid-cols-1 gap-8 sm:grid-cols-2">
+              <Card className="group relative flex items-center justify-center overflow-clip">
+                <div className="opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-20 dark:group-hover:opacity-60">
+                  <div className="absolute left-0 bottom-0 h-16 w-16 -translate-x-1/2 translate-y-1/2 rounded-full border-1 border-black dark:border-neutral-700" />
+                  <div className="absolute right-0 top-0 h-16 w-16 translate-x-1/2 -translate-y-1/2 rounded-full border-1 border-black dark:border-neutral-700" />
+                  <div className="absolute left-0 top-0 h-16 w-16 -translate-x-1/2 -translate-y-1/2 rounded-full border-1 border-black dark:border-neutral-700" />
+                  <div className="absolute right-0 bottom-0 h-16 w-16 translate-x-1/2 translate-y-1/2 rounded-full border-1 border-black dark:border-neutral-700" />
+                </div>
+                <div className="flex flex-col items-center">
+                  <span className={cn(inter700.className, "text-2xl")}>
+                    Northeastern University
+                  </span>{" "}
+                  <span className="text-neutral-500">class of</span>
+                  <div
+                    className={cn(
+                      inter700.className,
+                      "w-fit bg-gradient-to-t from-rose-600 to-rose-300 bg-clip-text text-6xl text-transparent dark:to-rose-200"
+                    )}
+                  >
+                    2022
+                  </div>
+                </div>
+              </Card>
+              <Card className="group relative flex flex-col items-center justify-center">
+                <div className="opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-40 dark:group-hover:opacity-100">
+                  <div className="absolute inset-4 scale-110 border-1 border-black opacity-40 duration-500 group-hover:scale-100 dark:border-neutral-700" />
+                  <div className="absolute inset-8 scale-110 border-1 border-black opacity-[0.35] duration-500 group-hover:scale-100 dark:border-neutral-700" />
+                  <div className="absolute inset-12 scale-110 border-1 border-black opacity-30 duration-500 group-hover:scale-100 dark:border-neutral-700" />
+                  <div className="absolute inset-16 scale-110 border-1 border-black opacity-[0.25] duration-500 group-hover:scale-100 dark:border-neutral-700" />
+                  <div className="absolute inset-[5rem] scale-110 border-1 border-black opacity-20 duration-500 group-hover:scale-100 dark:border-neutral-700" />
+                  <div className="absolute inset-[6rem] scale-110 border-1 border-black opacity-15 duration-500 group-hover:scale-100 dark:border-neutral-700" />
+                </div>
+                <span className={cn(inter700.className, "relative text-2xl")}>
+                  B.S. in
+                </span>{" "}
+                <span
+                  className={cn(
+                    inter700.className,
+                    "relative w-fit bg-gradient-to-t from-teal-700 to-teal-300 bg-clip-text text-4xl text-transparent dark:to-teal-200"
+                  )}
+                >
+                  Computer Science
+                </span>
+              </Card>
+              <Card className="group relative flex items-center justify-center overflow-hidden">
+                <div className="absolute flex h-full w-full items-center opacity-0 duration-500 ease-in-out group-hover:opacity-15 dark:group-hover:opacity-50">
+                  <span
+                    className={cn(
+                      inter700.className,
+                      "absolute left-[7.25rem] -translate-x-1/2 scale-100 text-[7rem] text-black opacity-[0.35] duration-500 ease-in-out group-hover:scale-150 dark:text-neutral-700"
+                    )}
+                  >
+                    3.9
+                  </span>
+                  <span
+                    className={cn(
+                      inter700.className,
+                      "absolute left-[7.25rem] -translate-x-1/2 scale-100 text-[8rem] text-black opacity-30 duration-500 ease-in-out group-hover:scale-150 dark:text-neutral-700"
+                    )}
+                  >
+                    3.9
+                  </span>
+                  <span
+                    className={cn(
+                      inter700.className,
+                      "absolute left-[7.25rem] -translate-x-1/2 scale-100 text-[9rem] text-black opacity-[0.25] duration-500 ease-in-out group-hover:scale-150 dark:text-neutral-700"
+                    )}
+                  >
+                    3.9
+                  </span>
+                  <span
+                    className={cn(
+                      inter700.className,
+                      "absolute left-[7.25rem] -translate-x-1/2 scale-100 text-[10rem] text-black opacity-20 duration-500 ease-in-out group-hover:scale-150 dark:text-neutral-700"
+                    )}
+                  >
+                    3.9
+                  </span>
+                  <span
+                    className={cn(
+                      inter700.className,
+                      "absolute left-[7.25rem] -translate-x-1/2 scale-100 text-[11rem] text-black opacity-[0.15] duration-500 ease-in-out group-hover:scale-150 dark:text-neutral-700"
+                    )}
+                  >
+                    3.9
+                  </span>
+                  <span
+                    className={cn(
+                      inter700.className,
+                      "absolute left-[7.25rem] -translate-x-1/2 scale-100 text-[12rem] text-black opacity-10 duration-500 ease-in-out group-hover:scale-150 dark:text-neutral-700"
+                    )}
+                  >
+                    3.9
+                  </span>
+                </div>
+                <div>
+                  <span
+                    className={cn(
+                      inter700.className,
+                      "relative w-fit bg-gradient-to-br from-sky-700 to-sky-300 bg-clip-text text-[6rem] text-transparent dark:to-sky-200"
+                    )}
+                  >
+                    3.9
+                  </span>{" "}
+                  <span className={cn(inter700.className, "relative text-2xl")}>
+                    GPA
+                  </span>
+                </div>
+              </Card>
+              <Card className="group relative flex items-center justify-center">
+                <div className="opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-15 dark:group-hover:opacity-60">
+                  <div className="absolute top-1/2 left-6 h-36 w-36 -translate-y-1/2 rounded-full border-1 border-black dark:border-neutral-700" />
+                  <div className="absolute top-1/2 left-6 h-36 w-36 translate-x-4 -translate-y-1/2 rounded-full border-1 border-black opacity-90 dark:border-neutral-700" />
+                  <div className="absolute top-1/2 left-6 h-36 w-36 translate-x-8 -translate-y-1/2 rounded-full border-1 border-black opacity-80 dark:border-neutral-700" />
+                  <div className="absolute top-1/2 left-6 h-36 w-36 translate-x-12 -translate-y-1/2 rounded-full border-1 border-black opacity-70 dark:border-neutral-700" />
+                  <div className="absolute top-1/2 left-6 h-36 w-36 translate-x-16 -translate-y-1/2 rounded-full border-1 border-black opacity-60 dark:border-neutral-700" />
+                  <div className="absolute top-1/2 left-6 h-36 w-36 translate-x-20 -translate-y-1/2 rounded-full border-1 border-black opacity-50 dark:border-neutral-700" />
+                  <div className="absolute top-1/2 left-6 h-36 w-36 translate-x-24 -translate-y-1/2 rounded-full border-1 border-black opacity-40 dark:border-neutral-700" />
+                </div>
+                <div>
+                  <span
+                    className={cn(
+                      inter700.className,
+                      "from- relative w-fit bg-gradient-to-br from-amber-600 to-amber-300 bg-clip-text text-[6rem] text-transparent dark:to-amber-200"
+                    )}
+                  >
+                    3
+                  </span>{" "}
+                  <span className={cn(inter700.className, "relative text-2xl")}>
+                    co-ops
+                  </span>
+                </div>
+              </Card>
+            </div>
+          </div>
+        </Layout>
+      </Section>
+      <Section id="experience-section" className="flex flex-col items-center">
+        <div className={cn(inter700.className, "my-8 text-4xl")}>
+          Experience
+        </div>
+        <Experiences className="my-8">
+          <Experience id="experience-1" />
+          <Experience id="experience-2" />
+          <Experience id="experience-3" />
+          <Experience id="experience-4" />
+        </Experiences>
+      </Section>
+      <Section id="projects-section" className="flex justify-end">
+        My projects.
+      </Section>
+      <Section
+        id="contact-section"
+        bottom
+        className="flex flex-col justify-center"
+      >
+        What&apos;s next? Contact me!
+      </Section>
     </Container>
   );
 }
