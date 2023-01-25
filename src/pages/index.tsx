@@ -361,9 +361,15 @@ function IconLink({
   );
 }
 
-function Experiences({ children }: { children: React.ReactNode }) {
+function Experiences({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
   return (
-    <div className="">
+    <div id="experiences" className="relative">
       <div className="flex h-full w-fit flex-col">
         <div className="h-2 w-2 scale-110 rounded-full dark:bg-neutral-600" />
         <div className="ml-1 h-10 w-0.5 -translate-x-1/2 dark:bg-neutral-600" />
@@ -375,29 +381,47 @@ function Experiences({ children }: { children: React.ReactNode }) {
   );
 }
 
-function Experience({
-  id,
-  title,
-  company,
-  date,
-  description,
-  image,
-}: {
-  id: string;
-  title: string;
-  company: string;
-  date: string;
-  description: string;
-  image: string;
-}) {
+function Experience({ id }: { id: string }) {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const options = {
+      rootMargin: "0px",
+      threshold: 1, // TODO: Tune this.
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      });
+    }, options);
+    const target = document.getElementById(id);
+
+    if (target !== null) {
+      observer.observe(target);
+    }
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [id]);
+
   return (
-    <div id="experience-1" className="flex flex-row items-center gap-8">
+    <div id={id} className="group flex flex-row items-center gap-8">
       <div className="relative h-full">
-        <div className="absolute top-1/2 h-2 w-2 scale-110 rounded-full dark:bg-neutral-600" />
+        <div className="absolute top-1/2 z-10 h-2 w-2 scale-110 rounded-full transition-all duration-200 dark:bg-neutral-600 dark:group-hover:bg-indigo-500" />
         <div className="ml-1 h-full w-0.5 -translate-x-1/2 dark:bg-neutral-600" />
       </div>
-      <div className="my-8 flex flex-row items-center gap-8">
+      <div
+        className={cn("my-8 flex flex-row items-center gap-8", {
+          "motion-safe:animate-fade-up-0": isVisible,
+          invisible: !isVisible,
+        })}
+      >
         <div className="relative h-24 w-24">
+          <div className="absolute h-full w-full rounded-lg transition-all dark:bg-indigo-500 dark:group-hover:blur-md dark:group-hover:duration-200" />
           <Image
             src="/profile.png"
             fill
@@ -409,7 +433,14 @@ function Experience({
           <div className="text-sm dark:text-neutral-500">
             Jan 2021 - Aug 2021
           </div>
-          <div className={cn(inter800.className, "mt-2 text-2xl")}>Company</div>
+          <div
+            className={cn(
+              inter800.className,
+              "mt-2 from-indigo-400 to-pink-400 text-2xl dark:group-hover:bg-gradient-to-r dark:group-hover:bg-clip-text dark:group-hover:text-transparent dark:group-hover:duration-200"
+            )}
+          >
+            Company
+          </div>
           <div className="text-lg italic dark:text-neutral-200">
             Software Engineer
           </div>
@@ -518,12 +549,12 @@ export default function Home({}) {
         </Section>
         <Section id="experience-section" className="flex justify-center">
           <Experiences>
-            <Experience />
-            <Experience />
-            <Experience />
+            <Experience id="experience-1" />
+            <Experience id="experience-2" />
+            <Experience id="experience-3" />
           </Experiences>
         </Section>
-        <Section id="projects-section" className="flex justify-end px-6">
+        <Section id="projects-section" className="mt-4 flex justify-end px-6">
           My projects.
         </Section>
         <Section
