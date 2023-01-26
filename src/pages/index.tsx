@@ -7,6 +7,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Layout from "../components/Layout";
+import useIntersection from "../hooks/useIntersection";
 
 const inter700 = Inter({ weight: "700", subsets: ["latin"] });
 const inter800 = Inter({ weight: "800", subsets: ["latin"] });
@@ -219,33 +220,7 @@ function SectionNavItem({
   title: string;
   icon: React.ReactNode;
 }) {
-  const [isIntersecting, setIsIntersecting] = useState(false);
-
-  useEffect(() => {
-    const options = {
-      rootMargin: "0px",
-      threshold: 0.5, // TODO: Tune this.
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setIsIntersecting(true);
-        } else {
-          setIsIntersecting(false);
-        }
-      });
-    }, options);
-    const target = document.getElementById(id);
-
-    if (target !== null) {
-      observer.observe(target);
-    }
-
-    return () => {
-      observer.disconnect();
-    };
-  }, [id]);
+  const { intersecting } = useIntersection(id, { threshold: 0.5 });
 
   return (
     <div
@@ -260,7 +235,7 @@ function SectionNavItem({
       <div
         className={cn(
           "flex flex-row items-center rounded-full p-1",
-          isIntersecting
+          intersecting
             ? "bg-black text-white dark:bg-transparent dark:text-white"
             : "text-black dark:text-neutral-500 dark:hover:text-neutral-400"
         )}
@@ -382,31 +357,7 @@ function Experiences({
 }
 
 function Experience({ id }: { id: string }) {
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const options = {
-      rootMargin: "0px",
-      threshold: 0.8, // TODO: Tune this.
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      });
-    }, options);
-    const target = document.getElementById(id);
-
-    if (target !== null) {
-      observer.observe(target);
-    }
-
-    return () => {
-      observer.disconnect();
-    };
-  }, [id]);
+  const { viewed } = useIntersection(id, { threshold: 0.8 });
 
   return (
     <div id={id} className="group flex flex-row items-stretch gap-6 sm:gap-8">
@@ -418,8 +369,8 @@ function Experience({ id }: { id: string }) {
         className={cn(
           "my-6 flex flex-row items-center gap-6 sm:my-8 sm:gap-8",
           {
-            "motion-safe:animate-fade-up-0": isVisible,
-            invisible: !isVisible,
+            "motion-safe:animate-fade-up-0": viewed,
+            invisible: !viewed,
           }
         )}
       >
