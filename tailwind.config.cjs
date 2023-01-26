@@ -88,6 +88,10 @@ module.exports = {
       opacity: {
         15: "0.15",
       },
+      backgroundImage: {
+        "cool-gradient":
+          "radial-gradient(140% 107.13% at 50% 10%,transparent 47.41%,#63e 69.27%,#fff 100%)",
+      },
     },
     variants: {
       extend: {

@@ -380,22 +380,17 @@ function Experiences({
   );
 }
 
-function Experience({ id }: { id: string }) {
-  const { viewed } = useIntersection(id, { threshold: 0.8 });
-
+function Experience({ className }: { className?: string }) {
   return (
-    <div id={id} className="group flex flex-row items-stretch gap-6 sm:gap-8">
+    <div className="group group flex flex-row items-stretch gap-6 sm:gap-8">
       <div className="relative">
-        <div className="absolute top-1/2 z-10 h-2 w-2 scale-110 rounded-full bg-neutral-300 transition-all duration-200 group-hover:bg-indigo-400 dark:bg-neutral-800 dark:group-hover:bg-indigo-500" />
+        <div className="absolute top-1/2 z-10 h-2 w-2 scale-110 rounded-full bg-neutral-300 transition-all duration-200 group-hover:-translate-y-1 group-hover:bg-indigo-400 group-hover:duration-300 dark:bg-neutral-800 dark:group-hover:bg-indigo-500" />
         <div className="ml-1 h-full w-0.5 -translate-x-1/2 bg-neutral-300 dark:bg-neutral-800" />
       </div>
       <div
         className={cn(
-          "my-6 flex flex-row items-center gap-6 sm:my-8 sm:gap-8",
-          {
-            "motion-safe:animate-fade-up-0": viewed,
-            invisible: !viewed,
-          }
+          "my-6 flex flex-row items-center gap-6 transition-transform duration-200 group-hover:-translate-y-1 group-hover:duration-300 sm:my-8 sm:gap-8",
+          className
         )}
       >
         <div className="relative h-20 w-20 sm:h-24 sm:w-24">
@@ -445,7 +440,7 @@ function Card({
   return (
     <div
       className={cn(
-        "h-52 w-72 rounded-2xl border-1 border-black p-4 dark:border-neutral-700",
+        "h-52 w-72 rounded-2xl border-1 border-black bg-white p-4 dark:border-neutral-800 dark:bg-black",
         className
       )}
     >
@@ -457,7 +452,12 @@ function Card({
 export default function Home({}) {
   const { viewed: educationSectionViewed } = useIntersection(
     "education-section",
-    { threshold: 0.7 }
+    { threshold: 0.5 }
+  );
+
+  const { viewed: experienceSectionViewed } = useIntersection(
+    "experience-section",
+    { threshold: 0.3 }
   );
 
   return (
@@ -562,7 +562,7 @@ export default function Home({}) {
         className="relative mb-16 flex flex-col items-center"
       >
         <Layout className="px-6">
-          <div className="flex flex-col items-center text-center">
+          <div className="flex flex-col items-center rounded-3xl bg-cool-gradient to-black text-center">
             <div className="my-8">
               <div className={cn(inter700.className, "text-5xl")}>
                 Education
@@ -731,7 +731,7 @@ export default function Home({}) {
                   <span
                     className={cn(
                       inter700.className,
-                      "from- relative w-fit bg-gradient-to-br from-amber-500 to-amber-300 bg-clip-text text-[6rem] text-transparent dark:from-amber-600 dark:to-amber-200"
+                      "relative w-fit bg-gradient-to-br from-amber-500 to-amber-300 bg-clip-text text-[6rem] text-transparent dark:from-amber-600 dark:to-amber-200"
                     )}
                   >
                     3
@@ -751,10 +751,30 @@ export default function Home({}) {
             Experience
           </div>
           <Experiences className="my-8">
-            <Experience id="experience-1" />
-            <Experience id="experience-2" />
-            <Experience id="experience-3" />
-            <Experience id="experience-4" />
+            <Experience
+              className={cn({
+                "sm:animate-fade-up-0": experienceSectionViewed,
+                "sm:invisible": !experienceSectionViewed,
+              })}
+            />
+            <Experience
+              className={cn({
+                "sm:animate-fade-up-1": experienceSectionViewed,
+                "sm:invisible": !experienceSectionViewed,
+              })}
+            />
+            <Experience
+              className={cn({
+                "sm:animate-fade-up-2": experienceSectionViewed,
+                "sm:invisible": !experienceSectionViewed,
+              })}
+            />
+            <Experience
+              className={cn({
+                "sm:animate-fade-up-3": experienceSectionViewed,
+                "sm:invisible": !experienceSectionViewed,
+              })}
+            />
           </Experiences>
         </Layout>
       </Section>
