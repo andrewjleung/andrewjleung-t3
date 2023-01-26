@@ -457,7 +457,7 @@ function Card({
 export default function Home({}) {
   const { viewed: educationSectionViewed } = useIntersection(
     "education-section",
-    { threshold: 0.8 }
+    { threshold: 0.7 }
   );
 
   return (
