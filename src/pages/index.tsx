@@ -584,10 +584,20 @@ export default function Home({}) {
             <div className="my-8 grid grid-cols-1 gap-8 sm:grid-cols-2">
               <Card className="group relative flex items-center justify-center overflow-clip">
                 <div className="opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-30 dark:group-hover:opacity-70">
-                  <div className="absolute left-0 bottom-0 h-16 w-16 -translate-x-1/2 translate-y-1/2 rounded-full border-1 border-black dark:border-neutral-700" />
-                  <div className="absolute right-0 top-0 h-16 w-16 translate-x-1/2 -translate-y-1/2 rounded-full border-1 border-black dark:border-neutral-700" />
-                  <div className="absolute left-0 top-0 h-16 w-16 -translate-x-1/2 -translate-y-1/2 rounded-full border-1 border-black dark:border-neutral-700" />
-                  <div className="absolute right-0 bottom-0 h-16 w-16 translate-x-1/2 translate-y-1/2 rounded-full border-1 border-black dark:border-neutral-700" />
+                  {[
+                    "left-0 top-0 -translate-x-1/2 -translate-y-1/2",
+                    "right-0 top-0 translate-x-1/2 -translate-y-1/2",
+                    "left-0 bottom-0 -translate-x-1/2 translate-y-1/2",
+                    "right-0 bottom-0 translate-x-1/2 translate-y-1/2",
+                  ].map((position, i) => (
+                    <div
+                      key={`edu-hover-effect-1-${i}`}
+                      className={cn(
+                        "absolute h-16 w-16 rounded-full border-1 border-black dark:border-neutral-700",
+                        position
+                      )}
+                    />
+                  ))}
                 </div>
                 <div className="flex flex-col items-center">
                   <span className={cn(inter700.className, "text-2xl")}>
@@ -606,12 +616,22 @@ export default function Home({}) {
               </Card>
               <Card className="group relative flex flex-col items-center justify-center">
                 <div className="opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-[0.25] dark:group-hover:opacity-100">
-                  <div className="absolute inset-4 scale-110 border-1 border-black opacity-50 duration-500 group-hover:scale-100 dark:border-neutral-700" />
-                  <div className="absolute inset-8 scale-110 border-1 border-black opacity-[0.45] duration-500 group-hover:scale-100 dark:border-neutral-700" />
-                  <div className="absolute inset-12 scale-110 border-1 border-black opacity-40 duration-500 group-hover:scale-100 dark:border-neutral-700" />
-                  <div className="absolute inset-16 scale-110 border-1 border-black opacity-[0.35] duration-500 group-hover:scale-100 dark:border-neutral-700" />
-                  <div className="absolute inset-[5rem] scale-110 border-1 border-black opacity-30 duration-500 group-hover:scale-100 dark:border-neutral-700" />
-                  <div className="absolute inset-[6rem] scale-110 border-1 border-black opacity-[0.25] duration-500 group-hover:scale-100 dark:border-neutral-700" />
+                  {[
+                    "inset-4 opacity-50",
+                    "inset-8 opacity-[0.45]",
+                    "inset-12 opacity-40",
+                    "inset-16 opacity-[0.35]",
+                    "inset-[5rem] opacity-30",
+                    "inset-[6rem] opacity-[0.25]",
+                  ].map((styles, i) => (
+                    <div
+                      key={`edu-hover-effect-2-${i}`}
+                      className={cn(
+                        "absolute scale-110 border-1 border-black duration-500 group-hover:scale-100 dark:border-neutral-700",
+                        styles
+                      )}
+                    />
+                  ))}
                 </div>
                 <span className={cn(inter700.className, "relative text-2xl")}>
                   B.S. in
@@ -627,54 +647,25 @@ export default function Home({}) {
               </Card>
               <Card className="group relative flex items-center justify-center overflow-hidden">
                 <div className="absolute flex h-full w-full items-center opacity-0 duration-500 ease-in-out group-hover:opacity-15 dark:group-hover:opacity-60">
-                  <span
-                    className={cn(
-                      inter700.className,
-                      "absolute left-[7.25rem] -translate-x-1/2 scale-100 text-[7rem] text-black opacity-[0.35] duration-500 ease-in-out group-hover:scale-150 dark:text-neutral-700"
-                    )}
-                  >
-                    3.9
-                  </span>
-                  <span
-                    className={cn(
-                      inter700.className,
-                      "absolute left-[7.25rem] -translate-x-1/2 scale-100 text-[8rem] text-black opacity-30 duration-500 ease-in-out group-hover:scale-150 dark:text-neutral-700"
-                    )}
-                  >
-                    3.9
-                  </span>
-                  <span
-                    className={cn(
-                      inter700.className,
-                      "absolute left-[7.25rem] -translate-x-1/2 scale-100 text-[9rem] text-black opacity-[0.25] duration-500 ease-in-out group-hover:scale-150 dark:text-neutral-700"
-                    )}
-                  >
-                    3.9
-                  </span>
-                  <span
-                    className={cn(
-                      inter700.className,
-                      "absolute left-[7.25rem] -translate-x-1/2 scale-100 text-[10rem] text-black opacity-20 duration-500 ease-in-out group-hover:scale-150 dark:text-neutral-700"
-                    )}
-                  >
-                    3.9
-                  </span>
-                  <span
-                    className={cn(
-                      inter700.className,
-                      "absolute left-[7.25rem] -translate-x-1/2 scale-100 text-[11rem] text-black opacity-[0.15] duration-500 ease-in-out group-hover:scale-150 dark:text-neutral-700"
-                    )}
-                  >
-                    3.9
-                  </span>
-                  <span
-                    className={cn(
-                      inter700.className,
-                      "absolute left-[7.25rem] -translate-x-1/2 scale-100 text-[12rem] text-black opacity-10 duration-500 ease-in-out group-hover:scale-150 dark:text-neutral-700"
-                    )}
-                  >
-                    3.9
-                  </span>
+                  {[
+                    "text-[7rem] opacity-[0.35]",
+                    "text-[8rem] opacity-30",
+                    "text-[9rem] opacity-[0.25]",
+                    "text-[10rem] opacity-20",
+                    "text-[11rem] opacity-[0.15]",
+                    "text-[12rem] opacity-10",
+                  ].map((styles, i) => (
+                    <span
+                      key={`edu-hover-effect-3-${i}`}
+                      className={cn(
+                        inter700.className,
+                        "absolute left-[7.25rem] -translate-x-1/2 scale-0 text-black duration-500 ease-in-out group-hover:scale-150 dark:text-neutral-700",
+                        styles
+                      )}
+                    >
+                      3.9
+                    </span>
+                  ))}
                 </div>
                 <div>
                   <span
@@ -692,13 +683,23 @@ export default function Home({}) {
               </Card>
               <Card className="group relative flex items-center justify-center">
                 <div className="opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-20 dark:group-hover:opacity-70">
-                  <div className="absolute top-1/2 left-6 h-36 w-36 -translate-y-1/2 rounded-full border-1 border-black dark:border-neutral-700" />
-                  <div className="absolute top-1/2 left-6 h-36 w-36 translate-x-4 -translate-y-1/2 rounded-full border-1 border-black opacity-90 dark:border-neutral-700" />
-                  <div className="absolute top-1/2 left-6 h-36 w-36 translate-x-8 -translate-y-1/2 rounded-full border-1 border-black opacity-80 dark:border-neutral-700" />
-                  <div className="absolute top-1/2 left-6 h-36 w-36 translate-x-12 -translate-y-1/2 rounded-full border-1 border-black opacity-70 dark:border-neutral-700" />
-                  <div className="absolute top-1/2 left-6 h-36 w-36 translate-x-16 -translate-y-1/2 rounded-full border-1 border-black opacity-60 dark:border-neutral-700" />
-                  <div className="absolute top-1/2 left-6 h-36 w-36 translate-x-20 -translate-y-1/2 rounded-full border-1 border-black opacity-50 dark:border-neutral-700" />
-                  <div className="absolute top-1/2 left-6 h-36 w-36 translate-x-24 -translate-y-1/2 rounded-full border-1 border-black opacity-40 dark:border-neutral-700" />
+                  {[
+                    "translate-x-0 opacity-100",
+                    "translate-x-4 opacity-90",
+                    "translate-x-8 opacity-80",
+                    "translate-x-12 opacity-70",
+                    "translate-x-16 opacity-60",
+                    "translate-x-20 opacity-50",
+                    "translate-x-24 opacity-40",
+                  ].map((styles, i) => (
+                    <div
+                      key={`edu-hover-effect-4-${i}`}
+                      className={cn(
+                        "absolute top-1/2 left-6 h-36 w-36 -translate-y-1/2 rounded-full border-1 border-black dark:border-neutral-700",
+                        styles
+                      )}
+                    />
+                  ))}
                 </div>
                 <div>
                   <span
