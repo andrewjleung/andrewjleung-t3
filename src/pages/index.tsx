@@ -578,7 +578,7 @@ export default function Home({}) {
       >
         <Layout className="px-6">
           <div className="flex flex-col items-center text-center">
-            <div className={cn(inter700.className, "my-8 text-4xl")}>
+            <div className={cn(inter700.className, "my-8 text-5xl")}>
               Education
             </div>
             <div className="my-8 grid grid-cols-1 gap-8 sm:grid-cols-2">
@@ -718,16 +718,18 @@ export default function Home({}) {
           </div>
         </Layout>
       </Section>
-      <Section id="experience-section" className="flex flex-col items-center">
-        <div className={cn(inter700.className, "my-8 text-4xl")}>
-          Experience
-        </div>
-        <Experiences className="my-8">
-          <Experience id="experience-1" />
-          <Experience id="experience-2" />
-          <Experience id="experience-3" />
-          <Experience id="experience-4" />
-        </Experiences>
+      <Section id="experience-section">
+        <Layout className="flex flex-col items-center px-6">
+          <div className={cn(inter700.className, "my-8 text-5xl")}>
+            Experience
+          </div>
+          <Experiences className="my-8">
+            <Experience id="experience-1" />
+            <Experience id="experience-2" />
+            <Experience id="experience-3" />
+            <Experience id="experience-4" />
+          </Experiences>
+        </Layout>
       </Section>
       <Section id="projects-section" className="flex justify-end">
         My projects.
