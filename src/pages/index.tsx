@@ -3,7 +3,7 @@ import { Inter } from "@next/font/google";
 import cn from "classnames";
 import Balancer from "react-wrap-balancer";
 import useInterval from "../hooks/useInterval";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Layout from "../components/Layout";
@@ -29,6 +29,30 @@ function HandStopIcon({ className }: { className?: string }) {
       <path d="M11 5.5v-2a1.5 1.5 0 1 1 3 0v8.5"></path>
       <path d="M14 5.5a1.5 1.5 0 0 1 3 0v6.5"></path>
       <path d="M17 7.5a1.5 1.5 0 0 1 3 0v8.5a6 6 0 0 1 -6 6h-2h.208a6 6 0 0 1 -5.012 -2.7a69.74 69.74 0 0 1 -.196 -.3c-.312 -.479 -1.407 -2.388 -3.286 -5.728a1.5 1.5 0 0 1 .536 -2.022a1.867 1.867 0 0 1 2.28 .28l1.47 1.47"></path>
+    </svg>
+  );
+}
+
+function BooksIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      strokeWidth="2"
+      stroke="currentColor"
+      fill="none"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+      <path d="M5 4m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v14a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z"></path>
+      <path d="M9 4m0 1a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v14a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z"></path>
+      <path d="M5 8h4"></path>
+      <path d="M9 16h4"></path>
+      <path d="M13.803 4.56l2.184 -.53c.562 -.135 1.133 .19 1.282 .732l3.695 13.418a1.02 1.02 0 0 1 -.634 1.219l-.133 .041l-2.184 .53c-.562 .135 -1.133 -.19 -1.282 -.732l-3.695 -13.418a1.02 1.02 0 0 1 .634 -1.219l.133 -.041z"></path>
+      <path d="M14 9l4 -1"></path>
+      <path d="M16 16l3.923 -.98"></path>
     </svg>
   );
 }
@@ -220,7 +244,7 @@ function SectionNavItem({
   title: string;
   icon: React.ReactNode;
 }) {
-  const { intersecting } = useIntersection(id, { threshold: 0.5 });
+  const { intersecting } = useIntersection(id, { threshold: 0.7 });
 
   return (
     <div
@@ -256,7 +280,7 @@ function SectionNav({ children }: { children: React.ReactNode }) {
   return (
     <div
       className={cn(
-        "duration-400 fixed left-1/2 top-5 z-40 flex w-fit -translate-x-1/2 flex-row gap-4 rounded-full border-1 border-black py-2 px-4 transition-all ease-in dark:border-neutral-500 sm:motion-safe:animate-stretch",
+        "duration-400 fixed left-1/2 top-5 z-40 flex w-fit -translate-x-1/2 flex-row gap-4 rounded-full border-1 border-black bg-white py-2 px-4 transition-all ease-in dark:border-neutral-500 dark:bg-black sm:motion-safe:animate-stretch",
         { "hover:px-8": panelNavCanAnimate }
       )}
     >
@@ -421,7 +445,7 @@ function Card({
   return (
     <div
       className={cn(
-        "h-52 w-72 rounded-xl border-1 border-black p-4 dark:border-neutral-700",
+        "h-52 w-72 rounded-2xl border-1 border-black p-4 dark:border-neutral-700",
         className
       )}
     >
@@ -435,39 +459,36 @@ export default function Home({}) {
     <Container id="container">
       <div className="invisible absolute top-[50vh] left-[50vw] -z-10 h-5/6 w-full -translate-x-1/2 -translate-y-1/2 rotate-45 skew-y-6 rounded-full bg-transparent bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-neutral-400 via-neutral-900 to-neutral-900 opacity-10 blur-2xl motion-safe:animate-light-up dark:visible" />
       {/* <SectionNav>
-          <SectionNavItem
-            id="top-section"
-            title="Top"
-            icon={<HandStopIcon className="h-4 w-4 rotate-12" />}
-          />
-          <SectionNavItem
-            id="experience-section"
-            title="Experience"
-            icon={<BriefcaseIcon className="h-4 w-4" />}
-          />
-          <SectionNavItem
-            id="projects-section"
-            title="Projects"
-            icon={<LightbulbIcon className="h-4 w-4" />}
-          />
-          <SectionNavItem
-            id="contact-section"
-            title="Contact"
-            icon={<EmailIcon className="h-4 w-4" />}
-          />
-        </SectionNav> */}
+        <SectionNavItem
+          id="top-section"
+          title="Top"
+          icon={<HandStopIcon className="h-4 w-4 rotate-12" />}
+        />
+        <SectionNavItem
+          id="education-section"
+          title="Education"
+          icon={<BooksIcon className="h-4 w-4" />}
+        />
+        <SectionNavItem
+          id="experience-section"
+          title="Experience"
+          icon={<BriefcaseIcon className="h-4 w-4" />}
+        />
+        <SectionNavItem
+          id="projects-section"
+          title="Projects"
+          icon={<LightbulbIcon className="h-4 w-4" />}
+        />
+        <SectionNavItem
+          id="contact-section"
+          title="Contact"
+          icon={<EmailIcon className="h-4 w-4" />}
+        />
+      </SectionNav> */}
       <Section id="top-section" top>
         <Layout className="px-6">
-          <div className="relative flex h-full w-full items-center overflow-hidden sm:justify-center">
-            <div className="relative flex flex-col sm:items-center sm:text-center">
-              {/* <div className="relative h-40 w-40 rounded-xl">
-              <Image
-                className="rounded-xl object-cover"
-                src="/profile.png"
-                alt="Me!"
-                fill
-              />
-            </div> */}
+          <div className="relative flex h-full w-full items-center justify-center overflow-hidden">
+            <div className="relative flex flex-col">
               <div className="pt-8">
                 <div
                   className={cn(
@@ -485,11 +506,11 @@ export default function Home({}) {
                   Software engineer seeking full-time, full-stack opportunities.
                   Looking to improve the lives of developers and users alike.
                 </Balancer>
-                <div className="mt-2 flex flex-row items-center gap-2 whitespace-nowrap text-sm text-neutral-400 motion-safe:animate-fade-up-2 dark:text-neutral-500 sm:justify-center">
+                <div className="mt-2 flex flex-row items-center gap-2 whitespace-nowrap text-sm text-neutral-400 motion-safe:animate-fade-up-2 dark:text-neutral-500">
                   <MapPinIcon className="inline h-4 w-4" />
                   Remote or near Dallas–Fort Worth, TX
                 </div>
-                <div className="mt-8 flex flex-row items-center gap-3 text-sm text-black dark:text-neutral-500 sm:justify-center">
+                <div className="mt-8 flex flex-row items-center gap-3 text-sm text-black dark:text-neutral-500">
                   <IconLink
                     href="https://github.com/andrewjleung"
                     Icon={GitHubIcon}
@@ -520,6 +541,14 @@ export default function Home({}) {
                 </div>
               </div>
             </div>
+            {/* <div className="relative h-40 w-40 rounded-xl">
+              <Image
+                className="rounded-xl object-cover"
+                src="/profile.png"
+                alt="Me!"
+                fill
+              />
+            </div> */}
           </div>
         </Layout>
       </Section>
