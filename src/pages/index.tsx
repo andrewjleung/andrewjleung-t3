@@ -597,7 +597,7 @@ export default function Home({}) {
                   <div
                     className={cn(
                       inter700.className,
-                      "w-fit bg-gradient-to-t from-rose-600 to-rose-300 bg-clip-text text-6xl text-transparent dark:to-rose-200"
+                      "w-fit bg-gradient-to-t from-rose-500 to-rose-300 bg-clip-text text-6xl text-transparent dark:from-rose-600 dark:to-rose-200"
                     )}
                   >
                     2022
@@ -605,13 +605,13 @@ export default function Home({}) {
                 </div>
               </Card>
               <Card className="group relative flex flex-col items-center justify-center">
-                <div className="opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-30 dark:group-hover:opacity-100">
-                  <div className="absolute inset-4 scale-110 border-1 border-black opacity-[0.45] duration-500 group-hover:scale-100 dark:border-neutral-700" />
-                  <div className="absolute inset-8 scale-110 border-1 border-black opacity-40 duration-500 group-hover:scale-100 dark:border-neutral-700" />
-                  <div className="absolute inset-12 scale-110 border-1 border-black opacity-[0.35] duration-500 group-hover:scale-100 dark:border-neutral-700" />
-                  <div className="absolute inset-16 scale-110 border-1 border-black opacity-30 duration-500 group-hover:scale-100 dark:border-neutral-700" />
-                  <div className="absolute inset-[5rem] scale-110 border-1 border-black opacity-[0.25] duration-500 group-hover:scale-100 dark:border-neutral-700" />
-                  <div className="absolute inset-[6rem] scale-110 border-1 border-black opacity-20 duration-500 group-hover:scale-100 dark:border-neutral-700" />
+                <div className="opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-[0.25] dark:group-hover:opacity-100">
+                  <div className="absolute inset-4 scale-110 border-1 border-black opacity-50 duration-500 group-hover:scale-100 dark:border-neutral-700" />
+                  <div className="absolute inset-8 scale-110 border-1 border-black opacity-[0.45] duration-500 group-hover:scale-100 dark:border-neutral-700" />
+                  <div className="absolute inset-12 scale-110 border-1 border-black opacity-40 duration-500 group-hover:scale-100 dark:border-neutral-700" />
+                  <div className="absolute inset-16 scale-110 border-1 border-black opacity-[0.35] duration-500 group-hover:scale-100 dark:border-neutral-700" />
+                  <div className="absolute inset-[5rem] scale-110 border-1 border-black opacity-30 duration-500 group-hover:scale-100 dark:border-neutral-700" />
+                  <div className="absolute inset-[6rem] scale-110 border-1 border-black opacity-[0.25] duration-500 group-hover:scale-100 dark:border-neutral-700" />
                 </div>
                 <span className={cn(inter700.className, "relative text-2xl")}>
                   B.S. in
@@ -619,7 +619,7 @@ export default function Home({}) {
                 <span
                   className={cn(
                     inter700.className,
-                    "relative w-fit bg-gradient-to-t from-teal-700 to-teal-300 bg-clip-text text-4xl text-transparent dark:to-teal-200"
+                    "relative w-fit bg-gradient-to-t from-teal-600 to-teal-300 bg-clip-text text-4xl text-transparent dark:from-teal-700 dark:to-teal-200"
                   )}
                 >
                   Computer Science
@@ -680,7 +680,7 @@ export default function Home({}) {
                   <span
                     className={cn(
                       inter700.className,
-                      "relative w-fit bg-gradient-to-br from-sky-700 to-sky-300 bg-clip-text text-[6rem] text-transparent dark:to-sky-200"
+                      "relative w-fit bg-gradient-to-br from-sky-600 to-sky-300 bg-clip-text text-[6rem] text-transparent dark:from-sky-700 dark:to-sky-200"
                     )}
                   >
                     3.9
@@ -704,7 +704,7 @@ export default function Home({}) {
                   <span
                     className={cn(
                       inter700.className,
-                      "from- relative w-fit bg-gradient-to-br from-amber-600 to-amber-300 bg-clip-text text-[6rem] text-transparent dark:to-amber-200"
+                      "from- relative w-fit bg-gradient-to-br from-amber-500 to-amber-300 bg-clip-text text-[6rem] text-transparent dark:from-amber-600 dark:to-amber-200"
                     )}
                   >
                     3
