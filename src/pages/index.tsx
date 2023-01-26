@@ -455,6 +455,11 @@ function Card({
 }
 
 export default function Home({}) {
+  const { viewed: educationSectionViewed } = useIntersection(
+    "education-section",
+    { threshold: 0.8 }
+  );
+
   return (
     <Container id="container">
       <div className="invisible absolute top-[50vh] left-[50vw] -z-10 h-5/6 w-full -translate-x-1/2 -translate-y-1/2 rotate-45 skew-y-6 rounded-full bg-transparent bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-neutral-400 via-neutral-900 to-neutral-900 opacity-10 blur-2xl motion-safe:animate-light-up dark:visible" />
@@ -558,11 +563,27 @@ export default function Home({}) {
       >
         <Layout className="px-6">
           <div className="flex flex-col items-center text-center">
-            <div className={cn(inter700.className, "my-8 text-5xl")}>
-              Education
+            <div className="my-8">
+              <div className={cn(inter700.className, "text-5xl")}>
+                Education
+              </div>
+              <Balancer as="div" className="mt-4 text-xl text-neutral-500">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              </Balancer>
             </div>
-            <div className="my-8 grid grid-cols-1 gap-8 sm:grid-cols-2">
-              <Card className="group relative flex items-center justify-center overflow-clip">
+            <div className="my-8 grid grid-cols-1 gap-10 sm:grid-cols-2">
+              <Card
+                className={cn(
+                  "group relative flex items-center justify-center overflow-clip",
+                  {
+                    "motion-safe:animate-fade-up-0": educationSectionViewed,
+                    invisible: !educationSectionViewed,
+                  }
+                )}
+              >
                 <div className="opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-30 dark:group-hover:opacity-70">
                   {[
                     "left-0 top-0 -translate-x-1/2 -translate-y-1/2",
@@ -594,7 +615,15 @@ export default function Home({}) {
                   </div>
                 </div>
               </Card>
-              <Card className="group relative flex flex-col items-center justify-center">
+              <Card
+                className={cn(
+                  "group relative flex flex-col items-center justify-center",
+                  {
+                    "motion-safe:animate-fade-up-1": educationSectionViewed,
+                    invisible: !educationSectionViewed,
+                  }
+                )}
+              >
                 <div className="opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-[0.25] dark:group-hover:opacity-100">
                   {[
                     "inset-4 opacity-50",
@@ -625,7 +654,15 @@ export default function Home({}) {
                   Computer Science
                 </span>
               </Card>
-              <Card className="group relative flex items-center justify-center overflow-hidden">
+              <Card
+                className={cn(
+                  "group relative flex items-center justify-center overflow-hidden",
+                  {
+                    "motion-safe:animate-fade-up-2": educationSectionViewed,
+                    invisible: !educationSectionViewed,
+                  }
+                )}
+              >
                 <div className="absolute flex h-full w-full items-center opacity-0 duration-500 ease-in-out group-hover:opacity-15 dark:group-hover:opacity-60">
                   {[
                     "text-[7rem] opacity-[0.35]",
@@ -661,7 +698,16 @@ export default function Home({}) {
                   </span>
                 </div>
               </Card>
-              <Card className="group relative flex items-center justify-center">
+              <Card
+                className={cn(
+                  "group relative flex items-center justify-center",
+
+                  {
+                    "motion-safe:animate-fade-up-3": educationSectionViewed,
+                    invisible: !educationSectionViewed,
+                  }
+                )}
+              >
                 <div className="opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-20 dark:group-hover:opacity-70">
                   {[
                     "translate-x-0 opacity-100",
