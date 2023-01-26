@@ -576,8 +576,6 @@ export default function Home({}) {
         id="education-section"
         className="relative mb-16 flex flex-col items-center"
       >
-        <div className="invisible absolute top-1/2 left-0 -z-10 h-screen w-2/3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-transparent bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-neutral-500 via-neutral-900 to-neutral-900 opacity-10 blur-2xl motion-safe:animate-light-up dark:visible" />
-        <div className="invisible absolute top-1/2 right-0 -z-10 h-screen w-2/3 translate-x-1/2 -translate-y-1/2 rounded-full bg-transparent bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-neutral-500 via-neutral-900 to-neutral-900 opacity-10 blur-2xl motion-safe:animate-light-up dark:visible" />
         <Layout className="px-6">
           <div className="flex flex-col items-center text-center">
             <div className={cn(inter700.className, "my-8 text-4xl")}>
@@ -585,7 +583,7 @@ export default function Home({}) {
             </div>
             <div className="my-8 grid grid-cols-1 gap-8 sm:grid-cols-2">
               <Card className="group relative flex items-center justify-center overflow-clip">
-                <div className="opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-20 dark:group-hover:opacity-60">
+                <div className="opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-30 dark:group-hover:opacity-70">
                   <div className="absolute left-0 bottom-0 h-16 w-16 -translate-x-1/2 translate-y-1/2 rounded-full border-1 border-black dark:border-neutral-700" />
                   <div className="absolute right-0 top-0 h-16 w-16 translate-x-1/2 -translate-y-1/2 rounded-full border-1 border-black dark:border-neutral-700" />
                   <div className="absolute left-0 top-0 h-16 w-16 -translate-x-1/2 -translate-y-1/2 rounded-full border-1 border-black dark:border-neutral-700" />
@@ -607,13 +605,13 @@ export default function Home({}) {
                 </div>
               </Card>
               <Card className="group relative flex flex-col items-center justify-center">
-                <div className="opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-40 dark:group-hover:opacity-100">
-                  <div className="absolute inset-4 scale-110 border-1 border-black opacity-40 duration-500 group-hover:scale-100 dark:border-neutral-700" />
-                  <div className="absolute inset-8 scale-110 border-1 border-black opacity-[0.35] duration-500 group-hover:scale-100 dark:border-neutral-700" />
-                  <div className="absolute inset-12 scale-110 border-1 border-black opacity-30 duration-500 group-hover:scale-100 dark:border-neutral-700" />
-                  <div className="absolute inset-16 scale-110 border-1 border-black opacity-[0.25] duration-500 group-hover:scale-100 dark:border-neutral-700" />
-                  <div className="absolute inset-[5rem] scale-110 border-1 border-black opacity-20 duration-500 group-hover:scale-100 dark:border-neutral-700" />
-                  <div className="absolute inset-[6rem] scale-110 border-1 border-black opacity-15 duration-500 group-hover:scale-100 dark:border-neutral-700" />
+                <div className="opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-30 dark:group-hover:opacity-100">
+                  <div className="absolute inset-4 scale-110 border-1 border-black opacity-[0.45] duration-500 group-hover:scale-100 dark:border-neutral-700" />
+                  <div className="absolute inset-8 scale-110 border-1 border-black opacity-40 duration-500 group-hover:scale-100 dark:border-neutral-700" />
+                  <div className="absolute inset-12 scale-110 border-1 border-black opacity-[0.35] duration-500 group-hover:scale-100 dark:border-neutral-700" />
+                  <div className="absolute inset-16 scale-110 border-1 border-black opacity-30 duration-500 group-hover:scale-100 dark:border-neutral-700" />
+                  <div className="absolute inset-[5rem] scale-110 border-1 border-black opacity-[0.25] duration-500 group-hover:scale-100 dark:border-neutral-700" />
+                  <div className="absolute inset-[6rem] scale-110 border-1 border-black opacity-20 duration-500 group-hover:scale-100 dark:border-neutral-700" />
                 </div>
                 <span className={cn(inter700.className, "relative text-2xl")}>
                   B.S. in
@@ -628,7 +626,7 @@ export default function Home({}) {
                 </span>
               </Card>
               <Card className="group relative flex items-center justify-center overflow-hidden">
-                <div className="absolute flex h-full w-full items-center opacity-0 duration-500 ease-in-out group-hover:opacity-15 dark:group-hover:opacity-50">
+                <div className="absolute flex h-full w-full items-center opacity-0 duration-500 ease-in-out group-hover:opacity-15 dark:group-hover:opacity-60">
                   <span
                     className={cn(
                       inter700.className,
@@ -693,7 +691,7 @@ export default function Home({}) {
                 </div>
               </Card>
               <Card className="group relative flex items-center justify-center">
-                <div className="opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-15 dark:group-hover:opacity-60">
+                <div className="opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-20 dark:group-hover:opacity-70">
                   <div className="absolute top-1/2 left-6 h-36 w-36 -translate-y-1/2 rounded-full border-1 border-black dark:border-neutral-700" />
                   <div className="absolute top-1/2 left-6 h-36 w-36 translate-x-4 -translate-y-1/2 rounded-full border-1 border-black opacity-90 dark:border-neutral-700" />
                   <div className="absolute top-1/2 left-6 h-36 w-36 translate-x-8 -translate-y-1/2 rounded-full border-1 border-black opacity-80 dark:border-neutral-700" />
