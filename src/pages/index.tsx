@@ -1,7 +1,7 @@
 import Container from "../components/Container";
 import { Inter } from "@next/font/google";
 import cn from "classnames";
-import Balancer from "react-wrap-balancer";
+import Balancer, { Provider } from "react-wrap-balancer";
 import useInterval from "../hooks/useInterval";
 import React, { useState } from "react";
 import Link from "next/link";
@@ -11,6 +11,59 @@ import useIntersection from "../hooks/useIntersection";
 
 const inter700 = Inter({ weight: "700", subsets: ["latin"] });
 const inter800 = Inter({ weight: "800", subsets: ["latin"] });
+
+type Experience = {
+  startDate: Date;
+  endDate: Date;
+  company: string;
+  title: string;
+  description: string;
+  image: string;
+  link: string;
+};
+
+const experiences: Experience[] = [
+  {
+    startDate: new Date("2021-01-01"),
+    endDate: new Date("2021-08-01"),
+    company: "Poloniex",
+    title: "Software Engineer Co-op",
+    description:
+      "Developed internal web tools with TypeScript, React, and PHP. Led migration to a CMS and made key contributions to the implementation of a permissions microservice.",
+    image: "/poloniex.png",
+    link: "https://www.poloniex.com/",
+  },
+  {
+    startDate: new Date("2020-09-01"),
+    endDate: new Date("2021-05-01"),
+    company: "Sandbox at Northeastern University",
+    title: "Software Developer",
+    description:
+      "Implemented full-stack features for GraduateNU, a course-planning web app for students, using TypeScript, React, and Ruby on Rails.",
+    image: "/sandboxnu.png",
+    link: "https://www.sandboxnu.com/",
+  },
+  {
+    startDate: new Date("2020-01-01"),
+    endDate: new Date("2020-08-01"),
+    company: "Teikametrics",
+    title: "Software Engineer Co-op",
+    description:
+      "Picked up web development for the first time working on a TypeScript and React frontend and a functional Scala with Cats backend.",
+    image: "/teikametrics.png",
+    link: "https://www.teikametrics.com/",
+  },
+  {
+    startDate: new Date("2019-01-01"),
+    endDate: new Date("2019-07-01"),
+    company: "Curriculum Associates",
+    title: "Software Engineer Co-op",
+    description:
+      "Worked on quality assurance tasks, Liquibase migrations, and SQL query templates in Java.",
+    image: "/curriculum-associates.jpg",
+    link: "https://www.curriculumassociates.com/",
+  },
+];
 
 function HandStopIcon({ className }: { className?: string }) {
   return (
@@ -378,50 +431,54 @@ function Experiences({
   );
 }
 
-function Experience({ className }: { className?: string }) {
+function Experience({
+  experience: { startDate, endDate, company, title, description, image, link },
+  className,
+}: {
+  experience: Experience;
+  className?: string;
+}) {
   return (
     <div className="group group flex flex-row items-stretch gap-6 sm:gap-8">
       <div className="relative">
-        <div className="absolute top-1/2 z-10 h-2 w-2 scale-110 rounded-full bg-neutral-300 transition-all duration-200  group-hover:bg-indigo-400 dark:bg-neutral-800 dark:group-hover:bg-indigo-500" />
+        <div className="absolute top-1/2 z-10 h-2 w-2 scale-110 rounded-full bg-neutral-300 transition-all duration-200  group-hover:bg-indigo-400 dark:bg-neutral-800 dark:group-hover:bg-neutral-400" />
         <div className="ml-1 h-full w-0.5 -translate-x-1/2 bg-neutral-300 dark:bg-neutral-800" />
       </div>
       <div
         className={cn(
-          "my-6 flex flex-row items-center gap-6 transition-transform duration-200 group-hover:duration-300 sm:my-8 sm:gap-8",
+          "my-6 flex flex-row items-center gap-6 transition-transform duration-200 group-hover:translate-x-2 group-hover:duration-300 sm:my-8 sm:gap-8",
           className
         )}
       >
-        <div className="relative h-20 w-20 sm:h-24 sm:w-24">
-          <div className="absolute h-full w-full rounded-lg bg-indigo-500 transition-all duration-200 group-hover:blur-md" />
+        <div className="relative h-20 w-20 shrink-0 sm:h-24 sm:w-24">
           <Image
-            src="/profile.png"
+            src={image}
             fill
-            className="rounded-lg object-cover"
-            alt="Company"
+            className="rounded-xl object-cover"
+            alt={`${company} logo`}
           />
         </div>
-        <div className="">
+        <div className="shrink">
           <div className="text-xs text-neutral-500 sm:text-sm">
-            Jan 2021 - Aug 2021
+            {startDate.toLocaleString("default", {
+              month: "short",
+              year: "numeric",
+            })}{" "}
+            -{" "}
+            {endDate.toLocaleString("default", {
+              month: "short",
+              year: "numeric",
+            })}{" "}
           </div>
-          <div
-            className={cn(
-              inter800.className,
-              "mt-2 from-indigo-500 to-pink-500 text-xl group-hover:bg-gradient-to-r group-hover:bg-clip-text group-hover:text-transparent group-hover:duration-200 dark:from-indigo-400 dark:to-pink-400 sm:text-2xl"
-            )}
-          >
-            Company
+          <div className={cn(inter800.className, "mt-2 text-xl sm:text-2xl")}>
+            {company}
           </div>
           <div className="text-base italic dark:text-neutral-200 sm:text-lg">
-            Software Engineer
+            {title}
           </div>
-          <Balancer
-            as="div"
-            className="mt-2 text-sm dark:text-neutral-400 sm:text-base"
-          >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          </Balancer>
+          <div className="mt-2 text-sm dark:text-neutral-400 sm:text-base">
+            {description}
+          </div>
         </div>
       </div>
     </div>
@@ -562,17 +619,18 @@ export default function Home({}) {
         <Layout className="px-6">
           <div className="flex flex-col items-center rounded-3xl to-black text-center">
             <div className="my-8">
-              <div className={cn(inter700.className, "text-5xl")}>
+              <div className={cn(inter700.className, "text-4xl sm:text-5xl")}>
                 Education
               </div>
-              <Balancer as="div" className="mt-4 text-xl text-neutral-500">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              <Balancer
+                as="div"
+                className="mt-4 text-lg text-neutral-500 sm:text-xl"
+              >
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
                 eiusmod tempor incididunt ut labore et dolore magna aliqua.
               </Balancer>
             </div>
-            <div className="my-8 grid grid-cols-1 gap-10 sm:grid-cols-2">
+            <div className="my-8 grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-10">
               <Card
                 className={cn(
                   "group relative flex items-center justify-center overflow-clip",
@@ -745,34 +803,20 @@ export default function Home({}) {
       </Section>
       <Section id="experience-section">
         <Layout className="flex flex-col items-center px-6">
-          <div className={cn(inter700.className, "my-8 text-5xl")}>
+          <div className={cn(inter700.className, "my-8 text-4xl sm:text-5xl")}>
             Experience
           </div>
-          <Experiences className="my-8">
-            <Experience
-              className={cn({
-                "animate-fade-up-0": experienceSectionViewed,
-                invisible: !experienceSectionViewed,
-              })}
-            />
-            <Experience
-              className={cn({
-                "animate-fade-up-1": experienceSectionViewed,
-                invisible: !experienceSectionViewed,
-              })}
-            />
-            <Experience
-              className={cn({
-                "animate-fade-up-2": experienceSectionViewed,
-                invisible: !experienceSectionViewed,
-              })}
-            />
-            <Experience
-              className={cn({
-                "animate-fade-up-3": experienceSectionViewed,
-                invisible: !experienceSectionViewed,
-              })}
-            />
+          <Experiences className="my-8 max-w-3xl">
+            {experiences.map((experience, i) => (
+              <Experience
+                key={`experience-${experience.company}-${experience.title}`}
+                experience={experience}
+                className={cn({
+                  [`animate-fade-up-${i}`]: experienceSectionViewed,
+                  invisible: !experienceSectionViewed,
+                })}
+              />
+            ))}
           </Experiences>
         </Layout>
       </Section>
