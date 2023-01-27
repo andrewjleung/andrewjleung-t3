@@ -1,7 +1,7 @@
 import Container from "../components/Container";
 import { Inter } from "@next/font/google";
 import cn from "classnames";
-import Balancer, { Provider } from "react-wrap-balancer";
+import Balancer from "react-wrap-balancer";
 import useInterval from "../hooks/useInterval";
 import React, { useState } from "react";
 import Link from "next/link";
@@ -20,6 +20,7 @@ type Experience = {
   description: string;
   image: string;
   link: string;
+  animation: string;
 };
 
 const experiences: Experience[] = [
@@ -32,7 +33,9 @@ const experiences: Experience[] = [
       "Developed internal web tools with TypeScript, React, and PHP. Led migration to a CMS and made key contributions to the implementation of a permissions microservice.",
     image: "/poloniex.png",
     link: "https://www.poloniex.com/",
+    animation: "motion-safe:animate-fade-up-0",
   },
+
   {
     startDate: new Date("2020-09-01T00:00:00"),
     endDate: new Date("2021-05-02"),
@@ -42,6 +45,7 @@ const experiences: Experience[] = [
       "Implemented full-stack features for GraduateNU, a course-planning web app for students, using TypeScript, React, and Ruby on Rails.",
     image: "/sandboxnu.png",
     link: "https://www.sandboxnu.com/",
+    animation: "motion-safe:animate-fade-up-1",
   },
   {
     startDate: new Date("2020-01-01T00:00:00"),
@@ -52,6 +56,7 @@ const experiences: Experience[] = [
       "Picked up web development for the first time working on a TypeScript and React frontend and a functional Scala with Cats backend.",
     image: "/teikametrics.png",
     link: "https://www.teikametrics.com/",
+    animation: "motion-safe:animate-fade-up-2",
   },
   {
     startDate: new Date("2019-01-01T00:00:00"),
@@ -62,6 +67,7 @@ const experiences: Experience[] = [
       "Worked on quality assurance tasks, Liquibase migrations, and SQL query templates in Java.",
     image: "/curriculum-associates.jpg",
     link: "https://www.curriculumassociates.com/",
+    animation: "motion-safe:animate-fade-up-3",
   },
 ];
 
@@ -804,13 +810,13 @@ export default function Home({}) {
             Experience
           </div>
           <Experiences className="my-8 max-w-3xl">
-            {experiences.map((experience, i) => (
+            {experiences.map((experience) => (
               <Experience
                 key={`experience-${experience.company}-${experience.title}`}
                 experience={experience}
                 className={cn({
-                  [`animate-fade-up-${i}`]: experienceSectionViewed,
                   invisible: !experienceSectionViewed,
+                  [experience.animation]: experienceSectionViewed,
                 })}
               />
             ))}
