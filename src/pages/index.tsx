@@ -24,8 +24,8 @@ type Experience = {
 
 const experiences: Experience[] = [
   {
-    startDate: new Date("2021-01-01"),
-    endDate: new Date("2021-08-01"),
+    startDate: new Date("2021-01-01T00:00:00"),
+    endDate: new Date("2021-08-01T00:00:00"),
     company: "Poloniex",
     title: "Software Engineer Co-op",
     description:
@@ -34,8 +34,8 @@ const experiences: Experience[] = [
     link: "https://www.poloniex.com/",
   },
   {
-    startDate: new Date("2020-09-01"),
-    endDate: new Date("2021-05-01"),
+    startDate: new Date("2020-09-01T00:00:00"),
+    endDate: new Date("2021-05-02"),
     company: "Sandbox at Northeastern University",
     title: "Software Developer",
     description:
@@ -44,8 +44,8 @@ const experiences: Experience[] = [
     link: "https://www.sandboxnu.com/",
   },
   {
-    startDate: new Date("2020-01-01"),
-    endDate: new Date("2020-08-01"),
+    startDate: new Date("2020-01-01T00:00:00"),
+    endDate: new Date("2020-08-01T00:00:00"),
     company: "Teikametrics",
     title: "Software Engineer Co-op",
     description:
@@ -54,8 +54,8 @@ const experiences: Experience[] = [
     link: "https://www.teikametrics.com/",
   },
   {
-    startDate: new Date("2019-01-01"),
-    endDate: new Date("2019-07-01"),
+    startDate: new Date("2019-01-01T00:00:00"),
+    endDate: new Date("2019-07-01T00:00:00"),
     company: "Curriculum Associates",
     title: "Software Engineer Co-op",
     description:
@@ -438,10 +438,15 @@ function Experience({
   experience: Experience;
   className?: string;
 }) {
+  const [formattedStartDate, formattedEndDate] = [startDate, endDate].map(
+    (date) =>
+      date.toLocaleString("default", { month: "short", year: "numeric" })
+  );
+
   return (
     <div className="group group flex flex-row items-stretch gap-6 sm:gap-8">
       <div className="relative">
-        <div className="absolute top-1/2 z-10 h-2 w-2 scale-110 rounded-full bg-neutral-300 transition-all duration-200  group-hover:bg-indigo-400 dark:bg-neutral-800 dark:group-hover:bg-neutral-400" />
+        <div className="absolute top-1/2 z-10 h-2 w-2 scale-110 rounded-full bg-neutral-300 transition-all duration-200  group-hover:bg-neutral-400 dark:bg-neutral-800 dark:group-hover:bg-neutral-400" />
         <div className="ml-1 h-full w-0.5 -translate-x-1/2 bg-neutral-300 dark:bg-neutral-800" />
       </div>
       <div
@@ -454,21 +459,13 @@ function Experience({
           <Image
             src={image}
             fill
-            className="rounded-xl object-cover"
+            className="rounded-xl object-cover brightness-75 grayscale transition-all duration-300 ease-in-out group-hover:brightness-100 group-hover:grayscale-0"
             alt={`${company} logo`}
           />
         </div>
         <div className="shrink">
           <div className="text-xs text-neutral-500 sm:text-sm">
-            {startDate.toLocaleString("default", {
-              month: "short",
-              year: "numeric",
-            })}{" "}
-            -{" "}
-            {endDate.toLocaleString("default", {
-              month: "short",
-              year: "numeric",
-            })}{" "}
+            {formattedStartDate} - {formattedEndDate}
           </div>
           <div className={cn(inter800.className, "mt-2 text-xl sm:text-2xl")}>
             {company}
