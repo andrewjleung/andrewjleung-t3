@@ -370,11 +370,9 @@ function Experiences({
   return (
     <div id="experiences" className={cn("relative", className)}>
       <div className="flex h-full w-fit flex-col">
-        <div className="h-2 w-2 scale-110 rounded-full bg-neutral-300 dark:bg-neutral-800" />
-        <div className="ml-1 h-10 w-0.5 -translate-x-1/2 bg-neutral-300 dark:bg-neutral-800" />
+        <div className="ml-1 h-10 w-0.5 -translate-x-1/2 bg-gradient-to-b from-white to-neutral-300 dark:from-black dark:to-neutral-800" />
         {children}
-        <div className="ml-1 h-10 w-0.5 -translate-x-1/2 bg-neutral-300 dark:bg-neutral-800" />
-        <div className="h-2 w-2 scale-110 rounded-full bg-neutral-300 dark:bg-neutral-800" />
+        <div className="ml-1 h-10 w-0.5 -translate-x-1/2 bg-gradient-to-t from-white to-neutral-300 dark:from-black dark:to-neutral-800" />
       </div>
     </div>
   );
@@ -384,17 +382,17 @@ function Experience({ className }: { className?: string }) {
   return (
     <div className="group group flex flex-row items-stretch gap-6 sm:gap-8">
       <div className="relative">
-        <div className="absolute top-1/2 z-10 h-2 w-2 scale-110 rounded-full bg-neutral-300 transition-all duration-200 group-hover:-translate-y-1 group-hover:bg-indigo-400 group-hover:duration-300 dark:bg-neutral-800 dark:group-hover:bg-indigo-500" />
+        <div className="absolute top-1/2 z-10 h-2 w-2 scale-110 rounded-full bg-neutral-300 transition-all duration-200  group-hover:bg-indigo-400 dark:bg-neutral-800 dark:group-hover:bg-indigo-500" />
         <div className="ml-1 h-full w-0.5 -translate-x-1/2 bg-neutral-300 dark:bg-neutral-800" />
       </div>
       <div
         className={cn(
-          "my-6 flex flex-row items-center gap-6 transition-transform duration-200 group-hover:-translate-y-1 group-hover:duration-300 sm:my-8 sm:gap-8",
+          "my-6 flex flex-row items-center gap-6 transition-transform duration-200 group-hover:duration-300 sm:my-8 sm:gap-8",
           className
         )}
       >
         <div className="relative h-20 w-20 sm:h-24 sm:w-24">
-          <div className="absolute h-full w-full rounded-lg bg-indigo-500 transition-all group-hover:blur-md group-hover:duration-200" />
+          <div className="absolute h-full w-full rounded-lg bg-indigo-500 transition-all duration-200 group-hover:blur-md" />
           <Image
             src="/profile.png"
             fill
@@ -562,7 +560,7 @@ export default function Home({}) {
         className="relative mb-16 flex flex-col items-center"
       >
         <Layout className="px-6">
-          <div className="flex flex-col items-center rounded-3xl bg-cool-gradient to-black text-center">
+          <div className="flex flex-col items-center rounded-3xl to-black text-center">
             <div className="my-8">
               <div className={cn(inter700.className, "text-5xl")}>
                 Education
@@ -753,26 +751,26 @@ export default function Home({}) {
           <Experiences className="my-8">
             <Experience
               className={cn({
-                "sm:animate-fade-up-0": experienceSectionViewed,
-                "sm:invisible": !experienceSectionViewed,
+                "animate-fade-up-0": experienceSectionViewed,
+                invisible: !experienceSectionViewed,
               })}
             />
             <Experience
               className={cn({
-                "sm:animate-fade-up-1": experienceSectionViewed,
-                "sm:invisible": !experienceSectionViewed,
+                "animate-fade-up-1": experienceSectionViewed,
+                invisible: !experienceSectionViewed,
               })}
             />
             <Experience
               className={cn({
-                "sm:animate-fade-up-2": experienceSectionViewed,
-                "sm:invisible": !experienceSectionViewed,
+                "animate-fade-up-2": experienceSectionViewed,
+                invisible: !experienceSectionViewed,
               })}
             />
             <Experience
               className={cn({
-                "sm:animate-fade-up-3": experienceSectionViewed,
-                "sm:invisible": !experienceSectionViewed,
+                "animate-fade-up-3": experienceSectionViewed,
+                invisible: !experienceSectionViewed,
               })}
             />
           </Experiences>
