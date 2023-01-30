@@ -792,11 +792,7 @@ export default function Home({}) {
           </div>
         </Layout>
       </Section>
-      <Section
-        id="contact-section"
-        bottom
-        className="flex flex-col justify-center"
-      >
+      <Section id="contact-section" className="flex flex-col justify-center">
         What&apos;s next? Contact me!
       </Section>
     </Container>
