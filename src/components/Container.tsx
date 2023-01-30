@@ -98,17 +98,18 @@ function NavMenuMobile({
 }
 
 function NavBar({
+  animateNavBar = false,
   children,
   className,
 }: {
+  animateNavBar?: boolean;
   children: React.ReactNode;
   className?: string;
 }) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    // TODO: Move hash navigation to the center, then dif//ferent pages to the left. Make it all collapse in smaller screens.
-    <div className={cn("flex w-full justify-center", className)}>
+    <div className={cn("flex w-full justify-center ", className)}>
       {/* <div className="flex w-full max-w-screen-lg flex-row items-center gap-5 p-6 md:hidden">
         <div className="text-black transition-all duration-200 ease-out dark:text-neutral-500 dark:hover:text-white">
           <div
@@ -127,6 +128,7 @@ function NavBar({
       <div
         className={cn(
           "flex w-full max-w-screen-lg flex-row items-center gap-5 p-6",
+          { "motion-safe:animate-fade-down-0": animateNavBar },
           className
         )}
       >
@@ -161,11 +163,13 @@ export default function Container({
   metadata = INITIAL_METADATA,
   className,
   id,
+  animateNavBar = false,
 }: {
   children: React.ReactNode;
   metadata?: Metadata;
   className?: string;
   id?: string;
+  animateNavBar?: boolean;
 }) {
   const m = { ...INITIAL_METADATA, ...metadata };
   const { pathname } = useRouter();
@@ -192,6 +196,7 @@ export default function Container({
           className={cn("z-30", {
             absolute: pathname === "/",
           })}
+          animateNavBar={animateNavBar}
         >
           <NavItem title="Home" href="/" />
           <NavItem title="Blog" href="/blog" />

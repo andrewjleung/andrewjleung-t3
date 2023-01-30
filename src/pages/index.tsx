@@ -350,48 +350,15 @@ function SectionNav({ children }: { children: React.ReactNode }) {
 
 function Section({
   id,
-  top,
-  bottom,
   children,
   className,
 }: {
   id?: string;
-  top?: boolean;
-  bottom?: boolean;
   children: React.ReactNode;
   className?: string;
 }) {
-  if (top && bottom) {
-    throw new Error("Cannot be top and bottom.");
-  }
-
-  const commonStyles = "bg-transparent";
-
-  if (top) {
-    return (
-      <div id={id} className={cn(commonStyles, "h-screen", className)}>
-        {children}
-      </div>
-    );
-  }
-
-  if (bottom) {
-    return (
-      <div
-        id={id}
-        className={cn(
-          commonStyles,
-          // "h-[calc(100vh-4rem)] pt-[4rem]",
-          className
-        )}
-      >
-        {children}
-      </div>
-    );
-  }
-
   return (
-    <div id={id} className={cn(commonStyles, className)}>
+    <div id={id} className={cn("bg-transparent", className)}>
       {children}
     </div>
   );
@@ -525,7 +492,7 @@ export default function Home({}) {
   );
 
   return (
-    <Container id="container">
+    <Container id="container" animateNavBar>
       <div className="invisible absolute top-[50vh] left-[50vw] -z-10 h-5/6 w-full -translate-x-1/2 -translate-y-1/2 rotate-45 skew-y-6 rounded-full bg-transparent bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-neutral-400 via-neutral-900 to-neutral-900 opacity-10 blur-2xl motion-safe:animate-light-up dark:visible" />
       {/* <SectionNav>
         <SectionNavItem
@@ -554,61 +521,57 @@ export default function Home({}) {
           icon={<EmailIcon className="h-4 w-4" />}
         />
       </SectionNav> */}
-      <Section id="top-section" top>
-        <Layout className="px-6">
-          <div className="relative flex h-full w-full items-center justify-center overflow-hidden">
-            <div className="relative flex flex-col">
-              <div className="pt-8">
-                <div
-                  className={cn(
-                    inter700.className,
-                    "text-5xl motion-safe:animate-fade-up-0 sm:text-6xl"
-                  )}
-                >
-                  <span className="whitespace-nowrap">Andrew Leung</span>{" "}
-                </div>
-                <Balancer
-                  ratio={1}
-                  as="div"
-                  className="mt-6 text-xl text-neutral-500 motion-safe:animate-fade-up-1 dark:text-neutral-400"
-                >
-                  Software engineer seeking full-time, full-stack opportunities.
-                  Looking to improve the lives of developers and users alike.
-                </Balancer>
-                <div className="mt-2 flex flex-row items-center gap-2 whitespace-nowrap text-sm text-neutral-400 motion-safe:animate-fade-up-2 dark:text-neutral-500">
-                  <MapPinIcon className="inline h-4 w-4" />
-                  Remote or near Dallas–Fort Worth, TX
-                </div>
-                <div className="mt-8 flex flex-row items-center gap-3 text-sm text-black dark:text-neutral-500">
-                  <IconLink
-                    href="https://github.com/andrewjleung"
-                    Icon={GitHubIcon}
-                    className="motion-safe:animate-fade-up-2"
-                  />
-                  <IconLink
-                    href="https://www.linkedin.com/in/andrewjleung-"
-                    Icon={LinkedInIcon}
-                    className="motion-safe:animate-fade-up-3"
-                  />
-                  <IconLink
-                    href="https://open.spotify.com/artist/00zDjeTQDVOFlNttOnv9bc"
-                    Icon={SpotifyIcon}
-                    className="motion-safe:animate-fade-up-4"
-                  />
-                  <IconLink
-                    href="https://www.youtube.com/channel/UCVxaN-2GATE-3Ag9RTGrIXw"
-                    Icon={YouTubeIcon}
-                    className="motion-safe:animate-fade-up-5"
-                  />
-                  <Link
-                    href="/resume"
-                    className="ml-2 flex w-fit flex-row items-center gap-1 rounded-full border-1 border-black px-4 py-2 transition-all duration-200 hover:bg-black hover:text-white motion-safe:animate-fade-up-6 motion-safe:animate-fade-up-5 dark:border-neutral-500 dark:hover:border-white dark:hover:bg-transparent dark:hover:text-white"
-                  >
-                    <span className="whitespace-nowrap text-sm">My resume</span>
-                    <RightChevronIcon className="h-4 w-4" />
-                  </Link>
-                </div>
-              </div>
+      <Section id="top-section" className="h-screen w-screen">
+        <Layout className="relative flex h-full w-full items-center justify-center overflow-hidden px-6">
+          <div className="relative flex flex-col">
+            <div
+              className={cn(
+                inter700.className,
+                "text-5xl motion-safe:animate-fade-up-0 sm:text-6xl"
+              )}
+            >
+              <span className="relative whitespace-nowrap">Andrew Leung</span>{" "}
+            </div>
+            <Balancer
+              ratio={1}
+              as="div"
+              className="mt-6 text-xl text-neutral-500 motion-safe:animate-fade-up-1 dark:text-neutral-400"
+            >
+              Software engineer seeking full-time, full-stack opportunities.
+              Looking to improve the lives of developers and users alike.
+            </Balancer>
+            <div className="mt-2 flex flex-row items-center gap-2 whitespace-nowrap text-sm text-neutral-400 motion-safe:animate-fade-up-2 dark:text-neutral-500">
+              <MapPinIcon className="inline h-4 w-4" />
+              Remote or near Dallas–Fort Worth, TX
+            </div>
+            <div className="mt-8 flex flex-row items-center gap-3 text-sm text-black dark:text-neutral-500">
+              <IconLink
+                href="https://github.com/andrewjleung"
+                Icon={GitHubIcon}
+                className="motion-safe:animate-fade-up-2"
+              />
+              <IconLink
+                href="https://www.linkedin.com/in/andrewjleung-"
+                Icon={LinkedInIcon}
+                className="motion-safe:animate-fade-up-3"
+              />
+              <IconLink
+                href="https://open.spotify.com/artist/00zDjeTQDVOFlNttOnv9bc"
+                Icon={SpotifyIcon}
+                className="motion-safe:animate-fade-up-4"
+              />
+              <IconLink
+                href="https://www.youtube.com/channel/UCVxaN-2GATE-3Ag9RTGrIXw"
+                Icon={YouTubeIcon}
+                className="motion-safe:animate-fade-up-5"
+              />
+              <Link
+                href="/resume"
+                className="ml-2 flex w-fit flex-row items-center gap-1 rounded-full border-1 border-black px-4 py-2 transition-all duration-200 hover:bg-black hover:text-white motion-safe:animate-fade-up-6 motion-safe:animate-fade-up-5 dark:border-neutral-500 dark:hover:border-white dark:hover:bg-transparent dark:hover:text-white"
+              >
+                <span className="whitespace-nowrap text-sm">My resume</span>
+                <RightChevronIcon className="h-4 w-4" />
+              </Link>
             </div>
             {/* <div className="relative h-40 w-40 rounded-xl">
               <Image

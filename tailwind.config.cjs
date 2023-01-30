@@ -11,6 +11,7 @@ module.exports = {
         "fade-up-4": "fade-up-4 2s",
         "fade-up-5": "fade-up-5 2s",
         "fade-up-6": "fade-up-6 2s",
+        "fade-down-0": "fade-down-0 6s",
         "light-up": "light-up 3s",
         stretch: "stretch 3s",
       },
@@ -60,6 +61,12 @@ module.exports = {
           "0%": { opacity: 0, transform: "translateY(60%)" },
           "60%": { opacity: 0, transform: "translateY(60%)" },
           "80%": { transform: "translateY(0)" },
+          "100%": { opacity: 1 },
+        },
+        "fade-down-0": {
+          "0%": { opacity: 0, transform: "translateY(-60%)" },
+          "20%": { transform: "translateY(0)" },
+          "40%": { opacity: 1 },
           "100%": { opacity: 1 },
         },
         "light-up": {
