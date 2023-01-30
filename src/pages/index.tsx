@@ -20,7 +20,7 @@ type Experience = {
   description: string;
   image: string;
   link: string;
-  animation: string;
+  animation: string; // TODO: Bad separation of concerns. Instead zip with an array of animation classes.
 };
 
 const experiences: Experience[] = [
@@ -461,21 +461,27 @@ function Experience({
           className
         )}
       >
-        <div className="relative h-20 w-20 shrink-0 sm:h-24 sm:w-24">
+        <Link
+          className="relative h-20 w-20 shrink-0 sm:h-24 sm:w-24"
+          href={link}
+        >
           <Image
             src={image}
             fill
             className="rounded-xl object-cover brightness-75 grayscale transition-all duration-300 ease-in-out group-hover:brightness-100 group-hover:grayscale-0"
             alt={`${company} logo`}
           />
-        </div>
+        </Link>
         <div className="shrink">
-          <div className="text-xs text-neutral-500 sm:text-sm">
+          <div className="mb-2 text-xs text-neutral-500 sm:text-sm">
             {formattedStartDate} - {formattedEndDate}
           </div>
-          <div className={cn(inter800.className, "mt-2 text-xl sm:text-2xl")}>
+          <Link
+            className={cn(inter800.className, "text-xl sm:text-2xl")}
+            href={link}
+          >
             {company}
-          </div>
+          </Link>
           <div className="text-base italic dark:text-neutral-200 sm:text-lg">
             {title}
           </div>
@@ -621,17 +627,10 @@ export default function Home({}) {
       >
         <Layout className="px-6">
           <div className="flex flex-col items-center rounded-3xl to-black text-center">
-            <div className="my-8">
-              <div className={cn(inter700.className, "text-4xl sm:text-5xl")}>
-                Education
-              </div>
-              <Balancer
-                as="div"
-                className="mt-4 text-lg text-neutral-500 sm:text-xl"
-              >
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              </Balancer>
+            <div
+              className={cn(inter700.className, "my-8 text-4xl sm:text-5xl")}
+            >
+              Education
             </div>
             <div className="my-8 grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-10">
               <Card
@@ -823,8 +822,12 @@ export default function Home({}) {
           </Experiences>
         </Layout>
       </Section>
-      <Section id="projects-section" className="flex justify-end">
-        My projects.
+      <Section id="projects-section" className="flex justify-center">
+        <Layout className="flex flex-col items-center px-6">
+          <div className={cn(inter700.className, "my-8 text-4xl sm:text-5xl")}>
+            Projects
+          </div>
+        </Layout>
       </Section>
       <Section
         id="contact-section"
