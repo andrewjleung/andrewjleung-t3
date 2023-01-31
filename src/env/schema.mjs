@@ -9,6 +9,9 @@ export const serverSchema = z.object({
   DATABASE_URL: z.optional(z.string().url()),
   NODE_ENV: z.enum(["development", "test", "production"]),
   DATO_API_TOKEN: z.string(),
+  SPOTIFY_CLIENT_ID: z.string(),
+  SPOTIFY_CLIENT_SECRET: z.string(),
+  SPOTIFY_REFRESH_TOKEN: z.string(),
 });
 
 /**
@@ -20,6 +23,9 @@ export const serverEnv = {
   DATABASE_URL: process.env.DATABASE_URL,
   NODE_ENV: process.env.NODE_ENV,
   DATO_API_TOKEN: process.env.DATO_API_TOKEN,
+  SPOTIFY_CLIENT_ID: process.env.SPOTIFY_CLIENT_ID,
+  SPOTIFY_CLIENT_SECRET: process.env.SPOTIFY_CLIENT_SECRET,
+  SPOTIFY_REFRESH_TOKEN: process.env.SPOTIFY_REFRESH_TOKEN,
 };
 
 /**
