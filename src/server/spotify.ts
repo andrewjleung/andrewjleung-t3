@@ -12,53 +12,58 @@ const SpotifyAccessTokenResponse = z.object({
 
 type SpotifyAccessTokenResponse = z.infer<typeof SpotifyAccessTokenResponse>;
 
-const SpotifyTopItemsResponse = z.object({
-  items: z.array(
-    z.object({
-      album: z.object({
-        album_type: z.string(),
-        artists: z.array(
-          z.object({
-            name: z.string(),
-            href: z.string(),
-            uri: z.string(),
-            external_urls: z.object({
-              spotify: z.string(),
-            }),
-          })
-        ),
-        href: z.string(),
-        id: z.string(),
-        images: z.array(
-          z.object({
-            height: z.number(),
-            width: z.number(),
-            url: z.string(),
-          })
-        ),
+const SpotifyTrackItem = z.object({
+  album: z.object({
+    album_type: z.string(),
+    artists: z.array(
+      z.object({
         name: z.string(),
+        href: z.string(),
         uri: z.string(),
         external_urls: z.object({
           spotify: z.string(),
         }),
-      }),
-      artists: z.array(
-        z.object({
-          name: z.string(),
-          href: z.string(),
-          uri: z.string(),
-          external_urls: z.object({
-            spotify: z.string(),
-          }),
-        })
-      ),
+      })
+    ),
+    href: z.string(),
+    id: z.string(),
+    images: z.array(
+      z.object({
+        height: z.number(),
+        width: z.number(),
+        url: z.string(),
+      })
+    ),
+    name: z.string(),
+    uri: z.string(),
+    external_urls: z.object({
+      spotify: z.string(),
+    }),
+  }),
+  artists: z.array(
+    z.object({
       name: z.string(),
       href: z.string(),
+      uri: z.string(),
+      external_urls: z.object({
+        spotify: z.string(),
+      }),
     })
   ),
+  name: z.string(),
+  href: z.string(),
 });
 
-type SpotifyTopItemsResponse = z.infer<typeof SpotifyTopItemsResponse>;
+type SpotifyTrackItem = z.infer<typeof SpotifyTrackItem>;
+
+const SpotifyGetPlaybackStateResponse = z.object({
+  is_playing: z.boolean(),
+  item: SpotifyTrackItem,
+});
+
+type SpotifyGetPlaybackStateResponse = z.infer<
+  typeof SpotifyGetPlaybackStateResponse
+>;
 
 export const SPOTIFY_CLIENT_CREDENTIALS = Buffer.from(
   `${env.SPOTIFY_CLIENT_ID}:${env.SPOTIFY_CLIENT_SECRET}`
@@ -83,9 +88,7 @@ export function getAccessToken(): Promise<
     .then((res) => res.access_token);
 }
 
-export function getTopItems(
-  accessToken: string
-): Promise<SpotifyTopItemsResponse> {
+export function getTopItems(accessToken: string): Promise<SpotifyTrackItem[]> {
   const params = new URLSearchParams({
     limit: "10",
     time_range: "short_term",
@@ -98,7 +101,21 @@ export function getTopItems(
     },
   })
     .then((res) => res.json())
-    .then((res) => SpotifyTopItemsResponse.parse(res));
+    .then((res) => z.object({ items: z.array(SpotifyTrackItem) }).parse(res))
+    .then((res) => res.items);
+}
+
+export function getPlaybackState(
+  accessToken: string
+): Promise<SpotifyGetPlaybackStateResponse> {
+  return fetch(`${SPOTIFY_API_BASE_URL}/me/player`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  })
+    .then((res) => res.json())
+    .then((res) => SpotifyGetPlaybackStateResponse.parse(res));
 }
 
 function makeAuthorizationUrl() {

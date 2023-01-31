@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { getAccessToken, getTopItems } from "../../spotify";
+import { getAccessToken, getPlaybackState, getTopItems } from "../../spotify";
 
 import { createTRPCRouter, publicProcedure } from "../trpc";
 
@@ -8,5 +8,10 @@ export const spotifyRouter = createTRPCRouter({
     const accessToken = await getAccessToken();
     const topItems = await getTopItems(accessToken);
     return topItems;
+  }),
+  getPlaybackState: publicProcedure.query(async ({ ctx }) => {
+    const accessToken = await getAccessToken();
+    const playbackState = await getPlaybackState(accessToken);
+    return playbackState;
   }),
 });
