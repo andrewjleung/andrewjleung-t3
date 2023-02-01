@@ -13,7 +13,7 @@ function Track({
   className?: string;
 }) {
   const [, type, id] = track.uri.split(":");
-  const href = `https://open.spotify.com/${type}/${id}`;
+  const href = `https://open.spotify.com/${type as string}/${id as string}`;
   const image = track.album.images.find(Boolean)?.url;
 
   return (
@@ -56,7 +56,7 @@ export default function SpotifyWidget({
   }`;
 
   const [, type, id] = lastPlayedTrack.uri.split(":");
-  const href = `https://open.spotify.com/${type}/${id}`;
+  const href = `https://open.spotify.com/${type as string}/${id as string}`;
   const image = lastPlayedTrack.album.images.find(Boolean)?.url;
 
   return (
