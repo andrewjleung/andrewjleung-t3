@@ -562,14 +562,6 @@ export default function Home({
   return (
     <Container id="container">
       <div className="invisible absolute top-[50vh] left-[50vw] -z-10 h-5/6 w-full -translate-x-1/2 -translate-y-1/2 rotate-45 skew-y-6 rounded-full bg-transparent bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-neutral-400 via-neutral-900 to-neutral-900 opacity-10 blur-2xl motion-safe:animate-light-up dark:visible" />
-      <div className="fixed bottom-6 left-6 z-50">
-        <SpotifyWidget
-          topTracks={topTracks}
-          // recentlyPlayedTracks={recentlyPlayedTracks}
-          isCurrentlyPlaying={isCurrentlyPlaying}
-          lastPlayedTrack={lastPlayedTrack}
-        />
-      </div>
       {/* <SectionNav>
         <SectionNavItem
           id="top-section"
@@ -599,6 +591,14 @@ export default function Home({
       </SectionNav> */}
       <Section id="top-section" className="h-screen w-screen">
         <Layout className="relative flex h-full w-full items-center justify-center overflow-hidden px-6">
+          <div className="absolute bottom-6 left-6 z-50">
+            <SpotifyWidget
+              topTracks={topTracks}
+              // recentlyPlayedTracks={recentlyPlayedTracks}
+              isCurrentlyPlaying={isCurrentlyPlaying}
+              lastPlayedTrack={lastPlayedTrack}
+            />
+          </div>
           <div className="relative flex flex-col">
             <div
               className={cn(

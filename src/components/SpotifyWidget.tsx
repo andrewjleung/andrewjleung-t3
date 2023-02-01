@@ -32,6 +32,14 @@ function Track({
   );
 }
 
+function TrackAndArtist({ track, artist }: { track: string; artist: string }) {
+  return (
+    <span>
+      <span>{track}</span> by <span>{artist}</span>
+    </span>
+  );
+}
+
 export default function SpotifyWidget({
   topTracks,
   // recentlyPlayedTracks,
@@ -51,9 +59,10 @@ export default function SpotifyWidget({
     return null;
   }
 
-  const formattedTrackAndArtist = `${lastPlayedTrack.name} by ${
-    lastPlayedTrack.artists.find(Boolean)?.name || "Unknown Artist"
-  }`;
+  const artistNames =
+    lastPlayedTrack.artists.length < 1
+      ? "Unknown Artist"
+      : lastPlayedTrack.artists.map((artist) => artist.name).join(", ");
 
   const [, type, id] = lastPlayedTrack.uri.split(":");
   const href = `https://open.spotify.com/${type as string}/${id as string}`;
@@ -61,7 +70,10 @@ export default function SpotifyWidget({
 
   return (
     <div
-      className={cn("flex flex-col motion-safe:animate-fade-up-4", className)}
+      className={cn(
+        "flex flex-row items-center motion-safe:animate-fade-up-4",
+        className
+      )}
     >
       {/* <button
         onClick={() => {
@@ -71,32 +83,40 @@ export default function SpotifyWidget({
       >
         Show music
       </button> */}
-      <div className="relative h-20 w-20">
+      <Link href={href} className="peer relative mr-6 h-20 w-20">
         {image && (
           <Image
             alt="Currently listening cover art"
             src={image}
-            className="object-cover"
+            className={cn("object-cover", {
+              "brightness-50 grayscale transition-all duration-300 hover:brightness-100 hover:grayscale-0":
+                !isCurrentlyPlaying,
+            })}
             fill
           />
         )}
-      </div>
-      <Link
-        href={href}
-        className={cn("text-sm", {
-          "text-neutral-400 dark:text-neutral-600": !isCurrentlyPlaying,
-          "text-black dark:text-white": isCurrentlyPlaying,
-        })}
+      </Link>
+      <div
+        className={cn(
+          "invisible text-sm opacity-0 transition-all duration-300 peer-hover:visible peer-hover:opacity-100",
+          {
+            "text-neutral-400 dark:text-neutral-600": !isCurrentlyPlaying,
+            "text-black dark:text-white": isCurrentlyPlaying,
+          }
+        )}
       >
         {isCurrentlyPlaying ? (
           <span className="flex flex-row items-center">
             <DeviceSpeakerIcon className="mr-1 h-4 w-4" />
-            {formattedTrackAndArtist}
+            <TrackAndArtist track={lastPlayedTrack.name} artist={artistNames} />
           </span>
         ) : (
-          <span>Last listened to {formattedTrackAndArtist}</span>
+          <span>
+            Last listened to{" "}
+            <TrackAndArtist track={lastPlayedTrack.name} artist={artistNames} />
+          </span>
         )}
-      </Link>
+      </div>
       {/* <div className="flex w-screen flex-row gap-2 overflow-x-scroll py-3">
             {recentlyPlayedTracks?.map((track, i) => (
               <Track
