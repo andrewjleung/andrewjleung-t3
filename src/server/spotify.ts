@@ -10,9 +10,11 @@ const SpotifyAccessTokenResponse = z.object({
   expires_in: z.number(),
 });
 
-type SpotifyAccessTokenResponse = z.infer<typeof SpotifyAccessTokenResponse>;
+export type SpotifyAccessTokenResponse = z.infer<
+  typeof SpotifyAccessTokenResponse
+>;
 
-const SpotifyTrackItem = z.object({
+const SpotifyPlayableItem = z.object({
   album: z.object({
     album_type: z.string(),
     artists: z.array(
@@ -52,27 +54,66 @@ const SpotifyTrackItem = z.object({
   ),
   name: z.string(),
   href: z.string(),
+  uri: z.string(),
+  type: z.string(),
 });
 
-type SpotifyTrackItem = z.infer<typeof SpotifyTrackItem>;
+export type SpotifyPlayableItem = z.infer<typeof SpotifyPlayableItem>;
 
 const SpotifyGetPlaybackStateResponse = z.object({
   is_playing: z.boolean(),
-  item: SpotifyTrackItem,
+  item: SpotifyPlayableItem,
 });
 
-type SpotifyGetPlaybackStateResponse = z.infer<
-  typeof SpotifyGetPlaybackStateResponse
+export type SpotifyGetPlaybackStateResponse =
+  | { status: 204 }
+  | { status: 200; data: z.infer<typeof SpotifyGetPlaybackStateResponse> };
+
+const SpotifyRecentlyPlayedTracksResponse = z.object({
+  href: z.string(),
+  items: z.array(
+    z.object({
+      track: SpotifyPlayableItem,
+      played_at: z.string(),
+      context: z.object({
+        type: z.string(),
+        external_urls: z.object({
+          spotify: z.string(),
+        }),
+        href: z.string(),
+        uri: z.string(),
+      }),
+    })
+  ),
+  limit: z.number(),
+  next: z.string(),
+  cursors: z.object({
+    after: z.string(),
+  }),
+});
+
+type SpotifyRecentlyPlayedTracksResponse = z.infer<
+  typeof SpotifyRecentlyPlayedTracksResponse
+>;
+
+const SpotifyGetCurrentlyPlayingTrackResponse = z.object({
+  is_playing: z.boolean(),
+  item: SpotifyPlayableItem,
+  currently_playing_type: z.string(),
+});
+
+type SpotifyGetCurrentlyPlayingTrackResponse = z.infer<
+  typeof SpotifyGetCurrentlyPlayingTrackResponse
 >;
 
 export const SPOTIFY_CLIENT_CREDENTIALS = Buffer.from(
   `${env.SPOTIFY_CLIENT_ID}:${env.SPOTIFY_CLIENT_SECRET}`
 ).toString("base64");
 
-export function getAccessToken(): Promise<
-  SpotifyAccessTokenResponse["access_token"]
+export async function getAccessToken(): Promise<
+  SpotifyAccessTokenResponse["access_token"] | undefined
 > {
-  return fetch("https://accounts.spotify.com/api/token", {
+  const response = await fetch("https://accounts.spotify.com/api/token", {
     method: "POST",
     headers: {
       Authorization: `Basic ${SPOTIFY_CLIENT_CREDENTIALS}`,
@@ -82,40 +123,121 @@ export function getAccessToken(): Promise<
       grant_type: "refresh_token",
       refresh_token: env.SPOTIFY_REFRESH_TOKEN,
     }).toString(),
-  })
-    .then((res) => res.json())
-    .then((res) => SpotifyAccessTokenResponse.parse(res))
-    .then((res) => res.access_token);
+  });
+
+  if (response.status === 200) {
+    return await response
+      .json()
+      .then((res) => SpotifyAccessTokenResponse.parse(res))
+      .then((res) => res.access_token);
+  }
+
+  return undefined;
 }
 
-export function getTopItems(accessToken: string): Promise<SpotifyTrackItem[]> {
+export async function getTopTracks(
+  accessToken: string
+): Promise<SpotifyPlayableItem[] | undefined> {
   const params = new URLSearchParams({
     limit: "10",
     time_range: "short_term",
   }).toString();
 
-  return fetch(`${SPOTIFY_API_BASE_URL}/me/top/tracks?${params}`, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  })
-    .then((res) => res.json())
-    .then((res) => z.object({ items: z.array(SpotifyTrackItem) }).parse(res))
-    .then((res) => res.items);
+  const response = await fetch(
+    `${SPOTIFY_API_BASE_URL}/me/top/tracks?${params}`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }
+  );
+
+  if (response.status === 200) {
+    return await response
+      .json()
+      .then((res) =>
+        z.object({ items: z.array(SpotifyPlayableItem) }).parse(res)
+      )
+      .then((res) => res.items);
+  }
+
+  return undefined;
 }
 
-export function getPlaybackState(
+export async function getPlaybackState(
   accessToken: string
-): Promise<SpotifyGetPlaybackStateResponse> {
-  return fetch(`${SPOTIFY_API_BASE_URL}/me/player`, {
+): Promise<SpotifyGetPlaybackStateResponse | undefined> {
+  const response = await fetch(`${SPOTIFY_API_BASE_URL}/me/player`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
-  })
-    .then((res) => res.json())
-    .then((res) => SpotifyGetPlaybackStateResponse.parse(res));
+  });
+
+  if (response.status === 204) {
+    return { status: response.status };
+  }
+
+  if (response.status === 200) {
+    return {
+      status: response.status,
+      data: await response
+        .json()
+        .then((res) => SpotifyGetPlaybackStateResponse.parse(res)),
+    };
+  }
+
+  return undefined;
+}
+
+export async function getRecentlyPlayedTracks(
+  accessToken: string,
+  limit: number
+): Promise<SpotifyRecentlyPlayedTracksResponse | undefined> {
+  const queryParams = new URLSearchParams({
+    limit: limit.toString(),
+  }).toString();
+
+  const response = await fetch(
+    `${SPOTIFY_API_BASE_URL}/me/player/recently-played?${queryParams}`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }
+  );
+
+  if (response.status === 200) {
+    return await response.json().then((res) => {
+      return SpotifyRecentlyPlayedTracksResponse.parse(res);
+    });
+  }
+
+  return undefined;
+}
+
+export async function getCurrentlyPlayingTrack(
+  accessToken: string
+): Promise<SpotifyGetCurrentlyPlayingTrackResponse | undefined> {
+  const response = await fetch(
+    `${SPOTIFY_API_BASE_URL}/me/player/currently-playing`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }
+  );
+
+  if (response.status === 200) {
+    return await response
+      .json()
+      .then((res) => SpotifyGetCurrentlyPlayingTrackResponse.parse(res));
+  }
+
+  return undefined;
 }
 
 function makeAuthorizationUrl() {

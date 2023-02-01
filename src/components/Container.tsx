@@ -201,6 +201,7 @@ export default function Container({
           <NavItem title="Home" href="/" />
           <NavItem title="Blog" href="/blog" />
           <NavItem title="Bits" href="/bits" />
+          <ThemeToggler className="ml-auto" />
         </NavBar>
         <div className="relative h-full w-full">{children}</div>
         <Footer className="mt-auto">

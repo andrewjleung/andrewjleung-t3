@@ -8,6 +8,15 @@ import Link from "next/link";
 import Image from "next/image";
 import Layout from "../components/Layout";
 import useIntersection from "../hooks/useIntersection";
+import type { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import type { SpotifyPlayableItem } from "../server/spotify";
+import { getCurrentlyPlayingTrack } from "../server/spotify";
+import {
+  getAccessToken,
+  getTopTracks,
+  getRecentlyPlayedTracks,
+} from "../server/spotify";
+import SpotifyWidget from "../components/SpotifyWidget";
 
 const inter700 = Inter({ weight: "700", subsets: ["latin"] });
 const inter800 = Inter({ weight: "800", subsets: ["latin"] });
@@ -480,7 +489,11 @@ function Card({
   );
 }
 
-export default function Home({}) {
+export default function Home({
+  topTracks,
+  isCurrentlyPlaying,
+  lastPlayedTrack,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { viewed: educationSectionViewed } = useIntersection(
     "education-section",
     { threshold: 0.5 }
@@ -532,6 +545,12 @@ export default function Home({}) {
             >
               <span className="relative whitespace-nowrap">Andrew Leung</span>{" "}
             </div>
+            <SpotifyWidget
+              className="text-sm text-neutral-500 dark:text-neutral-400"
+              topTracks={topTracks}
+              isCurrentlyPlaying={isCurrentlyPlaying}
+              lastPlayedTrack={lastPlayedTrack}
+            />
             <Balancer
               ratio={1}
               as="div"
@@ -798,3 +817,36 @@ export default function Home({}) {
     </Container>
   );
 }
+
+type GetServerSidePropsData = {
+  topTracks?: SpotifyPlayableItem[];
+  isCurrentlyPlaying?: boolean;
+  lastPlayedTrack?: SpotifyPlayableItem;
+};
+
+export const getServerSideProps: GetServerSideProps<
+  GetServerSidePropsData
+> = async () => {
+  const accessToken = await getAccessToken();
+
+  if (accessToken === undefined) {
+    return {
+      props: {},
+    };
+  }
+
+  const topTracks = await getTopTracks(accessToken);
+  const currentlyPlayingItem = await getCurrentlyPlayingTrack(accessToken);
+
+  const lastPlayedTrack = await getRecentlyPlayedTracks(accessToken, 1).then(
+    (res) => res?.items.find(Boolean)?.track
+  ); // Safely get the first element.
+
+  return {
+    props: {
+      topTracks,
+      isCurrentlyPlaying: currentlyPlayingItem?.is_playing || false,
+      lastPlayedTrack,
+    },
+  };
+};
