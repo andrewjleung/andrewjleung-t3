@@ -507,6 +507,14 @@ export default function Home({
   return (
     <Container id="container" animateNavBar>
       <div className="invisible absolute top-[50vh] left-[50vw] -z-10 h-5/6 w-full -translate-x-1/2 -translate-y-1/2 rotate-45 skew-y-6 rounded-full bg-transparent bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-neutral-400 via-neutral-900 to-neutral-900 opacity-10 blur-2xl motion-safe:animate-light-up dark:visible" />
+      <div className="fixed bottom-6 left-6 z-50">
+        <SpotifyWidget
+          topTracks={topTracks}
+          // recentlyPlayedTracks={recentlyPlayedTracks}
+          isCurrentlyPlaying={isCurrentlyPlaying}
+          lastPlayedTrack={lastPlayedTrack}
+        />
+      </div>
       {/* <SectionNav>
         <SectionNavItem
           id="top-section"
@@ -545,12 +553,6 @@ export default function Home({
             >
               <span className="relative whitespace-nowrap">Andrew Leung</span>{" "}
             </div>
-            <SpotifyWidget
-              className="text-sm text-neutral-500 dark:text-neutral-400"
-              topTracks={topTracks}
-              isCurrentlyPlaying={isCurrentlyPlaying}
-              lastPlayedTrack={lastPlayedTrack}
-            />
             <Balancer
               ratio={1}
               as="div"
@@ -756,12 +758,11 @@ export default function Home({
                     "translate-x-12 opacity-70",
                     "translate-x-16 opacity-60",
                     "translate-x-20 opacity-50",
-                    "translate-x-24 opacity-40",
                   ].map((styles, i) => (
                     <div
                       key={`edu-hover-effect-4-${i}`}
                       className={cn(
-                        "absolute top-1/2 left-3 h-32 w-32 -translate-y-1/2 rounded-full border-1 border-black dark:border-neutral-700",
+                        "absolute top-1/2 left-[0.9rem] h-32 w-32 -translate-y-1/2 rounded-full border-1 border-black dark:border-neutral-700",
                         styles
                       )}
                     />
@@ -820,6 +821,7 @@ export default function Home({
 
 type GetServerSidePropsData = {
   topTracks: SpotifyPlayableItem[] | null;
+  // recentlyPlayedTracks: SpotifyPlayableItem[] | null;
   isCurrentlyPlaying: boolean;
   lastPlayedTrack: SpotifyPlayableItem | null;
 };
@@ -833,6 +835,7 @@ export const getServerSideProps: GetServerSideProps<
     return {
       props: {
         topTracks: null,
+        recentlyPlayedTracks: null,
         isCurrentlyPlaying: false,
         lastPlayedTrack: null,
       },
@@ -841,7 +844,22 @@ export const getServerSideProps: GetServerSideProps<
 
   const topTracks = await getTopTracks(accessToken);
   const currentlyPlayingItem = await getCurrentlyPlayingTrack(accessToken);
+  // const recentlyPlayedTracks = await getRecentlyPlayedTracks(accessToken, 50)
+  //   .then((response) => response?.items.map((item) => item.track))
+  //   .then((res) => {
+  //     return (
+  //       res?.reduce(
+  //         (acc, track) => ({ ...acc, [track.uri]: track }),
+  //         {} as Record<string, SpotifyPlayableItem>
+  //       ) || {}
+  //     );
+  //   })
+  //   .then((res) => Object.values(res));
 
+  // TODO: This API is not 100% accurate. It does return some track which was
+  // recently played, but not necessarily the most recent/current one. Find a
+  // better but still lightweight way to cache the most recent track from the
+  // "Currently Playing" API.
   const lastPlayedTrack = await getRecentlyPlayedTracks(accessToken, 1).then(
     (res) => res?.items.find(Boolean)?.track
   ); // Safely get the first element.
@@ -849,6 +867,7 @@ export const getServerSideProps: GetServerSideProps<
   return {
     props: {
       topTracks: topTracks || null,
+      // recentlyPlayedTracks: recentlyPlayedTracks || null,
       isCurrentlyPlaying: currentlyPlayingItem?.is_playing || false,
       lastPlayedTrack: currentlyPlayingItem?.item || lastPlayedTrack || null,
     },
