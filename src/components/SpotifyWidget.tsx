@@ -6,12 +6,12 @@ export default function SpotifyWidget({
   lastPlayedTrack,
   className,
 }: {
-  topTracks?: SpotifyPlayableItem[];
+  topTracks: SpotifyPlayableItem[] | null;
   isCurrentlyPlaying?: boolean;
-  lastPlayedTrack?: SpotifyPlayableItem;
+  lastPlayedTrack: SpotifyPlayableItem | null;
   className?: string;
 }) {
-  if (isCurrentlyPlaying === undefined || lastPlayedTrack === undefined) {
+  if (isCurrentlyPlaying === null || lastPlayedTrack === null) {
     return <div className={className}>Loading</div>;
   }
 

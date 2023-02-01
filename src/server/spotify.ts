@@ -60,15 +60,6 @@ const SpotifyPlayableItem = z.object({
 
 export type SpotifyPlayableItem = z.infer<typeof SpotifyPlayableItem>;
 
-const SpotifyGetPlaybackStateResponse = z.object({
-  is_playing: z.boolean(),
-  item: SpotifyPlayableItem,
-});
-
-export type SpotifyGetPlaybackStateResponse =
-  | { status: 204 }
-  | { status: 200; data: z.infer<typeof SpotifyGetPlaybackStateResponse> };
-
 const SpotifyRecentlyPlayedTracksResponse = z.object({
   href: z.string(),
   items: z.array(
@@ -160,32 +151,6 @@ export async function getTopTracks(
         z.object({ items: z.array(SpotifyPlayableItem) }).parse(res)
       )
       .then((res) => res.items);
-  }
-
-  return undefined;
-}
-
-export async function getPlaybackState(
-  accessToken: string
-): Promise<SpotifyGetPlaybackStateResponse | undefined> {
-  const response = await fetch(`${SPOTIFY_API_BASE_URL}/me/player`, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
-
-  if (response.status === 204) {
-    return { status: response.status };
-  }
-
-  if (response.status === 200) {
-    return {
-      status: response.status,
-      data: await response
-        .json()
-        .then((res) => SpotifyGetPlaybackStateResponse.parse(res)),
-    };
   }
 
   return undefined;

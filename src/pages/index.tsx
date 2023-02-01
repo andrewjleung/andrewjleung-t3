@@ -819,9 +819,9 @@ export default function Home({
 }
 
 type GetServerSidePropsData = {
-  topTracks?: SpotifyPlayableItem[];
-  isCurrentlyPlaying?: boolean;
-  lastPlayedTrack?: SpotifyPlayableItem;
+  topTracks: SpotifyPlayableItem[] | null;
+  isCurrentlyPlaying: boolean;
+  lastPlayedTrack: SpotifyPlayableItem | null;
 };
 
 export const getServerSideProps: GetServerSideProps<
@@ -831,7 +831,11 @@ export const getServerSideProps: GetServerSideProps<
 
   if (accessToken === undefined) {
     return {
-      props: {},
+      props: {
+        topTracks: null,
+        isCurrentlyPlaying: false,
+        lastPlayedTrack: null,
+      },
     };
   }
 
@@ -844,9 +848,9 @@ export const getServerSideProps: GetServerSideProps<
 
   return {
     props: {
-      topTracks,
+      topTracks: topTracks || null,
       isCurrentlyPlaying: currentlyPlayingItem?.is_playing || false,
-      lastPlayedTrack,
+      lastPlayedTrack: currentlyPlayingItem?.item || lastPlayedTrack || null,
     },
   };
 };
