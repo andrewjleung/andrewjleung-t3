@@ -1,5 +1,5 @@
 import Container from "../components/Container";
-import type { GetStaticProps } from "next";
+import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import type { BitsQuery } from "../../graphql/generated";
 import { BitsDocument } from "../../graphql/generated";
 import { request } from "../server/dato";
@@ -37,7 +37,7 @@ function Code({ node, theme }: { node: Code; theme: string }) {
 
   return (
     <div className="relative">
-      <div
+      <button
         className="absolute top-2 right-2 cursor-pointer rounded-md text-gray-300 transition duration-100 ease-in-out hover:text-blue-300 active:text-gray-300 dark:text-white dark:hover:text-blue-400 dark:active:text-gray-300 md:m-1"
         onClick={() => {
           // TODO: Make responsive (right now it overlaps the code).
@@ -78,7 +78,7 @@ function Code({ node, theme }: { node: Code; theme: string }) {
             <path d="M16 8v-2a2 2 0 0 0 -2 -2h-8a2 2 0 0 0 -2 2v8a2 2 0 0 0 2 2h2"></path>
           </svg>
         )}
-      </div>
+      </button>
       <Highlight
         {...defaultProps}
         code={node.code}
@@ -202,7 +202,9 @@ function Bit({
   );
 }
 
-export default function Bits({ result }: { result: BitsQuery }) {
+export default function Bits({
+  bits,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   const { resolvedTheme } = useTheme();
   const [isMounted, setIsMounted] = useState(false);
 
@@ -223,7 +225,7 @@ export default function Bits({ result }: { result: BitsQuery }) {
               "flex min-w-0 flex-col divide-y-1 dark:divide-neutral-800"
             )}
           >
-            {result.allBits.map((bit) => (
+            {bits.allBits.map((bit) => (
               <Bit key={bit.id} bit={bit} theme={resolvedTheme} />
             ))}
           </div>
@@ -233,13 +235,15 @@ export default function Bits({ result }: { result: BitsQuery }) {
   );
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getStaticProps: GetStaticProps<{
+  bits: BitsQuery;
+}> = async () => {
   // TODO: Paginate in the future rather than requesting everything?
-  const result = await request(BitsDocument);
+  const bits = await request(BitsDocument);
 
   return {
     props: {
-      result,
+      bits,
     },
     // TODO: Setup on-demand revalidation: https://nextjs.org/docs/basic-features/data-fetching/incremental-static-regeneration
     revalidate: 60,

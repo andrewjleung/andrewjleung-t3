@@ -84,7 +84,7 @@ function NavMenuMobile({
   }
 
   return (
-    <div
+    <button
       className="fixed inset-0 h-screen w-screen backdrop-blur-2xl transition-all duration-300"
       onClick={() => {
         setIsOpen(false);
@@ -93,12 +93,11 @@ function NavMenuMobile({
       <div className="absolute m-6 mt-24 box-border flex w-full flex-col gap-3 rounded-xl p-6 text-6xl">
         {children}
       </div>
-    </div>
+    </button>
   );
 }
 
 function NavBar({
-  animateNavBar = false,
   children,
   className,
 }: {
@@ -112,13 +111,13 @@ function NavBar({
     <div className={cn("flex w-full justify-center ", className)}>
       {/* <div className="flex w-full max-w-screen-lg flex-row items-center gap-5 p-6 md:hidden">
         <div className="text-black transition-all duration-200 ease-out dark:text-neutral-500 dark:hover:text-white">
-          <div
+          <button
             onClick={() => {
               setIsOpen((open) => !open);
             }}
           >
             <MenuIcon className="h-8 w-8 cursor-pointer" />
-          </div>
+          </button>
           <NavMenuMobile isOpen={isOpen} setIsOpen={setIsOpen}>
             {children}
           </NavMenuMobile>
@@ -128,12 +127,10 @@ function NavBar({
       <div
         className={cn(
           "flex w-full max-w-screen-lg flex-row items-center gap-5 p-6",
-          { "motion-safe:animate-fade-down-0": animateNavBar },
           className
         )}
       >
         {children}
-        <ThemeToggler className="ml-auto" />
       </div>
     </div>
   );

@@ -32,7 +32,7 @@ type Experience = {
   animation: string; // TODO: Bad separation of concerns. Instead zip with an array of animation classes.
 };
 
-const experiences: Experience[] = [
+const EXPERIENCES: Experience[] = [
   {
     startDate: new Date("2021-01-01T00:00:00"),
     endDate: new Date("2021-08-01T00:00:00"),
@@ -77,6 +77,35 @@ const experiences: Experience[] = [
     image: "/curriculum-associates.jpg",
     link: "https://www.curriculumassociates.com/",
     animation: "motion-safe:animate-fade-up-3",
+  },
+];
+
+type Project = {
+  title: string;
+  description: string;
+  image: string;
+  link?: string;
+  github: string;
+  animation: string;
+};
+
+const PROJECTS: Project[] = [
+  {
+    title: "Raudi",
+    description:
+      "Get random sounds for instant inspiration, made for audio creatives prone to overthinking. Built off of the Freesound API.",
+    image: "/raudi.png",
+    link: "https://raudi.xyz/",
+    github: "https://github.com/andrewjleung/raudi",
+    animation: "motion-safe:animate-fade-up-0",
+  },
+  {
+    title: "TND Reviews",
+    description:
+      "Generating/live-updating a dataset containing all of Anthony Fantano's scored music reviews using the YouTube Data API.",
+    image: "/tnd-reviews.png",
+    github: "https://github.com/andrewjleung/fantano-reviews",
+    animation: "motion-safe:animate-fade-up-1",
   },
 ];
 
@@ -315,7 +344,7 @@ function SectionNavItem({
   const { intersecting } = useIntersection(id, { threshold: 0.7 });
 
   return (
-    <div
+    <button
       className="cursor-pointer"
       onClick={() => {
         const element = document.getElementById(id);
@@ -334,7 +363,7 @@ function SectionNavItem({
       >
         {icon}
       </div>
-    </div>
+    </button>
   );
 }
 
@@ -470,6 +499,26 @@ function Experience({
   );
 }
 
+function Projects({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return <div>{children}</div>;
+}
+
+function Project({
+  project: { title, description, image, link, github, animation },
+  className,
+}: {
+  project: Project;
+  className?: string;
+}) {
+  return <div>{title}</div>;
+}
+
 function Card({
   children,
   className,
@@ -480,7 +529,7 @@ function Card({
   return (
     <div
       className={cn(
-        "h-52 w-72 rounded-2xl border-1 border-black bg-white p-4 dark:border-neutral-800 dark:bg-black",
+        "h-44 w-60 rounded-2xl border-1 border-black bg-white p-4 dark:border-neutral-800 dark:bg-black",
         className
       )}
     >
@@ -491,6 +540,7 @@ function Card({
 
 export default function Home({
   topTracks,
+  // recentlyPlayedTracks,
   isCurrentlyPlaying,
   lastPlayedTrack,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
@@ -504,8 +554,13 @@ export default function Home({
     { threshold: 0.3 }
   );
 
+  const { viewed: projectsSectionViewed } = useIntersection(
+    "projects-section",
+    { threshold: 0.3 }
+  );
+
   return (
-    <Container id="container" animateNavBar>
+    <Container id="container">
       <div className="invisible absolute top-[50vh] left-[50vw] -z-10 h-5/6 w-full -translate-x-1/2 -translate-y-1/2 rotate-45 skew-y-6 rounded-full bg-transparent bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-neutral-400 via-neutral-900 to-neutral-900 opacity-10 blur-2xl motion-safe:animate-light-up dark:visible" />
       <div className="fixed bottom-6 left-6 z-50">
         <SpotifyWidget
@@ -792,7 +847,7 @@ export default function Home({
             Experience
           </div>
           <Experiences className="my-8 max-w-3xl">
-            {experiences.map((experience) => (
+            {EXPERIENCES.map((experience) => (
               <Experience
                 key={`experience-${experience.company}-${experience.title}`}
                 experience={experience}
@@ -810,6 +865,18 @@ export default function Home({
           <div className={cn(inter700.className, "my-8 text-4xl sm:text-5xl")}>
             Projects
           </div>
+          <Projects className="my-8 max-w-3xl">
+            {PROJECTS.map((project) => (
+              <Project
+                key={`project-${project.title}`}
+                project={project}
+                className={cn({
+                  invisible: !projectsSectionViewed,
+                  [project.animation]: projectsSectionViewed,
+                })}
+              />
+            ))}
+          </Projects>
         </Layout>
       </Section>
       <Section id="contact-section" className="flex flex-col justify-center">
