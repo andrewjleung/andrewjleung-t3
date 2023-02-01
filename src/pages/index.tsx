@@ -644,11 +644,11 @@ export default function Home({
                   <span className={cn(inter700.className, "text-2xl")}>
                     Northeastern University
                   </span>{" "}
-                  <span className="text-neutral-500">class of</span>
+                  <span className="text-sm text-neutral-500">class of</span>
                   <div
                     className={cn(
                       inter700.className,
-                      "w-fit bg-gradient-to-t from-rose-500 to-rose-300 bg-clip-text text-6xl text-transparent dark:from-rose-600 dark:to-rose-200"
+                      "w-fit bg-gradient-to-t from-rose-500 to-rose-300 bg-clip-text text-5xl text-transparent dark:from-rose-600 dark:to-rose-200"
                     )}
                   >
                     2022
@@ -716,7 +716,7 @@ export default function Home({
                       key={`edu-hover-effect-3-${i}`}
                       className={cn(
                         inter700.className,
-                        "absolute left-[7.25rem] -translate-x-1/2 scale-0 text-black duration-500 ease-in-out group-hover:scale-150 dark:text-neutral-700",
+                        "absolute left-[5.75rem] -translate-x-1/2 scale-0 text-black duration-500 ease-in-out group-hover:scale-150 dark:text-neutral-700",
                         styles
                       )}
                     >
@@ -728,7 +728,7 @@ export default function Home({
                   <span
                     className={cn(
                       inter700.className,
-                      "relative w-fit bg-gradient-to-br from-sky-600 to-sky-300 bg-clip-text text-[6rem] text-transparent dark:from-sky-700 dark:to-sky-200"
+                      "relative w-fit bg-gradient-to-br from-sky-600 to-sky-300 bg-clip-text text-[5rem] text-transparent dark:from-sky-700 dark:to-sky-200"
                     )}
                   >
                     3.9
@@ -740,7 +740,7 @@ export default function Home({
               </Card>
               <Card
                 className={cn(
-                  "group relative flex items-center justify-center",
+                  "group relative flex items-center justify-center overflow-clip",
 
                   {
                     "motion-safe:animate-fade-up-3": educationSectionViewed,
@@ -748,7 +748,7 @@ export default function Home({
                   }
                 )}
               >
-                <div className="opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-20 dark:group-hover:opacity-70">
+                <div className="opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-15 dark:group-hover:opacity-70">
                   {[
                     "translate-x-0 opacity-100",
                     "translate-x-4 opacity-90",
@@ -761,7 +761,7 @@ export default function Home({
                     <div
                       key={`edu-hover-effect-4-${i}`}
                       className={cn(
-                        "absolute top-1/2 left-6 h-36 w-36 -translate-y-1/2 rounded-full border-1 border-black dark:border-neutral-700",
+                        "absolute top-1/2 left-3 h-32 w-32 -translate-y-1/2 rounded-full border-1 border-black dark:border-neutral-700",
                         styles
                       )}
                     />
@@ -771,7 +771,7 @@ export default function Home({
                   <span
                     className={cn(
                       inter700.className,
-                      "relative w-fit bg-gradient-to-br from-amber-500 to-amber-300 bg-clip-text text-[6rem] text-transparent dark:from-amber-600 dark:to-amber-200"
+                      "relative w-fit bg-gradient-to-br from-amber-500 to-amber-300 bg-clip-text text-[5rem] text-transparent dark:from-amber-600 dark:to-amber-200"
                     )}
                   >
                     3
