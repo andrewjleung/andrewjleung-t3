@@ -16,7 +16,11 @@ import {
   getTopTracks,
   getRecentlyPlayedTracks,
 } from "../server/spotify";
-import SpotifyWidget from "../components/SpotifyWidget";
+import SpotifyCurrentlyListening from "../components/SpotifyCurrentlyListening";
+import { CodeIcon, DeviceSpeakerIcon } from "../components/Icons";
+import type { GitHubEvent, GitHubPushEventPayload } from "../server/github";
+import { getLastCommitFromEvents } from "../server/github";
+import { getGitHubEvents } from "../server/github";
 
 const inter700 = Inter({ weight: "700", subsets: ["latin"] });
 const inter800 = Inter({ weight: "800", subsets: ["latin"] });
@@ -540,9 +544,9 @@ function Card({
 
 export default function Home({
   topTracks,
-  // recentlyPlayedTracks,
   isCurrentlyPlaying,
   lastPlayedTrack,
+  lastCommit,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const { viewed: educationSectionViewed } = useIntersection(
     "education-section",
@@ -591,14 +595,6 @@ export default function Home({
       </SectionNav> */}
       <Section id="top-section" className="h-screen w-screen">
         <Layout className="relative flex h-full w-full items-center justify-center overflow-hidden px-6">
-          <div className="absolute bottom-6 left-6 z-50">
-            <SpotifyWidget
-              topTracks={topTracks}
-              // recentlyPlayedTracks={recentlyPlayedTracks}
-              isCurrentlyPlaying={isCurrentlyPlaying}
-              lastPlayedTrack={lastPlayedTrack}
-            />
-          </div>
           <div className="relative flex flex-col">
             <div
               className={cn(
@@ -620,6 +616,22 @@ export default function Home({
               <MapPinIcon className="inline h-4 w-4" />
               Remote or near Dallas–Fort Worth, TX
             </div>
+            <div className="mt-1 flex flex-row items-center gap-2 whitespace-nowrap text-sm text-neutral-400 motion-safe:animate-fade-up-2 dark:text-neutral-500">
+              <DeviceSpeakerIcon className="inline h-4 w-4" />
+              <SpotifyCurrentlyListening
+                topTracks={topTracks}
+                isCurrentlyPlaying={isCurrentlyPlaying}
+                lastPlayedTrack={lastPlayedTrack}
+              />
+            </div>
+            {lastCommit && (
+              <div className="mt-1 flex flex-row items-center gap-2 whitespace-nowrap text-sm text-neutral-400 motion-safe:animate-fade-up-2 dark:text-neutral-500">
+                <CodeIcon className="inline h-4 w-4" />
+                <Link href={lastCommit.href}>
+                  Last commit made on {lastCommit.createdAt.toString()}
+                </Link>
+              </div>
+            )}
             <div className="mt-8 flex flex-row items-center gap-3 text-sm text-black dark:text-neutral-500">
               <IconLink
                 href="https://github.com/andrewjleung"
@@ -888,9 +900,13 @@ export default function Home({
 
 type GetServerSidePropsData = {
   topTracks: SpotifyPlayableItem[] | null;
-  // recentlyPlayedTracks: SpotifyPlayableItem[] | null;
   isCurrentlyPlaying: boolean;
   lastPlayedTrack: SpotifyPlayableItem | null;
+  lastCommit: {
+    href: string;
+    message: GitHubPushEventPayload["commits"][number]["message"];
+    createdAt: GitHubEvent["created_at"];
+  } | null;
 };
 
 export const getServerSideProps: GetServerSideProps<
@@ -902,26 +918,15 @@ export const getServerSideProps: GetServerSideProps<
     return {
       props: {
         topTracks: null,
-        recentlyPlayedTracks: null,
         isCurrentlyPlaying: false,
         lastPlayedTrack: null,
+        lastCommit: null,
       },
     };
   }
 
   const topTracks = await getTopTracks(accessToken);
   const currentlyPlayingItem = await getCurrentlyPlayingTrack(accessToken);
-  // const recentlyPlayedTracks = await getRecentlyPlayedTracks(accessToken, 50)
-  //   .then((response) => response?.items.map((item) => item.track))
-  //   .then((res) => {
-  //     return (
-  //       res?.reduce(
-  //         (acc, track) => ({ ...acc, [track.uri]: track }),
-  //         {} as Record<string, SpotifyPlayableItem>
-  //       ) || {}
-  //     );
-  //   })
-  //   .then((res) => Object.values(res));
 
   // TODO: This API is not 100% accurate. It does return some track which was
   // recently played, but not necessarily the most recent/current one. Find a
@@ -931,12 +936,15 @@ export const getServerSideProps: GetServerSideProps<
     (res) => res?.items.find(Boolean)?.track
   ); // Safely get the first element.
 
+  const githubEvents = await getGitHubEvents();
+  const lastCommit = getLastCommitFromEvents(githubEvents || []);
+
   return {
     props: {
       topTracks: topTracks || null,
-      // recentlyPlayedTracks: recentlyPlayedTracks || null,
       isCurrentlyPlaying: currentlyPlayingItem?.is_playing || false,
       lastPlayedTrack: currentlyPlayingItem?.item || lastPlayedTrack || null,
+      lastCommit: lastCommit || null,
     },
   };
 };

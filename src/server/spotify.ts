@@ -1,5 +1,6 @@
 import { env } from "../env/server.mjs";
 import { z } from "zod";
+import { handle200 } from "./utils";
 
 const SPOTIFY_API_BASE_URL = "https://api.spotify.com/v1";
 
@@ -117,13 +118,10 @@ export async function getAccessToken(): Promise<
   });
 
   if (response.status === 200) {
-    return await response
-      .json()
-      .then((res) => SpotifyAccessTokenResponse.parse(res))
-      .then((res) => res.access_token);
+    return handle200(response, SpotifyAccessTokenResponse).then(
+      (res) => res?.access_token
+    );
   }
-
-  return undefined;
 }
 
 export async function getTopTracks(
@@ -145,15 +143,11 @@ export async function getTopTracks(
   );
 
   if (response.status === 200) {
-    return await response
-      .json()
-      .then((res) =>
-        z.object({ items: z.array(SpotifyPlayableItem) }).parse(res)
-      )
-      .then((res) => res.items);
+    return handle200(
+      response,
+      z.object({ items: z.array(SpotifyPlayableItem) })
+    ).then((res) => res?.items);
   }
-
-  return undefined;
 }
 
 export async function getRecentlyPlayedTracks(
@@ -175,12 +169,8 @@ export async function getRecentlyPlayedTracks(
   );
 
   if (response.status === 200) {
-    return await response.json().then((res) => {
-      return SpotifyRecentlyPlayedTracksResponse.parse(res);
-    });
+    return handle200(response, SpotifyRecentlyPlayedTracksResponse);
   }
-
-  return undefined;
 }
 
 export async function getCurrentlyPlayingTrack(
@@ -197,12 +187,10 @@ export async function getCurrentlyPlayingTrack(
   );
 
   if (response.status === 200) {
-    return await response
-      .json()
-      .then((res) => SpotifyGetCurrentlyPlayingTrackResponse.parse(res));
+    return handle200(response, SpotifyGetCurrentlyPlayingTrackResponse);
   }
 
-  return undefined;
+  // TODO: For this and all other endpoint wrappers, report other error codes.
 }
 
 function makeAuthorizationUrl() {
