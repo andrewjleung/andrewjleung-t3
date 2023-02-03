@@ -618,7 +618,7 @@ export default function Home({
             <div className="mt-6 text-xs text-neutral-500 motion-safe:animate-fade-up-2 sm:text-sm">
               <div className="flex flex-row items-center gap-2">
                 <MapPinIcon className="inline h-4 w-4" />
-                Remote or near Dallas–Fort Worth, TX
+                Open to remote or near Dallas–Fort Worth, TX
               </div>
               {lastPlayedTrack && (
                 <div className="mt-1 flex flex-row items-center gap-2">
