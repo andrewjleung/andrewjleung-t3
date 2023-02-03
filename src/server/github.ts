@@ -46,6 +46,8 @@ export async function getGitHubEvents(): Promise<GitHubEvent[] | undefined> {
 export function getLastCommitFromEvents(events: GitHubEvent[]):
   | {
       href: string;
+      repo: string;
+      sha: string;
       message: string;
       createdAt: GitHubEvent["created_at"];
     }
@@ -74,6 +76,8 @@ export function getLastCommitFromEvents(events: GitHubEvent[]):
 
   return {
     href: url.toString(),
+    repo: mostRecentPushEvent.repo.name,
+    sha: mostRecentCommit.sha,
     message: mostRecentCommit.message,
     createdAt: mostRecentPushEvent.created_at,
   };

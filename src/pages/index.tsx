@@ -18,9 +18,12 @@ import {
 } from "../server/spotify";
 import SpotifyCurrentlyListening from "../components/SpotifyCurrentlyListening";
 import { CodeIcon, DeviceSpeakerIcon } from "../components/Icons";
-import type { GitHubEvent, GitHubPushEventPayload } from "../server/github";
 import { getLastCommitFromEvents } from "../server/github";
 import { getGitHubEvents } from "../server/github";
+import relativeTime from "dayjs/plugin/relativeTime";
+import dayjs from "dayjs";
+
+dayjs.extend(relativeTime);
 
 const inter700 = Inter({ weight: "700", subsets: ["latin"] });
 const inter800 = Inter({ weight: "800", subsets: ["latin"] });
@@ -627,9 +630,17 @@ export default function Home({
             {lastCommit && (
               <div className="mt-1 flex flex-row items-center gap-2 whitespace-nowrap text-sm text-neutral-400 motion-safe:animate-fade-up-2 dark:text-neutral-500">
                 <CodeIcon className="inline h-4 w-4" />
-                <Link href={lastCommit.href}>
-                  Last commit made on {lastCommit.createdAt.toString()}
-                </Link>
+                <div>
+                  Pushed commit{" "}
+                  <Link href={lastCommit.href}>
+                    {lastCommit.sha.substring(0, 7)}
+                  </Link>{" "}
+                  to{" "}
+                  <Link href={`https://github.com/${lastCommit.repo}`}>
+                    {lastCommit.repo}
+                  </Link>{" "}
+                  {dayjs(lastCommit.createdAt).fromNow()}
+                </div>
               </div>
             )}
             <div className="mt-8 flex flex-row items-center gap-3 text-sm text-black dark:text-neutral-500">
