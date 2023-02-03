@@ -46,7 +46,7 @@ export async function getGitHubEvents(): Promise<GitHubEvent[] | undefined> {
 export function getLastCommitFromEvents(events: GitHubEvent[]):
   | {
       href: string;
-      message: GitHubPushEventPayload["commits"][number]["message"];
+      message: string;
       createdAt: GitHubEvent["created_at"];
     }
   | undefined {
@@ -58,7 +58,7 @@ export function getLastCommitFromEvents(events: GitHubEvent[]):
 
   const mostRecentPushEvent = pushEvents.find(Boolean) as GitHubEvent;
   const mostRecentCommit = mostRecentPushEvent.payload?.commits
-    .reverse()
+    ?.reverse()
     .find(Boolean);
 
   if (mostRecentCommit === undefined) {

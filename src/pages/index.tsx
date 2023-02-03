@@ -902,11 +902,7 @@ type GetServerSidePropsData = {
   topTracks: SpotifyPlayableItem[] | null;
   isCurrentlyPlaying: boolean;
   lastPlayedTrack: SpotifyPlayableItem | null;
-  lastCommit: {
-    href: string;
-    message: string;
-    createdAt: GitHubEvent["created_at"];
-  } | null;
+  lastCommit: ReturnType<typeof getLastCommitFromEvents> | null;
 };
 
 export const getServerSideProps: GetServerSideProps<
