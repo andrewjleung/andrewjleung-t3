@@ -62,14 +62,20 @@ export default function SpotifyCurrentlyListening({
         {isCurrentlyPlaying ? (
           <span className="flex flex-row items-center">
             Listening to{" "}
-            <Link href={href}>
+            <Link
+              href={href}
+              className="hover:underline dark:hover:text-neutral-300"
+            >
               {lastPlayedTrack.name} by {artistNames}
             </Link>
           </span>
         ) : (
           <span>
             Last listened to{" "}
-            <Link href={href}>
+            <Link
+              href={href}
+              className="hover:underline dark:hover:text-neutral-300"
+            >
               {lastPlayedTrack.name} by {artistNames}
             </Link>
           </span>
