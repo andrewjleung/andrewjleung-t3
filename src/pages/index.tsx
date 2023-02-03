@@ -485,7 +485,7 @@ function Experience({
           />
         </Link>
         <div className="shrink">
-          <div className="mb-2 text-xs text-neutral-500 sm:text-sm">
+          <div className="mb-2 text-xs text-black dark:text-neutral-400 sm:text-sm">
             {formattedStartDate} - {formattedEndDate}
           </div>
           <Link
@@ -610,12 +610,12 @@ export default function Home({
             <Balancer
               ratio={1}
               as="div"
-              className="mt-6 text-lg text-neutral-500 motion-safe:animate-fade-up-1 dark:text-neutral-400 md:text-xl"
+              className="mt-6 text-lg text-black motion-safe:animate-fade-up-1 dark:text-neutral-300 md:text-xl"
             >
               Software engineer seeking full-time, full-stack opportunities.
               Looking to improve the lives of developers and users alike.
             </Balancer>
-            <div className="mt-6 text-xs text-neutral-500 motion-safe:animate-fade-up-2 sm:text-sm">
+            <div className="mt-6 text-xs text-black motion-safe:animate-fade-up-2 dark:text-neutral-400 sm:text-sm">
               <div className="flex flex-row items-center gap-2">
                 <MapPinIcon className="inline h-4 w-4" />
                 Open to remote or near Dallas–Fort Worth, TX
@@ -653,7 +653,7 @@ export default function Home({
                 </div>
               )}
             </div>
-            <div className="mt-8 flex flex-row items-center gap-3 text-sm text-black dark:text-neutral-500">
+            <div className="mt-8 flex flex-row items-center gap-3 text-sm text-black dark:text-neutral-400">
               <IconLink
                 href="https://github.com/andrewjleung"
                 Icon={GitHubIcon}
