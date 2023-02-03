@@ -2,7 +2,15 @@ import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 import cn from "classnames";
 
-function TogglerIcon({ theme, size }: { theme: string; size: number }) {
+function TogglerIcon({
+  theme,
+  size,
+  className,
+}: {
+  theme: string;
+  size: number;
+  className?: string;
+}) {
   if (theme === "dark") {
     return (
       <svg
@@ -15,6 +23,7 @@ function TogglerIcon({ theme, size }: { theme: string; size: number }) {
         fill="none"
         strokeLinecap="round"
         strokeLinejoin="round"
+        className={className}
       >
         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
         <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z"></path>
@@ -35,6 +44,7 @@ function TogglerIcon({ theme, size }: { theme: string; size: number }) {
       fill="none"
       strokeLinecap="round"
       strokeLinejoin="round"
+      className={className}
     >
       <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
       <circle cx="12" cy="12" r="4"></circle>
@@ -67,21 +77,23 @@ export default function ThemeToggler({ className }: { className?: string }) {
   if (!mounted || resolvedTheme === undefined) {
     return (
       <div
-        className={cn("flex h-8 w-8 items-center justify-center", className)}
-      >
-        <div className="h-7 w-7 cursor-pointer rounded-md border-1 border-black dark:border-neutral-500"></div>
-      </div>
+        className={cn(
+          "h-7 w-7 cursor-pointer rounded-md border-1 border-black dark:border-neutral-500",
+          className
+        )}
+      ></div>
     );
   }
 
   return (
-    <div className={cn("flex h-8 w-8 items-center justify-center", className)}>
-      <button
-        onClick={toggleTheme}
-        className="flex h-7 w-7 cursor-pointer items-center justify-center rounded-md border-1 border-black text-black duration-100 ease-in-out hover:h-8 hover:w-8 dark:border-neutral-500 dark:text-neutral-500 dark:hover:border-white dark:hover:text-white dark:active:bg-transparent"
-      >
-        <TogglerIcon theme={resolvedTheme} size={16} />
-      </button>
-    </div>
+    <button
+      onClick={toggleTheme}
+      className={cn(
+        "flex h-7 w-7 cursor-pointer items-center justify-center rounded-md border-1 border-black transition-all duration-200  ease-in-out hover:bg-black hover:text-white dark:border-neutral-500 dark:text-neutral-500 dark:hover:border-white dark:hover:text-white dark:active:bg-transparent",
+        className
+      )}
+    >
+      <TogglerIcon theme={resolvedTheme} size={16} />
+    </button>
   );
 }
