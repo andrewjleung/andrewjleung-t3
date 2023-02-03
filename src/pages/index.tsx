@@ -602,47 +602,57 @@ export default function Home({
             <div
               className={cn(
                 inter700.className,
-                "text-5xl motion-safe:animate-fade-up-0 sm:text-6xl"
+                "relative whitespace-nowrap text-5xl motion-safe:animate-fade-up-0 md:text-6xl"
               )}
             >
-              <span className="relative whitespace-nowrap">Andrew Leung</span>{" "}
+              Andrew Leung
             </div>
             <Balancer
               ratio={1}
               as="div"
-              className="mt-6 text-xl text-neutral-500 motion-safe:animate-fade-up-1 dark:text-neutral-400"
+              className="mt-6 text-lg text-neutral-500 motion-safe:animate-fade-up-1 dark:text-neutral-400 md:text-xl"
             >
               Software engineer seeking full-time, full-stack opportunities.
               Looking to improve the lives of developers and users alike.
             </Balancer>
-            <div className="mt-2 flex flex-row items-center gap-2 whitespace-nowrap text-sm text-neutral-400 motion-safe:animate-fade-up-2 dark:text-neutral-500">
-              <MapPinIcon className="inline h-4 w-4" />
-              Remote or near Dallas–Fort Worth, TX
-            </div>
-            <div className="mt-1 flex flex-row items-center gap-2 whitespace-nowrap text-sm text-neutral-400 motion-safe:animate-fade-up-2 dark:text-neutral-500">
-              <DeviceSpeakerIcon className="inline h-4 w-4" />
-              <SpotifyCurrentlyListening
-                topTracks={topTracks}
-                isCurrentlyPlaying={isCurrentlyPlaying}
-                lastPlayedTrack={lastPlayedTrack}
-              />
-            </div>
-            {lastCommit && (
-              <div className="mt-1 flex flex-row items-center gap-2 text-sm text-neutral-400 motion-safe:animate-fade-up-2 dark:text-neutral-500">
-                <CodeIcon className="inline h-4 w-4" />
-                <div>
-                  Pushed{" "}
-                  <Link href={lastCommit.href}>
-                    {lastCommit.sha.substring(0, 7)}
-                  </Link>{" "}
-                  to{" "}
-                  <Link href={`https://github.com/${lastCommit.repo}`}>
-                    {lastCommit.repo}
-                  </Link>{" "}
-                  {dayjs(lastCommit.createdAt).fromNow()}
-                </div>
+            <div className="mt-6 text-xs text-neutral-500 motion-safe:animate-fade-up-2 sm:text-sm">
+              <div className="flex flex-row items-center gap-2">
+                <MapPinIcon className="inline h-4 w-4" />
+                Remote or near Dallas–Fort Worth, TX
               </div>
-            )}
+              {lastPlayedTrack && (
+                <div className="mt-1 flex flex-row items-center gap-2">
+                  <DeviceSpeakerIcon className="inline h-4 w-4" />
+                  <SpotifyCurrentlyListening
+                    topTracks={topTracks}
+                    isCurrentlyPlaying={isCurrentlyPlaying}
+                    lastPlayedTrack={lastPlayedTrack}
+                  />
+                </div>
+              )}
+              {lastCommit && (
+                <div className="mt-1 flex flex-row items-center gap-2">
+                  <CodeIcon className="inline h-4 w-4" />
+                  <div>
+                    Pushed{" "}
+                    <Link
+                      href={lastCommit.href}
+                      className="hover:underline dark:hover:text-neutral-300"
+                    >
+                      {lastCommit.sha.substring(0, 7)}
+                    </Link>{" "}
+                    to{" "}
+                    <Link
+                      href={`https://github.com/${lastCommit.repo}`}
+                      className="hover:underline dark:hover:text-neutral-300"
+                    >
+                      {lastCommit.repo}
+                    </Link>{" "}
+                    {dayjs(lastCommit.createdAt).fromNow()}
+                  </div>
+                </div>
+              )}
+            </div>
             <div className="mt-8 flex flex-row items-center gap-3 text-sm text-black dark:text-neutral-500">
               <IconLink
                 href="https://github.com/andrewjleung"
@@ -821,7 +831,6 @@ export default function Home({
               <Card
                 className={cn(
                   "group relative flex items-center justify-center overflow-clip",
-
                   {
                     "motion-safe:animate-fade-up-3": educationSectionViewed,
                     invisible: !educationSectionViewed,
@@ -940,7 +949,7 @@ export const getServerSideProps: GetServerSideProps<
       getTopTracks(accessToken),
       getCurrentlyPlayingTrack(accessToken),
       getRecentlyPlayedTracks(accessToken, 1).then(
-    (res) => res?.items.find(Boolean)?.track
+        (res) => res?.items.find(Boolean)?.track
       ),
       getGitHubEvents(),
     ]).then(
