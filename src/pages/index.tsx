@@ -932,18 +932,28 @@ export const getServerSideProps: GetServerSideProps<
     };
   }
 
-  const topTracks = await getTopTracks(accessToken);
-  const currentlyPlayingItem = await getCurrentlyPlayingTrack(accessToken);
+  const getFulfilled = <T,>(p: PromiseSettledResult<T>): T | undefined =>
+    p.status === "fulfilled" ? p.value : undefined;
 
-  // TODO: This API is not 100% accurate. It does return some track which was
-  // recently played, but not necessarily the most recent/current one. Find a
-  // better but still lightweight way to cache the most recent track from the
-  // "Currently Playing" API.
-  const lastPlayedTrack = await getRecentlyPlayedTracks(accessToken, 1).then(
+  const { topTracks, currentlyPlayingItem, lastPlayedTrack, githubEvents } =
+    await Promise.allSettled([
+      getTopTracks(accessToken),
+      getCurrentlyPlayingTrack(accessToken),
+      getRecentlyPlayedTracks(accessToken, 1).then(
     (res) => res?.items.find(Boolean)?.track
-  ); // Safely get the first element.
+      ),
+      getGitHubEvents(),
+    ]).then(
+      ([topTracks, currentlyPlayingItem, lastPlayedTrack, githubEvents]) => {
+        return {
+          topTracks: getFulfilled(topTracks),
+          currentlyPlayingItem: getFulfilled(currentlyPlayingItem),
+          lastPlayedTrack: getFulfilled(lastPlayedTrack),
+          githubEvents: getFulfilled(githubEvents),
+        };
+      }
+    );
 
-  const githubEvents = await getGitHubEvents();
   const lastCommit = getLastCommitFromEvents(githubEvents || []);
 
   return {
