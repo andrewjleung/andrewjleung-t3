@@ -904,7 +904,7 @@ type GetServerSidePropsData = {
   lastPlayedTrack: SpotifyPlayableItem | null;
   lastCommit: {
     href: string;
-    message: GitHubPushEventPayload["commits"][number]["message"];
+    message: string;
     createdAt: GitHubEvent["created_at"];
   } | null;
 };
