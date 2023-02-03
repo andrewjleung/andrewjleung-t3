@@ -628,10 +628,10 @@ export default function Home({
               />
             </div>
             {lastCommit && (
-              <div className="mt-1 flex flex-row items-center gap-2 whitespace-nowrap text-sm text-neutral-400 motion-safe:animate-fade-up-2 dark:text-neutral-500">
+              <div className="mt-1 flex flex-row items-center gap-2 text-sm text-neutral-400 motion-safe:animate-fade-up-2 dark:text-neutral-500">
                 <CodeIcon className="inline h-4 w-4" />
                 <div>
-                  Pushed commit{" "}
+                  Pushed{" "}
                   <Link href={lastCommit.href}>
                     {lastCommit.sha.substring(0, 7)}
                   </Link>{" "}
