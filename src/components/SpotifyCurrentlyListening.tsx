@@ -57,18 +57,24 @@ export default function SpotifyCurrentlyListening({
   // const image = lastPlayedTrack.album.images.find(Boolean)?.url;
 
   return (
-    <Link href={href} className={cn("flex flex-row items-center", className)}>
+    <div className={cn("flex flex-row items-center", className)}>
       <div>
         {isCurrentlyPlaying ? (
           <span className="flex flex-row items-center">
-            Listening to {lastPlayedTrack.name} by {artistNames}
+            Listening to{" "}
+            <Link href={href}>
+              {lastPlayedTrack.name} by {artistNames}
+            </Link>
           </span>
         ) : (
           <span>
-            Last listened to {lastPlayedTrack.name} by {artistNames}
+            Last listened to{" "}
+            <Link href={href}>
+              {lastPlayedTrack.name} by {artistNames}
+            </Link>
           </span>
         )}
       </div>
-    </Link>
+    </div>
   );
 }
