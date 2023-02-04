@@ -89,7 +89,7 @@ export default function ThemeToggler({ className }: { className?: string }) {
     <button
       onClick={toggleTheme}
       className={cn(
-        "flex h-7 w-7 cursor-pointer items-center justify-center rounded-md border-1 border-black transition-all duration-200  ease-in-out hover:bg-black hover:text-white dark:border-neutral-500 dark:text-neutral-500 dark:hover:border-white dark:hover:text-white dark:active:bg-transparent",
+        "flex h-7 w-7 cursor-pointer items-center justify-center rounded-md border-1 border-black transition-all duration-200  ease-in-out hover:bg-black hover:text-white dark:border-neutral-400 dark:text-neutral-400 dark:hover:border-white dark:hover:text-white dark:active:bg-transparent",
         className
       )}
     >

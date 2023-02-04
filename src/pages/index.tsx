@@ -526,36 +526,12 @@ function Project({
   return <div>{title}</div>;
 }
 
-function Card({
-  children,
-  className,
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) {
-  return (
-    <div
-      className={cn(
-        "h-44 w-60 rounded-2xl border-1 border-black bg-white p-4 dark:border-neutral-800 dark:bg-black",
-        className
-      )}
-    >
-      {children}
-    </div>
-  );
-}
-
 export default function Home({
   topTracks,
   isCurrentlyPlaying,
   lastPlayedTrack,
   lastCommit,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const { viewed: educationSectionViewed } = useIntersection(
-    "education-section",
-    { threshold: 0.5 }
-  );
-
   const { viewed: experienceSectionViewed } = useIntersection(
     "experience-section",
     { threshold: 0.3 }
@@ -574,11 +550,6 @@ export default function Home({
           id="top-section"
           title="Top"
           icon={<HandStopIcon className="h-4 w-4 rotate-12" />}
-        />
-        <SectionNavItem
-          id="education-section"
-          title="Education"
-          icon={<BooksIcon className="h-4 w-4" />}
         />
         <SectionNavItem
           id="experience-section"
@@ -637,14 +608,14 @@ export default function Home({
                     Pushed{" "}
                     <Link
                       href={lastCommit.href}
-                      className="hover:underline dark:hover:text-neutral-300"
+                      className="hover:underline dark:hover:text-white"
                     >
                       {lastCommit.sha.substring(0, 7)}
                     </Link>{" "}
                     to{" "}
                     <Link
                       href={`https://github.com/${lastCommit.repo}`}
-                      className="hover:underline dark:hover:text-neutral-300"
+                      className="hover:underline dark:hover:text-white"
                     >
                       {lastCommit.repo}
                     </Link>{" "}
@@ -690,186 +661,6 @@ export default function Home({
                 fill
               />
             </div> */}
-          </div>
-        </Layout>
-      </Section>
-      <Section
-        id="education-section"
-        className="relative mb-16 flex flex-col items-center"
-      >
-        <Layout className="px-6">
-          <div className="flex flex-col items-center rounded-3xl to-black text-center">
-            <div
-              className={cn(inter700.className, "my-8 text-4xl sm:text-5xl")}
-            >
-              Education
-            </div>
-            <div className="my-8 grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-10">
-              <Card
-                className={cn(
-                  "group relative flex items-center justify-center overflow-clip",
-                  {
-                    "motion-safe:animate-fade-up-0": educationSectionViewed,
-                    invisible: !educationSectionViewed,
-                  }
-                )}
-              >
-                <div className="opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-30 dark:group-hover:opacity-70">
-                  {[
-                    "left-0 top-0 -translate-x-1/2 -translate-y-1/2",
-                    "right-0 top-0 translate-x-1/2 -translate-y-1/2",
-                    "left-0 bottom-0 -translate-x-1/2 translate-y-1/2",
-                    "right-0 bottom-0 translate-x-1/2 translate-y-1/2",
-                  ].map((position, i) => (
-                    <div
-                      key={`edu-hover-effect-1-${i}`}
-                      className={cn(
-                        "absolute h-16 w-16 rounded-full border-1 border-black dark:border-neutral-700",
-                        position
-                      )}
-                    />
-                  ))}
-                </div>
-                <div className="flex flex-col items-center">
-                  <span className={cn(inter700.className, "text-2xl")}>
-                    Northeastern University
-                  </span>{" "}
-                  <span className="text-sm text-neutral-500">class of</span>
-                  <div
-                    className={cn(
-                      inter700.className,
-                      "w-fit bg-gradient-to-t from-rose-500 to-rose-300 bg-clip-text text-5xl text-transparent dark:from-rose-600 dark:to-rose-200"
-                    )}
-                  >
-                    2022
-                  </div>
-                </div>
-              </Card>
-              <Card
-                className={cn(
-                  "group relative flex flex-col items-center justify-center",
-                  {
-                    "motion-safe:animate-fade-up-1": educationSectionViewed,
-                    invisible: !educationSectionViewed,
-                  }
-                )}
-              >
-                <div className="opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-[0.25] dark:group-hover:opacity-100">
-                  {[
-                    "inset-4 opacity-50",
-                    "inset-8 opacity-[0.45]",
-                    "inset-12 opacity-40",
-                    "inset-16 opacity-[0.35]",
-                    "inset-[5rem] opacity-30",
-                    "inset-[6rem] opacity-[0.25]",
-                  ].map((styles, i) => (
-                    <div
-                      key={`edu-hover-effect-2-${i}`}
-                      className={cn(
-                        "absolute scale-110 border-1 border-black duration-500 group-hover:scale-100 dark:border-neutral-700",
-                        styles
-                      )}
-                    />
-                  ))}
-                </div>
-                <span className={cn(inter700.className, "relative text-2xl")}>
-                  B.S. in
-                </span>{" "}
-                <span
-                  className={cn(
-                    inter700.className,
-                    "relative w-fit bg-gradient-to-t from-teal-600 to-teal-300 bg-clip-text text-4xl text-transparent dark:from-teal-700 dark:to-teal-200"
-                  )}
-                >
-                  Computer Science
-                </span>
-              </Card>
-              <Card
-                className={cn(
-                  "group relative flex items-center justify-center overflow-hidden",
-                  {
-                    "motion-safe:animate-fade-up-2": educationSectionViewed,
-                    invisible: !educationSectionViewed,
-                  }
-                )}
-              >
-                <div className="absolute flex h-full w-full items-center opacity-0 duration-500 ease-in-out group-hover:opacity-15 dark:group-hover:opacity-60">
-                  {[
-                    "text-[7rem] opacity-[0.35]",
-                    "text-[8rem] opacity-30",
-                    "text-[9rem] opacity-[0.25]",
-                    "text-[10rem] opacity-20",
-                    "text-[11rem] opacity-[0.15]",
-                    "text-[12rem] opacity-10",
-                  ].map((styles, i) => (
-                    <span
-                      key={`edu-hover-effect-3-${i}`}
-                      className={cn(
-                        inter700.className,
-                        "absolute left-[5.75rem] -translate-x-1/2 scale-0 text-black duration-500 ease-in-out group-hover:scale-150 dark:text-neutral-700",
-                        styles
-                      )}
-                    >
-                      3.9
-                    </span>
-                  ))}
-                </div>
-                <div>
-                  <span
-                    className={cn(
-                      inter700.className,
-                      "relative w-fit bg-gradient-to-br from-sky-600 to-sky-300 bg-clip-text text-[5rem] text-transparent dark:from-sky-700 dark:to-sky-200"
-                    )}
-                  >
-                    3.9
-                  </span>{" "}
-                  <span className={cn(inter700.className, "relative text-2xl")}>
-                    GPA
-                  </span>
-                </div>
-              </Card>
-              <Card
-                className={cn(
-                  "group relative flex items-center justify-center overflow-clip",
-                  {
-                    "motion-safe:animate-fade-up-3": educationSectionViewed,
-                    invisible: !educationSectionViewed,
-                  }
-                )}
-              >
-                <div className="opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-15 dark:group-hover:opacity-70">
-                  {[
-                    "translate-x-0 opacity-100",
-                    "translate-x-4 opacity-90",
-                    "translate-x-8 opacity-80",
-                    "translate-x-12 opacity-70",
-                    "translate-x-16 opacity-60",
-                    "translate-x-20 opacity-50",
-                  ].map((styles, i) => (
-                    <div
-                      key={`edu-hover-effect-4-${i}`}
-                      className={cn(
-                        "absolute top-1/2 left-[0.9rem] h-32 w-32 -translate-y-1/2 rounded-full border-1 border-black dark:border-neutral-700",
-                        styles
-                      )}
-                    />
-                  ))}
-                </div>
-                <div>
-                  <span
-                    className={cn(
-                      inter700.className,
-                      "relative w-fit bg-gradient-to-br from-amber-500 to-amber-300 bg-clip-text text-[5rem] text-transparent dark:from-amber-600 dark:to-amber-200"
-                    )}
-                  >
-                    3
-                  </span>{" "}
-                  <span className={cn(inter700.className, "relative text-2xl")}>
-                    co-ops
-                  </span>
-                </div>
-              </Card>
-            </div>
           </div>
         </Layout>
       </Section>

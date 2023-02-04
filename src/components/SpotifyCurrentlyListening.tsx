@@ -29,7 +29,7 @@ export default function SpotifyCurrentlyListening({
   return (
     <div className={className}>
       {preamble}{" "}
-      <Link href={href} className="hover:underline dark:hover:text-neutral-300">
+      <Link href={href} className="hover:underline dark:hover:text-white">
         {lastPlayedTrack.name} by {artistNames}
       </Link>
     </div>
