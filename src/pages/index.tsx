@@ -497,7 +497,7 @@ function Experience({
           <div className="text-base italic dark:text-neutral-200 sm:text-lg">
             {title}
           </div>
-          <div className="mt-2 text-sm dark:text-neutral-400 sm:text-base">
+          <div className="mt-2 text-xs dark:text-neutral-400 sm:text-base">
             {description}
           </div>
         </div>
@@ -666,21 +666,25 @@ export default function Home({
       </Section>
       <Section id="experience-section">
         <Layout className="flex flex-col items-center px-6">
-          <div className={cn(inter700.className, "my-8 text-4xl sm:text-5xl")}>
-            Experience
+          <div>
+            <div
+              className={cn(inter700.className, "my-8 text-4xl sm:text-5xl")}
+            >
+              Experience
+            </div>
+            <Experiences className="my-8 max-w-3xl">
+              {EXPERIENCES.map((experience) => (
+                <Experience
+                  key={`experience-${experience.company}-${experience.title}`}
+                  experience={experience}
+                  className={cn({
+                    invisible: !experienceSectionViewed,
+                    [experience.animation]: experienceSectionViewed,
+                  })}
+                />
+              ))}
+            </Experiences>
           </div>
-          <Experiences className="my-8 max-w-3xl">
-            {EXPERIENCES.map((experience) => (
-              <Experience
-                key={`experience-${experience.company}-${experience.title}`}
-                experience={experience}
-                className={cn({
-                  invisible: !experienceSectionViewed,
-                  [experience.animation]: experienceSectionViewed,
-                })}
-              />
-            ))}
-          </Experiences>
         </Layout>
       </Section>
       <Section id="projects-section" className="flex justify-center">
