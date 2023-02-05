@@ -94,6 +94,7 @@ type Project = {
   link?: string;
   github: string;
   animation: string;
+  className?: string;
 };
 
 const PROJECTS: Project[] = [
@@ -105,6 +106,7 @@ const PROJECTS: Project[] = [
     link: "https://raudi.xyz/",
     github: "https://github.com/andrewjleung/raudi",
     animation: "motion-safe:animate-fade-up-0",
+    className: "col-span-1 sm:col-span-2",
   },
   {
     title: "TND Reviews",
@@ -113,6 +115,7 @@ const PROJECTS: Project[] = [
     image: "/tnd-reviews.png",
     github: "https://github.com/andrewjleung/fantano-reviews",
     animation: "motion-safe:animate-fade-up-1",
+    className: "col-span-1",
   },
 ];
 
@@ -513,17 +516,41 @@ function Projects({
   children: React.ReactNode;
   className?: string;
 }) {
-  return <div>{children}</div>;
+  return (
+    <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">{children}</div>
+  );
 }
 
 function Project({
-  project: { title, description, image, link, github, animation },
+  project: {
+    title,
+    description,
+    image,
+    link,
+    github,
+    className: projectClassName,
+  },
   className,
 }: {
   project: Project;
   className?: string;
 }) {
-  return <div>{title}</div>;
+  return (
+    <div
+      className={cn(
+        className,
+        projectClassName,
+        "rounded-xl border-1 border-black bg-gradient-to-br p-6 dark:border-neutral-800 dark:from-black dark:via-neutral-900/40 dark:to-neutral-900/75"
+      )}
+    >
+      <div className={cn(inter700.className, "text-2xl sm:text-4xl")}>
+        {title}
+      </div>
+      <Balancer className="mt-6" ratio={0.5}>
+        {description}
+      </Balancer>
+    </div>
+  );
 }
 
 export default function Home({
@@ -539,7 +566,7 @@ export default function Home({
 
   const { viewed: projectsSectionViewed } = useIntersection(
     "projects-section",
-    { threshold: 0.3 }
+    { threshold: 1 }
   );
 
   return (
@@ -689,21 +716,25 @@ export default function Home({
       </Section>
       <Section id="projects-section" className="flex justify-center">
         <Layout className="flex flex-col items-center px-6">
-          <div className={cn(inter700.className, "my-8 text-4xl sm:text-5xl")}>
-            Projects
+          <div>
+            <div
+              className={cn(inter700.className, "my-8 text-4xl sm:text-5xl")}
+            >
+              Projects
+            </div>
+            <Projects className="my-8 max-w-3xl">
+              {PROJECTS.map((project) => (
+                <Project
+                  key={`project-${project.title}`}
+                  project={project}
+                  className={cn({
+                    invisible: !projectsSectionViewed,
+                    [project.animation]: projectsSectionViewed,
+                  })}
+                />
+              ))}
+            </Projects>
           </div>
-          <Projects className="my-8 max-w-3xl">
-            {PROJECTS.map((project) => (
-              <Project
-                key={`project-${project.title}`}
-                project={project}
-                className={cn({
-                  invisible: !projectsSectionViewed,
-                  [project.animation]: projectsSectionViewed,
-                })}
-              />
-            ))}
-          </Projects>
         </Layout>
       </Section>
       <Section id="contact-section" className="flex flex-col justify-center">
@@ -720,6 +751,9 @@ type GetServerSidePropsData = {
   lastCommit: ReturnType<typeof getLastCommitFromEvents> | null;
 };
 
+const getFulfilled = <T,>(p: PromiseSettledResult<T>): T | undefined =>
+  p.status === "fulfilled" ? p.value : undefined;
+
 export const getServerSideProps: GetServerSideProps<
   GetServerSidePropsData
 > = async () => {
@@ -735,9 +769,6 @@ export const getServerSideProps: GetServerSideProps<
       },
     };
   }
-
-  const getFulfilled = <T,>(p: PromiseSettledResult<T>): T | undefined =>
-    p.status === "fulfilled" ? p.value : undefined;
 
   const { topTracks, currentlyPlayingItem, lastPlayedTrack, githubEvents } =
     await Promise.allSettled([
