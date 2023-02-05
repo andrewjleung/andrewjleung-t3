@@ -483,7 +483,7 @@ function Experience({
           <Image
             src={image}
             fill
-            className="rounded-xl object-cover brightness-75 grayscale transition-all duration-300 ease-in-out group-hover:brightness-100 group-hover:grayscale-0"
+            className="rounded-xl object-cover transition-all duration-300 ease-in-out dark:brightness-75 dark:grayscale dark:group-hover:brightness-100 dark:group-hover:grayscale-0"
             alt={`${company} logo`}
           />
         </Link>
