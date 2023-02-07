@@ -184,7 +184,6 @@ export default function Container({
         id={id}
         className={cn(
           inter300.className,
-          // TODO: Make prose only apply to child content so that the rest of the container can fit the full width!
           "mx-auto flex min-h-screen flex-col overflow-hidden",
           className
         )}

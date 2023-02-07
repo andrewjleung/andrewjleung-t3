@@ -106,7 +106,7 @@ const PROJECTS: Project[] = [
     link: "https://raudi.xyz/",
     github: "https://github.com/andrewjleung/raudi",
     animation: "motion-safe:animate-fade-up-0",
-    className: "col-span-1 sm:col-span-2",
+    className: "col-span-1 md:col-span-2",
   },
   {
     title: "TND Reviews",
@@ -517,7 +517,7 @@ function Projects({
   className?: string;
 }) {
   return (
-    <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">{children}</div>
+    <div className="grid grid-cols-1 gap-6 md:grid-cols-3">{children}</div>
   );
 }
 
@@ -693,13 +693,13 @@ export default function Home({
       </Section>
       <Section id="experience-section">
         <Layout className="flex flex-col items-center px-6">
-          <div>
+          <div className="w-full">
             <div
               className={cn(inter700.className, "my-8 text-4xl sm:text-5xl")}
             >
               Experience
             </div>
-            <Experiences className="my-8 max-w-3xl">
+            <Experiences className="my-8">
               {EXPERIENCES.map((experience) => (
                 <Experience
                   key={`experience-${experience.company}-${experience.title}`}
@@ -716,7 +716,7 @@ export default function Home({
       </Section>
       <Section id="projects-section" className="flex justify-center">
         <Layout className="flex flex-col items-center px-6">
-          <div>
+          <div className="w-full">
             <div
               className={cn(inter700.className, "my-8 text-4xl sm:text-5xl")}
             >
