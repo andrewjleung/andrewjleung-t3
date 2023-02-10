@@ -444,9 +444,9 @@ function Experiences({
   return (
     <div id="experiences" className={cn("relative", className)}>
       <div className="flex h-full w-fit flex-col">
-        <div className="ml-1 h-10 w-0.5 -translate-x-1/2 bg-gradient-to-b from-white to-neutral-300 dark:from-black dark:to-neutral-800" />
+        <div className="ml-1 h-10 w-0.5 -translate-x-1/2 bg-gradient-to-b from-transparent to-black dark:from-black dark:to-neutral-800" />
         {children}
-        <div className="ml-1 h-10 w-0.5 -translate-x-1/2 bg-gradient-to-t from-white to-neutral-300 dark:from-black dark:to-neutral-800" />
+        <div className="ml-1 h-10 w-0.5 -translate-x-1/2 bg-gradient-to-t from-transparent to-black dark:from-black dark:to-neutral-800" />
       </div>
     </div>
   );
@@ -467,12 +467,12 @@ function Experience({
   return (
     <div className="group group flex flex-row items-stretch gap-6 sm:gap-8">
       <div className="relative">
-        <div className="absolute top-1/2 z-10 h-2 w-2 scale-110 rounded-full bg-neutral-300 transition-all duration-200  group-hover:bg-neutral-400 dark:bg-neutral-800 dark:group-hover:bg-neutral-400" />
-        <div className="ml-1 h-full w-0.5 -translate-x-1/2 bg-neutral-300 dark:bg-neutral-800" />
+        <div className="absolute top-1/2 z-10 h-2 w-2 scale-110 rounded-full bg-black transition-all duration-200 dark:bg-neutral-800 dark:group-hover:bg-neutral-400" />
+        <div className="ml-1 h-full w-0.5 -translate-x-1/2 bg-black dark:bg-neutral-800" />
       </div>
       <div
         className={cn(
-          "relative my-4 flex w-full flex-row items-center gap-4 rounded-xl border-1 border-black bg-gradient-to-br p-4 transition-transform duration-200 group-hover:translate-x-2 group-hover:duration-300 dark:border-neutral-800 dark:from-black dark:via-neutral-900/40 dark:to-neutral-900/75 md:my-6 md:gap-6 md:p-6",
+          "relative my-4 flex w-full flex-row items-center gap-4 rounded-xl bg-gradient-to-br p-4 outline outline-1 outline-black transition-transform duration-200 group-hover:translate-x-2 group-hover:duration-300 dark:border-neutral-800 dark:from-black dark:via-neutral-900/40 dark:to-neutral-900/75 md:my-6 md:gap-6 md:p-6",
           className
         )}
       >
