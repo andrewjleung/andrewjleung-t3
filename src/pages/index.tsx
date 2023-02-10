@@ -472,7 +472,7 @@ function Experience({
       </div>
       <div
         className={cn(
-          "relative my-4 flex w-full flex-row items-center gap-4 rounded-xl border-1 border-black bg-gradient-to-br p-4 transition-transform duration-200 group-hover:translate-x-2 group-hover:duration-300 dark:border-neutral-800 dark:from-black dark:via-neutral-900/40 dark:to-neutral-900/75 sm:my-6 sm:gap-6 sm:p-6",
+          "relative my-4 flex w-full flex-row items-center gap-4 rounded-xl border-1 border-black bg-gradient-to-br p-4 transition-transform duration-200 group-hover:translate-x-2 group-hover:duration-300 dark:border-neutral-800 dark:from-black dark:via-neutral-900/40 dark:to-neutral-900/75 md:my-6 md:gap-6 md:p-6",
           className
         )}
       >
@@ -490,20 +490,20 @@ function Experience({
         <div className="shrink">
           <div className="flex flex-col-reverse justify-between md:flex-row">
             <Link
-              className={cn(inter800.className, "text-xl sm:text-2xl")}
+              className={cn(inter800.className, "text-xl md:text-2xl")}
               href={link}
               as="span"
             >
               {company}
             </Link>
-            <span className="mb-2 text-xs text-black dark:text-neutral-400 sm:text-sm md:mb-0">
+            <span className="mb-2 text-xs text-black dark:text-neutral-400 md:mb-0">
               {formattedStartDate} - {formattedEndDate}
             </span>
           </div>
-          <div className="text-base italic dark:text-neutral-200 sm:text-lg">
+          <div className="text-base italic dark:text-neutral-200 md:text-lg">
             {title}
           </div>
-          <div className="mt-2 text-xs dark:text-neutral-400 sm:text-base">
+          <div className="mt-2 text-xs dark:text-neutral-400 md:text-base">
             {description}
           </div>
         </div>
