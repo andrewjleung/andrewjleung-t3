@@ -55,7 +55,7 @@ const EXPERIENCES: Experience[] = [
   {
     startDate: new Date("2020-09-01T00:00:00"),
     endDate: new Date("2021-05-02"),
-    company: "Sandbox @ NEU",
+    company: "Sandbox @ NU",
     title: "Software Developer",
     description:
       "Implemented full-stack features for GraduateNU, a course-planning web app for students, using TypeScript, React, and Ruby on Rails.",
