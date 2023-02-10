@@ -46,7 +46,7 @@ const EXPERIENCES: Experience[] = [
     company: "Poloniex",
     title: "Software Engineer Co-op",
     description:
-      "Developed internal web tools with TypeScript, React, and PHP. Led migration to a CMS and made key contributions to the implementation of a permissions microservice.",
+      "Developed internal web tools with TypeScript, React, and PHP. Led migration to a CMS and helped design and implement a permissions microservice.",
     image: "/poloniex.png",
     link: "https://www.poloniex.com/",
     animation: "motion-safe:animate-fade-up-0",
@@ -55,7 +55,7 @@ const EXPERIENCES: Experience[] = [
   {
     startDate: new Date("2020-09-01T00:00:00"),
     endDate: new Date("2021-05-02"),
-    company: "Sandbox at Northeastern University",
+    company: "Sandbox @ NEU",
     title: "Software Developer",
     description:
       "Implemented full-stack features for GraduateNU, a course-planning web app for students, using TypeScript, React, and Ruby on Rails.",
@@ -80,7 +80,7 @@ const EXPERIENCES: Experience[] = [
     company: "Curriculum Associates",
     title: "Software Engineer Co-op",
     description:
-      "Worked on quality assurance tasks, Liquibase migrations, and SQL query templates in Java.",
+      "Worked on QA, database migrations with Liquibase, and SQL query templates in Java.",
     image: "/curriculum-associates.jpg",
     link: "https://www.curriculumassociates.com/",
     animation: "motion-safe:animate-fade-up-3",
@@ -472,31 +472,34 @@ function Experience({
       </div>
       <div
         className={cn(
-          "my-6 flex flex-row items-center gap-6 transition-transform duration-200 group-hover:translate-x-2 group-hover:duration-300 sm:my-8 sm:gap-8",
+          "relative my-4 flex w-full flex-row items-center gap-4 rounded-xl border-1 border-black bg-gradient-to-br p-4 transition-transform duration-200 group-hover:translate-x-2 group-hover:duration-300 dark:border-neutral-800 dark:from-black dark:via-neutral-900/40 dark:to-neutral-900/75 sm:my-6 sm:gap-6 sm:p-6",
           className
         )}
       >
         <Link
-          className="relative h-20 w-20 shrink-0 sm:h-24 sm:w-24"
+          className="relative h-12 w-12 shrink-0 sm:h-16 sm:w-16"
           href={link}
         >
           <Image
             src={image}
             fill
-            className="rounded-xl object-cover transition-all duration-300 ease-in-out dark:brightness-75 dark:grayscale dark:group-hover:brightness-100 dark:group-hover:grayscale-0"
+            className="rounded-xl object-cover transition-all duration-300 ease-in-out dark:opacity-80 dark:brightness-75 dark:grayscale dark:group-hover:opacity-100 dark:group-hover:brightness-100 dark:group-hover:grayscale-0"
             alt={`${company} logo`}
           />
         </Link>
         <div className="shrink">
-          <div className="mb-2 text-xs text-black dark:text-neutral-400 sm:text-sm">
-            {formattedStartDate} - {formattedEndDate}
+          <div className="flex flex-col-reverse justify-between md:flex-row">
+            <Link
+              className={cn(inter800.className, "text-xl sm:text-2xl")}
+              href={link}
+              as="span"
+            >
+              {company}
+            </Link>
+            <span className="mb-2 text-xs text-black dark:text-neutral-400 sm:text-sm md:mb-0">
+              {formattedStartDate} - {formattedEndDate}
+            </span>
           </div>
-          <Link
-            className={cn(inter800.className, "text-xl sm:text-2xl")}
-            href={link}
-          >
-            {company}
-          </Link>
           <div className="text-base italic dark:text-neutral-200 sm:text-lg">
             {title}
           </div>
@@ -566,7 +569,7 @@ export default function Home({
 
   const { viewed: projectsSectionViewed } = useIntersection(
     "projects-section",
-    { threshold: 1 }
+    { threshold: 0.75 }
   );
 
   return (
@@ -692,7 +695,7 @@ export default function Home({
         </Layout>
       </Section>
       <Section id="experience-section">
-        <Layout className="flex flex-col items-center px-6">
+        <Layout className="flex flex-col items-center px-6 sm:px-24">
           <div className="w-full">
             <div
               className={cn(inter700.className, "my-8 text-4xl sm:text-5xl")}
@@ -715,7 +718,7 @@ export default function Home({
         </Layout>
       </Section>
       <Section id="projects-section" className="flex justify-center">
-        <Layout className="flex flex-col items-center px-6">
+        <Layout className="flex flex-col items-center px-6 sm:px-24">
           <div className="w-full">
             <div
               className={cn(inter700.className, "my-8 text-4xl sm:text-5xl")}
