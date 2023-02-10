@@ -472,7 +472,7 @@ function Experience({
       </div>
       <div
         className={cn(
-          "relative my-4 flex w-full flex-row items-center gap-4 rounded-xl bg-gradient-to-br p-4 outline outline-1 outline-black transition-transform duration-200 group-hover:translate-x-2 group-hover:duration-300 dark:border-neutral-800 dark:from-black dark:via-neutral-900/40 dark:to-neutral-900/75 md:my-6 md:gap-6 md:p-6",
+          "relative my-4 flex w-full flex-row items-center gap-4 rounded-xl border-1 border-black bg-gradient-to-br p-4 transition-transform duration-200 group-hover:translate-x-2 group-hover:duration-300 dark:border-neutral-800 dark:from-black dark:via-neutral-900/40 dark:to-neutral-900/75 md:my-6 md:gap-6 md:p-6",
           className
         )}
       >
