@@ -492,7 +492,6 @@ function Experience({
             <Link
               className={cn(inter800.className, "text-xl md:text-2xl")}
               href={link}
-              as="span"
             >
               {company}
             </Link>
