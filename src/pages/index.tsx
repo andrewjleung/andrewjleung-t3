@@ -490,7 +490,7 @@ function Experience({
         <div className="shrink">
           <div className="flex flex-col-reverse justify-between md:flex-row">
             <Link
-              className={cn(inter800.className, "text-xl md:text-2xl")}
+              className={cn(inter800.className, "w-fit text-xl md:text-2xl")}
               href={link}
             >
               {company}
