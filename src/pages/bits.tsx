@@ -38,7 +38,7 @@ function Code({ node, theme }: { node: Code; theme: string }) {
   return (
     <div className="relative">
       <button
-        className="absolute top-2 right-2 cursor-pointer rounded-md text-gray-300 transition duration-100 ease-in-out hover:text-blue-300 active:text-gray-300 dark:text-white dark:hover:text-blue-400 dark:active:text-gray-300 md:m-1"
+        className="absolute top-2 right-2 cursor-pointer text-neutral-300 transition duration-100 ease-in-out hover:text-blue-300 active:text-neutral-300 dark:text-neutral-500 dark:hover:text-blue-400 dark:active:text-neutral-300 md:m-1"
         onClick={() => {
           // TODO: Make responsive (right now it overlaps the code).
           // TODO: Add some feedback for copying to clipboard.
@@ -87,7 +87,10 @@ function Code({ node, theme }: { node: Code; theme: string }) {
       >
         {({ className, style, tokens, getLineProps, getTokenProps }) => (
           <pre
-            className={cn(className, "overflow-auto rounded-md py-2 px-3")}
+            className={cn(
+              className,
+              "overflow-auto rounded-md py-2 px-3 outline outline-2 outline-neutral-200 dark:outline-neutral-800"
+            )}
             style={style}
           >
             {tokens.map((line, i) => (
@@ -193,7 +196,8 @@ function Bit({
           locale={locale}
           className="whitespace-nowrap"
         />
-        <BitTags tags={bit.tags} />
+        {/* TODO: Show tags once they're fully functional. */}
+        {/* <BitTags tags={bit.tags} /> */}
       </div>
       <div className="prose prose-sm w-full dark:prose-invert lg:prose-base">
         <BitContent content={bit.content} theme={theme} />
@@ -217,7 +221,7 @@ export default function Bits({
 
   return (
     <Container>
-      <Layout>
+      <Layout className="flex flex-col items-center px-6 sm:px-24">
         {/* TODO: Set up filtering bits by tags. */}
         <div className="flex w-full justify-center">
           <div
