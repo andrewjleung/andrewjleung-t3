@@ -4,9 +4,24 @@
  * This is especially useful for Docker builds.
  */
 !process.env.SKIP_ENV_VALIDATION && (await import("./src/env/server.mjs"));
+import mdx from "@next/mdx";
+
+const withMDX = mdx({
+  extension: /\.mdx?$/,
+  options: {
+    // If you use remark-gfm, you'll need to use next.config.mjs
+    // as the package is ESM only
+    // https://github.com/remarkjs/remark-gfm#install
+    remarkPlugins: [],
+    rehypePlugins: [],
+    // If you use `MDXProvider`, uncomment the following line.
+    // providerImportSource: "@mdx-js/react",
+  },
+});
 
 /** @type {import("next").NextConfig} */
 const config = {
+  pageExtensions: ["js", "jsx", "ts", "tsx", "md", "mdx"],
   reactStrictMode: true,
   swcMinify: true,
   i18n: {
@@ -24,4 +39,5 @@ const config = {
     ],
   },
 };
-export default config;
+
+export default withMDX(config);

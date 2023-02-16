@@ -3,10 +3,8 @@ import Link from "next/link";
 import React, { useState } from "react";
 import cn from "classnames";
 import ThemeToggler from "./ThemeToggler";
-import { Inter } from "@next/font/google";
+import { inter300 } from "./Fonts";
 import { useRouter } from "next/router";
-
-const inter300 = Inter({ weight: "300", subsets: ["latin"] });
 
 type Metadata = {
   title: string;
@@ -50,7 +48,9 @@ function NavItem({
   className?: string;
 }) {
   const { pathname } = useRouter();
-  const isSelected = pathname === href;
+  const isSelected =
+    href === "/" ? href === pathname : pathname.startsWith(href);
+  console.log(href, pathname);
 
   return (
     <Link

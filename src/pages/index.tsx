@@ -1,5 +1,5 @@
 import Container from "../components/Container";
-import { Inter } from "@next/font/google";
+import { inter700, inter800 } from "../components/Fonts";
 import cn from "classnames";
 import Balancer from "react-wrap-balancer";
 import useInterval from "../hooks/useInterval";
@@ -24,9 +24,6 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import dayjs from "dayjs";
 
 dayjs.extend(relativeTime);
-
-const inter700 = Inter({ weight: "700", subsets: ["latin"] });
-const inter800 = Inter({ weight: "800", subsets: ["latin"] });
 
 type Experience = {
   startDate: Date;
@@ -620,7 +617,7 @@ export default function Home({
                 <MapPinIcon className="inline h-4 w-4" />
                 Open to remote or near Dallas–Fort Worth, TX
               </div>
-              {lastPlayedTrack && (
+              {lastPlayedTrack ? (
                 <div className="mt-1 flex flex-row items-center gap-2">
                   <DeviceSpeakerIcon className="inline h-4 w-4" />
                   <SpotifyCurrentlyListening
@@ -629,8 +626,8 @@ export default function Home({
                     lastPlayedTrack={lastPlayedTrack}
                   />
                 </div>
-              )}
-              {lastCommit && (
+              ) : null}
+              {lastCommit ? (
                 <div className="mt-1 flex flex-row items-center gap-2">
                   <CodeIcon className="inline h-4 w-4" />
                   <div>
@@ -651,7 +648,7 @@ export default function Home({
                     {dayjs(lastCommit.createdAt).fromNow()}
                   </div>
                 </div>
-              )}
+              ) : null}
             </div>
             <div className="mt-8 flex flex-row items-center gap-3 text-sm text-black dark:text-neutral-400">
               <IconLink
@@ -682,14 +679,6 @@ export default function Home({
                 <RightChevronIcon className="h-4 w-4" />
               </Link>
             </div>
-            {/* <div className="relative h-40 w-40 rounded-xl">
-              <Image
-                className="rounded-xl object-cover"
-                src="/profile.png"
-                alt="Me!"
-                fill
-              />
-            </div> */}
           </div>
         </Layout>
       </Section>
