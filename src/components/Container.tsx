@@ -50,7 +50,6 @@ function NavItem({
   const { pathname } = useRouter();
   const isSelected =
     href === "/" ? href === pathname : pathname.startsWith(href);
-  console.log(href, pathname);
 
   return (
     <Link

@@ -22,6 +22,7 @@ import { getLastCommitFromEvents } from "../server/github";
 import { getGitHubEvents } from "../server/github";
 import relativeTime from "dayjs/plugin/relativeTime";
 import dayjs from "dayjs";
+import Card from "../components/Card";
 
 dayjs.extend(relativeTime);
 
@@ -467,9 +468,9 @@ function Experience({
         <div className="absolute top-1/2 z-10 h-2 w-2 scale-110 rounded-full bg-black transition-all duration-200 dark:bg-neutral-800 dark:group-hover:bg-neutral-400" />
         <div className="ml-1 h-full w-0.5 -translate-x-1/2 bg-black dark:bg-neutral-800" />
       </div>
-      <div
+      <Card
         className={cn(
-          "relative my-4 flex w-full flex-row items-center gap-4 rounded-xl border-1 border-black bg-gradient-to-br p-4 transition-transform duration-200 group-hover:translate-x-2 group-hover:duration-300 dark:border-neutral-800 dark:from-black dark:via-neutral-900/40 dark:to-neutral-900/75 md:my-6 md:gap-6 md:p-6",
+          "relative my-4 flex w-full flex-row items-center gap-4 p-4 transition-all group-hover:translate-x-2 md:gap-6 md:p-6",
           className
         )}
       >
@@ -503,7 +504,7 @@ function Experience({
             {description}
           </div>
         </div>
-      </div>
+      </Card>
     </div>
   );
 }
@@ -535,20 +536,14 @@ function Project({
   className?: string;
 }) {
   return (
-    <div
-      className={cn(
-        className,
-        projectClassName,
-        "rounded-xl border-1 border-black bg-gradient-to-br p-6 dark:border-neutral-800 dark:from-black dark:via-neutral-900/40 dark:to-neutral-900/75"
-      )}
-    >
+    <Card className={cn("p-6", className, projectClassName)}>
       <div className={cn(inter700.className, "text-2xl sm:text-4xl")}>
         {title}
       </div>
       <Balancer className="mt-6" ratio={0.5}>
         {description}
       </Balancer>
-    </div>
+    </Card>
   );
 }
 
