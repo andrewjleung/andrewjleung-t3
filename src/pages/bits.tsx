@@ -202,7 +202,7 @@ export default function Bits({
               <>
                 <div
                   key={`bit-date-${bit.id}`}
-                  className="mr-6 flex w-full flex-row gap-2 border-t-2 border-neutral-800 py-4 text-sm md:flex-col lg:text-base"
+                  className="mr-6 flex w-full flex-row gap-2 border-t-1 border-neutral-800 py-4 text-sm md:flex-col lg:text-base"
                 >
                   <BitDate
                     date={bit._firstPublishedAt || undefined}
@@ -214,7 +214,7 @@ export default function Bits({
                 </div>
                 <div
                   key={`bit-content-${bit.id}`}
-                  className="prose prose-sm col-span-3 w-full border-neutral-800 dark:prose-invert md:border-t-2 md:py-4 lg:prose-base"
+                  className="prose prose-sm col-span-3 w-full border-neutral-800 dark:prose-invert md:border-t-1 md:py-4 lg:prose-base"
                 >
                   <BitContent content={bit.content} theme={resolvedTheme} />
                 </div>
