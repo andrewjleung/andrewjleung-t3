@@ -89,7 +89,7 @@ function Code({ node, theme }: { node: Code; theme: string }) {
           <pre
             className={cn(
               className,
-              "overflow-auto rounded-md py-2 px-3 outline outline-2 outline-neutral-200 dark:outline-neutral-800"
+              "rounded-md py-2 px-3 outline outline-2 outline-neutral-200 dark:outline-neutral-800"
             )}
             style={style}
           >
@@ -177,39 +177,11 @@ function BitTags({
   );
 }
 
-function Bit({
-  bit,
-  theme,
-  className,
-}: {
-  bit: Bit;
-  theme: string;
-  className?: string;
-}) {
-  const { locale } = useRouter();
-
-  return (
-    <div className={cn("flex flex-col py-6 md:flex-row", className)}>
-      <div className="mb-3 flex w-full flex-row gap-2 text-sm md:mr-2 md:w-52 md:flex-col lg:text-base">
-        <BitDate
-          date={bit._firstPublishedAt || undefined}
-          locale={locale}
-          className="whitespace-nowrap"
-        />
-        {/* TODO: Show tags once they're fully functional. */}
-        {/* <BitTags tags={bit.tags} /> */}
-      </div>
-      <div className="prose prose-sm w-full dark:prose-invert lg:prose-base">
-        <BitContent content={bit.content} theme={theme} />
-      </div>
-    </div>
-  );
-}
-
 export default function Bits({
   bits,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const { resolvedTheme } = useTheme();
+  const { locale } = useRouter();
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -224,13 +196,29 @@ export default function Bits({
       <Layout className="flex flex-col items-center px-6 sm:px-24">
         {/* TODO: Set up filtering bits by tags. */}
         <div className="flex w-full justify-center">
-          <div
-            className={cn(
-              "flex min-w-0 flex-col divide-y-1 dark:divide-neutral-800"
-            )}
-          >
+          <div className={cn("grid min-w-0 grid-cols-1 md:grid-cols-4")}>
             {bits.allBits.map((bit) => (
-              <Bit key={bit.id} bit={bit} theme={resolvedTheme} />
+              // TODO: React is complaining still about missing keys.
+              <>
+                <div
+                  key={`bit-date-${bit.id}`}
+                  className="mr-6 flex w-full flex-row gap-2 border-t-2 border-neutral-800 py-4 text-sm md:flex-col lg:text-base"
+                >
+                  <BitDate
+                    date={bit._firstPublishedAt || undefined}
+                    locale={locale}
+                    className="whitespace-nowrap"
+                  />
+                  {/* TODO: Show tags once they're fully functional. */}
+                  {/* <BitTags tags={bit.tags} /> */}
+                </div>
+                <div
+                  key={`bit-content-${bit.id}`}
+                  className="prose prose-sm col-span-3 w-full border-neutral-800 dark:prose-invert md:border-t-2 md:py-4 lg:prose-base"
+                >
+                  <BitContent content={bit.content} theme={resolvedTheme} />
+                </div>
+              </>
             ))}
           </div>
         </div>
