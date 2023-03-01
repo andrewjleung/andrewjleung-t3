@@ -18,6 +18,7 @@ import cn from "classnames";
 import { useRouter } from "next/router";
 import useInterval from "../hooks/useInterval";
 import Layout from "../components/Layout";
+import { env } from "../env/server.mjs";
 
 type Language = React.ComponentProps<typeof Highlight>["language"];
 const language: z.ZodType<Language> = z.enum(["typescript", "python"]);
@@ -89,7 +90,7 @@ function Code({ node, theme }: { node: Code; theme: string }) {
           <pre
             className={cn(
               className,
-              "rounded-md py-2 px-3 outline outline-2 outline-neutral-200 dark:outline-neutral-800"
+              "rounded-md py-2 px-3 outline outline-1 outline-neutral-200 dark:outline-neutral-800"
             )}
             style={style}
           >
@@ -202,7 +203,7 @@ export default function Bits({
               <>
                 <div
                   key={`bit-date-${bit.id}`}
-                  className="mr-6 flex w-full flex-row gap-2 border-t-1 border-neutral-800 py-4 text-sm md:flex-col lg:text-base"
+                  className="mr-6 flex w-full flex-row gap-2 border-t-1 border-neutral-200 py-4 text-sm dark:border-neutral-800 md:flex-col lg:text-base"
                 >
                   <BitDate
                     date={bit._firstPublishedAt || undefined}
@@ -214,7 +215,7 @@ export default function Bits({
                 </div>
                 <div
                   key={`bit-content-${bit.id}`}
-                  className="prose prose-sm col-span-3 w-full border-neutral-800 dark:prose-invert md:border-t-1 md:py-4 lg:prose-base"
+                  className="prose prose-sm col-span-3 w-full border-neutral-200 dark:border-neutral-800 dark:prose-invert md:border-t-1 md:py-4 lg:prose-base"
                 >
                   <BitContent content={bit.content} theme={resolvedTheme} />
                 </div>
@@ -239,5 +240,7 @@ export const getStaticProps: GetStaticProps<{
     },
     // TODO: Setup on-demand revalidation: https://nextjs.org/docs/basic-features/data-fetching/incremental-static-regeneration
     revalidate: 60,
+    // TODO: Unhide page when ready.
+    notFound: env.NODE_ENV === "production",
   };
 };
