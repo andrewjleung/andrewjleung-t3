@@ -667,7 +667,7 @@ export default function Home({
                 className="motion-safe:animate-fade-up-5"
               />
               <Link
-                href="/resume"
+                href="https://raw.githubusercontent.com/andrewjleung/resumes/main/AndrewLeung_Resume.pdf"
                 className="ml-2 flex w-fit flex-row items-center gap-1 rounded-full border-1 border-black px-4 py-2 transition-all duration-200 hover:bg-black hover:text-white motion-safe:animate-fade-up-6 motion-safe:animate-fade-up-5 dark:border-neutral-400 dark:hover:border-white dark:hover:bg-transparent dark:hover:text-white"
               >
                 <span className="whitespace-nowrap text-sm">My resume</span>

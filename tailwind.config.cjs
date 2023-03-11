@@ -96,7 +96,7 @@ module.exports = {
         15: "0.15",
       },
       boxShadow: {
-        card: "rgba(149, 157, 165, 0.2) 0px 8px 24px;",
+        card: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
       },
     },
     variants: {
