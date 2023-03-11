@@ -442,9 +442,9 @@ function Experiences({
   return (
     <div id="experiences" className={cn("relative", className)}>
       <div className="flex h-full w-fit flex-col">
-        <div className="ml-1 h-10 w-0.5 -translate-x-1/2 bg-gradient-to-b from-transparent to-black dark:from-black dark:to-neutral-800" />
+        <div className="ml-1 h-10 w-[0.0625rem] -translate-x-1/2 bg-gradient-to-b from-transparent to-neutral-200 dark:from-black dark:to-neutral-800" />
         {children}
-        <div className="ml-1 h-10 w-0.5 -translate-x-1/2 bg-gradient-to-t from-transparent to-black dark:from-black dark:to-neutral-800" />
+        <div className="ml-1 h-10 w-[0.0625rem] -translate-x-1/2 bg-gradient-to-t from-transparent to-neutral-200 dark:from-black dark:to-neutral-800" />
       </div>
     </div>
   );
@@ -465,12 +465,12 @@ function Experience({
   return (
     <div className="group group flex flex-row items-stretch gap-6 sm:gap-8">
       <div className="relative">
-        <div className="absolute top-1/2 z-10 h-2 w-2 scale-110 rounded-full bg-black transition-all duration-200 dark:bg-neutral-800 dark:group-hover:bg-neutral-400" />
-        <div className="ml-1 h-full w-0.5 -translate-x-1/2 bg-black dark:bg-neutral-800" />
+        <div className="absolute top-1/2 z-10 h-2 w-2 scale-110 rounded-full bg-neutral-200 transition-all duration-200 group-hover:bg-black dark:bg-neutral-800 dark:group-hover:bg-neutral-400" />
+        <div className="ml-1 h-full w-[0.0625rem] -translate-x-1/2 bg-neutral-200 dark:bg-neutral-800" />
       </div>
       <Card
         className={cn(
-          "relative my-4 flex w-full flex-row items-center gap-4 p-4 transition-all group-hover:translate-x-2 md:gap-6 md:p-6",
+          "relative my-4 flex w-full flex-row items-center gap-4 p-6 md:gap-6",
           className
         )}
       >
@@ -493,7 +493,7 @@ function Experience({
             >
               {company}
             </Link>
-            <span className="mb-2 text-xs text-black dark:text-neutral-400 md:mb-0">
+            <span className="mb-2 text-xs text-black dark:text-neutral-400 md:mb-0 lg:text-sm">
               {formattedStartDate} - {formattedEndDate}
             </span>
           </div>

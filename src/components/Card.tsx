@@ -10,7 +10,7 @@ export default function Card({
   return (
     <div
       className={cn(
-        "rounded-xl border-1 border-black bg-gradient-to-br transition-all duration-300 ease-in-out dark:border-neutral-800 dark:from-black dark:via-neutral-900/40 dark:to-neutral-900/75 hover:dark:border-neutral-600 hover:dark:bg-neutral-900/50",
+        "relative rounded-xl bg-white bg-gradient-to-br outline outline-1 outline-neutral-200 transition-all duration-300 ease-in-out after:absolute after:left-0 after:top-0 after:-z-10 after:block after:h-full after:w-full after:shadow-card hover:outline-black dark:border-neutral-800 dark:bg-black dark:from-neutral-900/80 dark:via-neutral-900/60 dark:to-black dark:outline-neutral-800  dark:after:shadow-none hover:dark:border-neutral-600 hover:dark:bg-neutral-900/70",
         className
       )}
     >

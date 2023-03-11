@@ -17,10 +17,12 @@ function BlogPost({
   slug: string;
 }) {
   return (
-    <Card className="w-full p-6">
+    <Card className="w-full">
       <Link href={`/blog/${slug}`}>
-        <h1 className={cn(inter700.className, "mb-3 text-2xl")}>{title}</h1>
-        <p>{description}</p>
+        <div className="p-6">
+          <h1 className={cn(inter700.className, "mb-3 text-2xl")}>{title}</h1>
+          <p>{description}</p>
+        </div>
       </Link>
     </Card>
   );
