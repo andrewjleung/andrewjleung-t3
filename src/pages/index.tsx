@@ -731,10 +731,10 @@ export default function Home({
 }
 
 type GetServerSidePropsData = {
-  topTracks: SpotifyPlayableItem[] | null;
+  topTracks?: SpotifyPlayableItem[];
   isCurrentlyPlaying: boolean;
-  lastPlayedTrack: SpotifyPlayableItem | null;
-  lastCommit: ReturnType<typeof getLastCommitFromEvents> | null;
+  lastPlayedTrack?: SpotifyPlayableItem;
+  lastCommit?: ReturnType<typeof getLastCommitFromEvents>;
 };
 
 const getFulfilled = <T,>(p: PromiseSettledResult<T>): T | undefined =>
@@ -748,10 +748,7 @@ export const getServerSideProps: GetServerSideProps<
   if (accessToken === undefined) {
     return {
       props: {
-        topTracks: null,
         isCurrentlyPlaying: false,
-        lastPlayedTrack: null,
-        lastCommit: null,
       },
     };
   }
@@ -779,10 +776,10 @@ export const getServerSideProps: GetServerSideProps<
 
   return {
     props: {
-      topTracks: topTracks || null,
+      topTracks: topTracks,
       isCurrentlyPlaying: currentlyPlayingItem?.is_playing || false,
-      lastPlayedTrack: currentlyPlayingItem?.item || lastPlayedTrack || null,
-      lastCommit: lastCommit || null,
+      lastPlayedTrack: currentlyPlayingItem?.item || lastPlayedTrack,
+      lastCommit: lastCommit,
     },
   };
 };

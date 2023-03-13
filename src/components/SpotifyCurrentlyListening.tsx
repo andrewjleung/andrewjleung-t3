@@ -7,12 +7,12 @@ export default function SpotifyCurrentlyListening({
   lastPlayedTrack,
   className,
 }: {
-  topTracks: SpotifyPlayableItem[] | null;
+  topTracks?: SpotifyPlayableItem[];
   isCurrentlyPlaying?: boolean;
-  lastPlayedTrack: SpotifyPlayableItem | null;
+  lastPlayedTrack?: SpotifyPlayableItem;
   className?: string;
 }) {
-  if (isCurrentlyPlaying === null || lastPlayedTrack === null) {
+  if (isCurrentlyPlaying === undefined || lastPlayedTrack === undefined) {
     return null;
   }
 
