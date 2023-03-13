@@ -100,29 +100,11 @@ function NavBar({
   children,
   className,
 }: {
-  animateNavBar?: boolean;
   children: React.ReactNode;
   className?: string;
 }) {
-  const [isOpen, setIsOpen] = useState(false);
-
   return (
-    <div className={cn("flex w-full justify-center ", className)}>
-      {/* <div className="flex w-full max-w-screen-lg flex-row items-center gap-5 p-6 md:hidden">
-        <div className="text-black transition-all duration-200 ease-out dark:text-neutral-500 dark:hover:text-white">
-          <button
-            onClick={() => {
-              setIsOpen((open) => !open);
-            }}
-          >
-            <MenuIcon className="h-8 w-8 cursor-pointer" />
-          </button>
-          <NavMenuMobile isOpen={isOpen} setIsOpen={setIsOpen}>
-            {children}
-          </NavMenuMobile>
-        </div>
-        <ThemeToggler className="ml-auto" />
-      </div> */}
+    <div className={cn("flex w-full justify-center", className)}>
       <div
         className={cn(
           "flex w-full max-w-screen-lg flex-row items-center gap-5 p-6",
@@ -190,8 +172,8 @@ export default function Container({
         <NavBar
           className={cn("z-30", {
             absolute: pathname === "/",
+            " animate-": animateNavBar,
           })}
-          animateNavBar={animateNavBar}
         >
           <NavItem title="Home" href="/" />
           <NavItem title="Blog" href="/blog" />
@@ -199,11 +181,13 @@ export default function Container({
           {/* <NavItem title="Bits" href="/bits" /> */}
           <ThemeToggler className="ml-auto" />
         </NavBar>
-        <div className="relative h-full w-full">{children}</div>
-        <Footer className="mt-auto">
-          <div className="mx-auto whitespace-nowrap text-xs text-neutral-400 sm:ml-auto sm:mr-0">
+        <div className="relative">{children}</div>
+        <Footer
+          className={cn(pathname === "/" ? "absolute bottom-0" : "mt-auto")}
+        >
+          <span className="mx-auto whitespace-nowrap text-xs dark:text-neutral-400 sm:ml-auto sm:mr-0">
             © {new Date().getFullYear()} Andrew Leung. All rights reserved.
-          </div>
+          </span>
         </Footer>
       </div>
     </>

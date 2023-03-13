@@ -564,7 +564,7 @@ export default function Home({
   );
 
   return (
-    <Container id="container">
+    <Container id="container" animateNavBar>
       <div className="invisible absolute top-[50vh] left-[50vw] -z-10 h-5/6 w-full -translate-x-1/2 -translate-y-1/2 rotate-45 skew-y-6 rounded-full bg-transparent bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-neutral-400 via-neutral-900 to-neutral-900 opacity-10 blur-2xl motion-safe:animate-light-up dark:visible" />
       {/* <SectionNav>
         <SectionNavItem
@@ -589,7 +589,7 @@ export default function Home({
         />
       </SectionNav> */}
       <Section id="top-section" className="h-screen w-screen">
-        <Layout className="relative flex h-full w-full items-center justify-center overflow-hidden px-6">
+        <Layout className="relative flex h-full w-full flex-col items-center justify-center overflow-hidden px-6">
           <div className="relative flex flex-col">
             <div
               className={cn(
@@ -677,7 +677,7 @@ export default function Home({
           </div>
         </Layout>
       </Section>
-      <Section id="experience-section">
+      {/* <Section id="experience-section">
         <Layout className="flex flex-col items-center px-6 sm:px-24">
           <div className="w-full">
             <div
@@ -725,7 +725,7 @@ export default function Home({
       </Section>
       <Section id="contact-section" className="flex flex-col justify-center">
         What&apos;s next? Contact me!
-      </Section>
+      </Section> */}
     </Container>
   );
 }
