@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { env } from "../env/server.mjs";
 import { handle200 } from "./utils";
 
 const GitHubPushEventPayload = z.object({
@@ -26,14 +27,14 @@ const GitHubEvent = z.object({
 
 export type GitHubEvent = z.infer<typeof GitHubEvent>;
 
-// TODO: Authenticate this request with a PAT to avoid rate limiting.
 export async function getGitHubEvents(): Promise<GitHubEvent[] | undefined> {
   const response = await fetch(
-    "https://api.github.com/users/andrewjleung/events/public",
+    "https://api.github.com/users/andrewjleung/events",
     {
       method: "GET",
       headers: {
         Accept: "application/vnd.github+json",
+        Authorization: `Bearer ${env.GITHUB_PAT}`,
         "X-GitHub-Api-Version": "2022-11-28",
       },
     }
