@@ -71,7 +71,7 @@ module.exports = {
         },
         "light-up": {
           "0%": { opacity: 0 },
-          "100%": { opacity: 0.1 },
+          "100%": { opacity: 0.25 },
         },
         stretch: {
           "0%": { padding: "0.5rem 1rem" },

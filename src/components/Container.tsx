@@ -1,6 +1,5 @@
 import Head from "next/head";
 import Link from "next/link";
-import React, { useState } from "react";
 import cn from "classnames";
 import ThemeToggler from "./ThemeToggler";
 import { inter300 } from "./Fonts";
@@ -17,26 +16,6 @@ const INITIAL_METADATA: Metadata = {
   description: "My personal landing and portfolio for development and music.",
   image: "/profile.png",
 };
-
-function MenuIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      strokeWidth="0.75"
-      stroke="currentColor"
-      fill="none"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-    >
-      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-      <line x1="4" y1="6" x2="20" y2="6"></line>
-      <line x1="4" y1="12" x2="20" y2="12"></line>
-      <line x1="4" y1="18" x2="20" y2="18"></line>
-    </svg>
-  );
-}
 
 function NavItem({
   title,
@@ -64,35 +43,6 @@ function NavItem({
     >
       {title}
     </Link>
-  );
-}
-
-function NavMenuMobile({
-  children,
-  isOpen,
-  setIsOpen,
-  className,
-}: {
-  children: React.ReactNode;
-  isOpen: boolean;
-  setIsOpen: (open: boolean) => void;
-  className?: string;
-}) {
-  if (!isOpen) {
-    return null;
-  }
-
-  return (
-    <button
-      className="fixed inset-0 h-screen w-screen backdrop-blur-2xl transition-all duration-300"
-      onClick={() => {
-        setIsOpen(false);
-      }}
-    >
-      <div className="absolute m-6 mt-24 box-border flex w-full flex-col gap-3 rounded-xl p-6 text-6xl">
-        {children}
-      </div>
-    </button>
   );
 }
 
@@ -141,7 +91,6 @@ export default function Container({
   metadata = INITIAL_METADATA,
   className,
   id,
-  animateNavBar = false,
 }: {
   children: React.ReactNode;
   metadata?: Metadata;
@@ -150,7 +99,6 @@ export default function Container({
   animateNavBar?: boolean;
 }) {
   const m = { ...INITIAL_METADATA, ...metadata };
-  const { pathname } = useRouter();
 
   return (
     <>
@@ -169,23 +117,16 @@ export default function Container({
           className
         )}
       >
-        <NavBar
-          className={cn("z-30", {
-            absolute: pathname === "/",
-            " animate-": animateNavBar,
-          })}
-        >
+        <NavBar>
           <NavItem title="Home" href="/" />
           <NavItem title="Blog" href="/blog" />
           {/* TODO: Uncomment when bits are ready... */}
           {/* <NavItem title="Bits" href="/bits" /> */}
           <ThemeToggler className="ml-auto" />
         </NavBar>
-        <div className="relative">{children}</div>
-        <Footer
-          className={cn(pathname === "/" ? "absolute bottom-0" : "mt-auto")}
-        >
-          <span className="mx-auto whitespace-nowrap text-xs dark:text-neutral-400 sm:ml-auto sm:mr-0">
+        <div className="relative my-auto">{children}</div>
+        <Footer>
+          <span className="ml-auto whitespace-nowrap text-2xs dark:text-neutral-400">
             © {new Date().getFullYear()} Andrew Leung. All rights reserved.
           </span>
         </Footer>

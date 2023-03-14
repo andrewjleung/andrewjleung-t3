@@ -553,20 +553,21 @@ export default function Home({
   lastPlayedTrack,
   lastCommit,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const { viewed: experienceSectionViewed } = useIntersection(
-    "experience-section",
-    { threshold: 0.3 }
-  );
+  // const { viewed: experienceSectionViewed } = useIntersection(
+  //   "experience-section",
+  //   { threshold: 0.3 }
+  // );
 
-  const { viewed: projectsSectionViewed } = useIntersection(
-    "projects-section",
-    { threshold: 0.75 }
-  );
+  // const { viewed: projectsSectionViewed } = useIntersection(
+  //   "projects-section",
+  //   { threshold: 0.75 }
+  // );
 
   return (
-    <Container id="container" animateNavBar>
-      <div className="invisible absolute top-[50vh] left-[50vw] -z-10 h-5/6 w-full -translate-x-1/2 -translate-y-1/2 rotate-45 skew-y-6 rounded-full bg-transparent bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-neutral-400 via-neutral-900 to-neutral-900 opacity-10 blur-2xl motion-safe:animate-light-up dark:visible" />
-      {/* <SectionNav>
+    <div className="relative overflow-hidden">
+      <div className="invisible absolute top-[50vh] left-[50vw] -z-10 h-5/6 w-full -translate-x-1/2 -translate-y-1/2 -rotate-45 skew-y-6 rounded-full bg-transparent bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-neutral-400 via-neutral-900 to-neutral-900 opacity-[0.25] blur-3xl motion-safe:animate-light-up dark:visible xl:w-5/6" />
+      <Container id="container" animateNavBar>
+        {/* <SectionNav>
         <SectionNavItem
           id="top-section"
           title="Top"
@@ -588,96 +589,102 @@ export default function Home({
           icon={<EmailIcon className="h-4 w-4" />}
         />
       </SectionNav> */}
-      <Section id="top-section" className="h-screen w-screen">
-        <Layout className="relative flex h-full w-full flex-col items-center justify-center overflow-hidden px-6">
-          <div className="relative flex flex-col">
-            <div
-              className={cn(
-                inter700.className,
-                "relative whitespace-nowrap text-5xl motion-safe:animate-fade-up-0 md:text-6xl"
-              )}
-            >
-              Andrew Leung
-            </div>
-            <Balancer
-              ratio={1}
-              as="div"
-              className="mt-6 text-lg text-black motion-safe:animate-fade-up-1 dark:text-neutral-300 md:text-xl"
-            >
-              Software engineer seeking full-time, full-stack opportunities.
-              Looking to improve the lives of developers and users alike.
-            </Balancer>
-            <div className="mt-6 text-xs text-black motion-safe:animate-fade-up-2 dark:text-neutral-400 sm:text-sm">
-              <div className="flex flex-row items-center gap-2">
-                <MapPinIcon className="inline h-4 w-4" />
-                Open to remote or near Dallas–Fort Worth, TX
-              </div>
-              {lastPlayedTrack ? (
-                <div className="mt-1 flex flex-row items-center gap-2">
-                  <DeviceSpeakerIcon className="inline h-4 w-4" />
-                  <SpotifyCurrentlyListening
-                    topTracks={topTracks}
-                    isCurrentlyPlaying={isCurrentlyPlaying}
-                    lastPlayedTrack={lastPlayedTrack}
-                  />
-                </div>
-              ) : null}
-              {lastCommit ? (
-                <div className="mt-1 flex flex-row items-center gap-2">
-                  <CodeIcon className="inline h-4 w-4" />
-                  <div>
-                    Pushed{" "}
-                    <Link
-                      href={lastCommit.href}
-                      className="hover:underline dark:hover:text-white"
-                    >
-                      {lastCommit.sha.substring(0, 7)}
-                    </Link>{" "}
-                    to{" "}
-                    <Link
-                      href={`https://github.com/${lastCommit.repo}`}
-                      className="hover:underline dark:hover:text-white"
-                    >
-                      {lastCommit.repo}
-                    </Link>{" "}
-                    {dayjs(lastCommit.createdAt).fromNow()}
-                  </div>
-                </div>
-              ) : null}
-            </div>
-            <div className="mt-8 flex flex-row items-center gap-3 text-sm text-black dark:text-neutral-400">
-              <IconLink
-                href="https://github.com/andrewjleung"
-                Icon={GitHubIcon}
-                className="motion-safe:animate-fade-up-2"
-              />
-              <IconLink
-                href="https://www.linkedin.com/in/andrewjleung-"
-                Icon={LinkedInIcon}
-                className="motion-safe:animate-fade-up-3"
-              />
-              <IconLink
-                href="https://open.spotify.com/artist/00zDjeTQDVOFlNttOnv9bc"
-                Icon={SpotifyIcon}
-                className="motion-safe:animate-fade-up-4"
-              />
-              <IconLink
-                href="https://www.youtube.com/channel/UCVxaN-2GATE-3Ag9RTGrIXw"
-                Icon={YouTubeIcon}
-                className="motion-safe:animate-fade-up-5"
-              />
-              <Link
-                href="https://raw.githubusercontent.com/andrewjleung/resumes/main/AndrewLeung_Resume.pdf"
-                className="ml-2 flex w-fit flex-row items-center gap-1 rounded-full border-1 border-black px-4 py-2 transition-all duration-200 hover:bg-black hover:text-white motion-safe:animate-fade-up-6 motion-safe:animate-fade-up-5 dark:border-neutral-400 dark:hover:border-white dark:hover:bg-transparent dark:hover:text-white"
+        <Section id="top-section" className="">
+          <Layout className="relative flex h-full w-full flex-col items-center justify-center px-6">
+            <div className="relative flex flex-col">
+              <div
+                className={cn(
+                  inter700.className,
+                  "relative whitespace-nowrap text-4xl motion-safe:animate-fade-up-0 sm:text-6xl"
+                )}
               >
-                <span className="whitespace-nowrap text-sm">My resume</span>
-                <RightChevronIcon className="h-4 w-4" />
-              </Link>
+                Andrew Leung
+              </div>
+              <Balancer
+                ratio={1}
+                as="div"
+                className="mt-6 text-base text-black motion-safe:animate-fade-up-1 dark:text-neutral-300 sm:text-lg md:text-xl"
+              >
+                Software engineer seeking full-time, full-stack opportunities.
+                Looking to improve the lives of developers and users alike.
+              </Balancer>
+              <div className="mt-6 text-xs text-black motion-safe:animate-fade-up-2 dark:text-neutral-400 sm:text-sm">
+                <div className="flex flex-row items-center gap-2">
+                  <div className="flex h-4 w-4 items-center justify-center sm:h-5 sm:w-5">
+                    <MapPinIcon className="inline h-4 w-4" />
+                  </div>
+                  Open to remote or near Dallas–Fort Worth, TX
+                </div>
+                {lastPlayedTrack ? (
+                  <div className="mt-1 flex flex-row gap-2">
+                    <div className="flex h-4 w-4 items-center justify-center sm:h-5 sm:w-5">
+                      <DeviceSpeakerIcon className="inline h-4 w-4" />
+                    </div>
+                    <SpotifyCurrentlyListening
+                      topTracks={topTracks}
+                      isCurrentlyPlaying={isCurrentlyPlaying}
+                      lastPlayedTrack={lastPlayedTrack}
+                    />
+                  </div>
+                ) : null}
+                {lastCommit ? (
+                  <div className="mt-1 flex flex-row gap-2">
+                    <div className="flex h-4 w-4 items-center justify-center sm:h-5 sm:w-5">
+                      <CodeIcon className="inline h-4 w-4" />
+                    </div>
+                    <div>
+                      Pushed{" "}
+                      <Link
+                        href={lastCommit.href}
+                        className="hover:underline dark:hover:text-white"
+                      >
+                        {lastCommit.sha.substring(0, 7)}
+                      </Link>{" "}
+                      to{" "}
+                      <Link
+                        href={`https://github.com/${lastCommit.repo}`}
+                        className="hover:underline dark:hover:text-white"
+                      >
+                        {lastCommit.repo}
+                      </Link>{" "}
+                      {dayjs(lastCommit.createdAt).fromNow()}
+                    </div>
+                  </div>
+                ) : null}
+              </div>
+              <div className="mt-8 flex flex-row items-center gap-3 text-sm text-black dark:text-neutral-400">
+                <IconLink
+                  href="https://github.com/andrewjleung"
+                  Icon={GitHubIcon}
+                  className="motion-safe:animate-fade-up-2"
+                />
+                <IconLink
+                  href="https://www.linkedin.com/in/andrewjleung-"
+                  Icon={LinkedInIcon}
+                  className="motion-safe:animate-fade-up-3"
+                />
+                <IconLink
+                  href="https://open.spotify.com/artist/00zDjeTQDVOFlNttOnv9bc"
+                  Icon={SpotifyIcon}
+                  className="motion-safe:animate-fade-up-4"
+                />
+                <IconLink
+                  href="https://www.youtube.com/channel/UCVxaN-2GATE-3Ag9RTGrIXw"
+                  Icon={YouTubeIcon}
+                  className="motion-safe:animate-fade-up-5"
+                />
+                <Link
+                  href="https://raw.githubusercontent.com/andrewjleung/resumes/main/AndrewLeung_Resume.pdf"
+                  className="ml-2 flex w-fit flex-row items-center gap-1 rounded-full border-1 border-black px-4 py-2 transition-all duration-200 hover:bg-black hover:text-white motion-safe:animate-fade-up-6 motion-safe:animate-fade-up-5 dark:border-neutral-400 dark:hover:border-white dark:hover:bg-transparent dark:hover:text-white"
+                >
+                  <span className="whitespace-nowrap text-sm">My resume</span>
+                  <RightChevronIcon className="h-4 w-4" />
+                </Link>
+              </div>
             </div>
-          </div>
-        </Layout>
-      </Section>
-      {/* <Section id="experience-section">
+          </Layout>
+        </Section>
+        {/* <Section id="experience-section">
         <Layout className="flex flex-col items-center px-6 sm:px-24">
           <div className="w-full">
             <div
@@ -726,7 +733,8 @@ export default function Home({
       <Section id="contact-section" className="flex flex-col justify-center">
         What&apos;s next? Contact me!
       </Section> */}
-    </Container>
+      </Container>
+    </div>
   );
 }
 
