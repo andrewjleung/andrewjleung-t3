@@ -8,21 +8,12 @@ import Link from "next/link";
 import Image from "next/image";
 import Layout from "../components/Layout";
 import useIntersection from "../hooks/useIntersection";
-import type { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import type { SpotifyPlayableItem } from "../server/spotify";
-import { getCurrentlyPlayingTrack } from "../server/spotify";
-import {
-  getAccessToken,
-  getTopTracks,
-  getRecentlyPlayedTracks,
-} from "../server/spotify";
 import SpotifyCurrentlyListening from "../components/SpotifyCurrentlyListening";
 import { CodeIcon, DeviceSpeakerIcon } from "../components/Icons";
-import { getLastCommitFromEvents } from "../server/github";
-import { getGitHubEvents } from "../server/github";
 import relativeTime from "dayjs/plugin/relativeTime";
 import dayjs from "dayjs";
 import Card from "../components/Card";
+import { api } from "../utils/api";
 
 dayjs.extend(relativeTime);
 
@@ -547,48 +538,80 @@ function Project({
   );
 }
 
-export default function Home({
-  topTracks,
-  isCurrentlyPlaying,
-  lastPlayedTrack,
-  lastCommit,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  // const { viewed: experienceSectionViewed } = useIntersection(
-  //   "experience-section",
-  //   { threshold: 0.3 }
-  // );
+function Stats() {
+  const { data } = api.home.stats.useQuery();
 
-  // const { viewed: projectsSectionViewed } = useIntersection(
-  //   "projects-section",
-  //   { threshold: 0.75 }
-  // );
+  return (
+    <div className="mt-6 text-xs text-black motion-safe:animate-fade-up-2 dark:text-neutral-400 sm:text-sm">
+      <div className="flex flex-row items-center gap-2">
+        <div className="flex h-4 w-4 items-center justify-center sm:h-5 sm:w-5">
+          <MapPinIcon className="inline h-4 w-4" />
+        </div>
+        Open to remote or near Dallas–Fort Worth, TX
+      </div>
+      {data?.lastPlayedTrack ? (
+        <div className="mt-1 flex flex-row gap-2">
+          <div className="flex h-4 w-4 items-center justify-center sm:h-5 sm:w-5">
+            <DeviceSpeakerIcon className="inline h-4 w-4" />
+          </div>
+          <SpotifyCurrentlyListening
+            topTracks={data?.topTracks}
+            isCurrentlyPlaying={data?.isCurrentlyPlaying}
+            lastPlayedTrack={data?.lastPlayedTrack}
+          />
+        </div>
+      ) : (
+        <div className="mt-1 flex flex-row gap-2">
+          <div className="flex h-4 w-4 items-center justify-center sm:h-5 sm:w-5">
+            <DeviceSpeakerIcon className="inline h-4 w-4" />
+          </div>
+          {/* TODO: Make a better loading indicator. */}
+          <div className="animate-pulse">
+            Not listening to anything at the moment...
+          </div>
+        </div>
+      )}
+      {/* TODO: Derive this via a static prop with ~1 hour invalidation to avoid rate limits. */}
+      {data?.lastCommit ? (
+        <div className="mt-1 flex flex-row gap-2">
+          <div className="flex h-4 w-4 items-center justify-center sm:h-5 sm:w-5">
+            <CodeIcon className="inline h-4 w-4" />
+          </div>
+          <div>
+            Pushed{" "}
+            <Link
+              href={data?.lastCommit.href}
+              className="hover:underline dark:hover:text-white"
+            >
+              {data?.lastCommit.sha.substring(0, 7)}
+            </Link>{" "}
+            to{" "}
+            <Link
+              href={`https://github.com/${data?.lastCommit.repo}`}
+              className="hover:underline dark:hover:text-white"
+            >
+              {data?.lastCommit.repo}
+            </Link>{" "}
+            {dayjs(data?.lastCommit.createdAt).fromNow()}
+          </div>
+        </div>
+      ) : (
+        <div className="mt-1 flex flex-row gap-2">
+          <div className="flex h-4 w-4 items-center justify-center sm:h-5 sm:w-5">
+            <CodeIcon className="inline h-4 w-4" />
+          </div>
+          <div>Working on something...</div>
+        </div>
+      )}
+    </div>
+  );
+}
 
+export default function Home() {
   return (
     <div className="relative overflow-hidden">
       <div className="invisible absolute top-[50vh] left-[50vw] -z-10 h-5/6 w-full -translate-x-1/2 -translate-y-1/2 -rotate-45 skew-y-6 rounded-full bg-transparent bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-neutral-400 via-neutral-900 to-neutral-900 opacity-20 blur-3xl motion-safe:animate-light-up dark:visible xl:w-5/6" />
       <Container id="container" animateNavBar>
-        {/* <SectionNav>
-        <SectionNavItem
-          id="top-section"
-          title="Top"
-          icon={<HandStopIcon className="h-4 w-4 rotate-12" />}
-        />
-        <SectionNavItem
-          id="experience-section"
-          title="Experience"
-          icon={<BriefcaseIcon className="h-4 w-4" />}
-        />
-        <SectionNavItem
-          id="projects-section"
-          title="Projects"
-          icon={<LightbulbIcon className="h-4 w-4" />}
-        />
-        <SectionNavItem
-          id="contact-section"
-          title="Contact"
-          icon={<EmailIcon className="h-4 w-4" />}
-        />
-      </SectionNav> */}
         <Section id="top-section" className="">
           <Layout className="relative flex h-full w-full flex-col items-center justify-center px-6">
             <div className="relative flex flex-col">
@@ -608,50 +631,7 @@ export default function Home({
                 Software engineer seeking full-time, full-stack opportunities.
                 Looking to improve the lives of developers and users alike.
               </Balancer>
-              <div className="mt-6 text-xs text-black motion-safe:animate-fade-up-2 dark:text-neutral-400 sm:text-sm">
-                <div className="flex flex-row items-center gap-2">
-                  <div className="flex h-4 w-4 items-center justify-center sm:h-5 sm:w-5">
-                    <MapPinIcon className="inline h-4 w-4" />
-                  </div>
-                  Open to remote or near Dallas–Fort Worth, TX
-                </div>
-                {lastPlayedTrack ? (
-                  <div className="mt-1 flex flex-row gap-2">
-                    <div className="flex h-4 w-4 items-center justify-center sm:h-5 sm:w-5">
-                      <DeviceSpeakerIcon className="inline h-4 w-4" />
-                    </div>
-                    <SpotifyCurrentlyListening
-                      topTracks={topTracks}
-                      isCurrentlyPlaying={isCurrentlyPlaying}
-                      lastPlayedTrack={lastPlayedTrack}
-                    />
-                  </div>
-                ) : null}
-                {lastCommit ? (
-                  <div className="mt-1 flex flex-row gap-2">
-                    <div className="flex h-4 w-4 items-center justify-center sm:h-5 sm:w-5">
-                      <CodeIcon className="inline h-4 w-4" />
-                    </div>
-                    <div>
-                      Pushed{" "}
-                      <Link
-                        href={lastCommit.href}
-                        className="hover:underline dark:hover:text-white"
-                      >
-                        {lastCommit.sha.substring(0, 7)}
-                      </Link>{" "}
-                      to{" "}
-                      <Link
-                        href={`https://github.com/${lastCommit.repo}`}
-                        className="hover:underline dark:hover:text-white"
-                      >
-                        {lastCommit.repo}
-                      </Link>{" "}
-                      {dayjs(lastCommit.createdAt).fromNow()}
-                    </div>
-                  </div>
-                ) : null}
-              </div>
+              <Stats />
               <div className="mt-8 flex flex-row items-center gap-3 text-sm text-black dark:text-neutral-400">
                 <IconLink
                   href="https://github.com/andrewjleung"
@@ -684,110 +664,7 @@ export default function Home({
             </div>
           </Layout>
         </Section>
-        {/* <Section id="experience-section">
-        <Layout className="flex flex-col items-center px-6 sm:px-24">
-          <div className="w-full">
-            <div
-              className={cn(inter700.className, "my-8 text-4xl sm:text-5xl")}
-            >
-              Experience
-            </div>
-            <Experiences className="my-8">
-              {EXPERIENCES.map((experience) => (
-                <Experience
-                  key={`experience-${experience.company}-${experience.title}`}
-                  experience={experience}
-                  className={cn({
-                    invisible: !experienceSectionViewed,
-                    [experience.animation]: experienceSectionViewed,
-                  })}
-                />
-              ))}
-            </Experiences>
-          </div>
-        </Layout>
-      </Section>
-      <Section id="projects-section" className="flex justify-center">
-        <Layout className="flex flex-col items-center px-6 sm:px-24">
-          <div className="w-full">
-            <div
-              className={cn(inter700.className, "my-8 text-4xl sm:text-5xl")}
-            >
-              Projects
-            </div>
-            <Projects className="my-8 max-w-3xl">
-              {PROJECTS.map((project) => (
-                <Project
-                  key={`project-${project.title}`}
-                  project={project}
-                  className={cn({
-                    invisible: !projectsSectionViewed,
-                    [project.animation]: projectsSectionViewed,
-                  })}
-                />
-              ))}
-            </Projects>
-          </div>
-        </Layout>
-      </Section>
-      <Section id="contact-section" className="flex flex-col justify-center">
-        What&apos;s next? Contact me!
-      </Section> */}
       </Container>
     </div>
   );
 }
-
-type GetServerSidePropsData = {
-  topTracks?: SpotifyPlayableItem[];
-  isCurrentlyPlaying: boolean;
-  lastPlayedTrack?: SpotifyPlayableItem;
-  lastCommit?: ReturnType<typeof getLastCommitFromEvents>;
-};
-
-const getFulfilled = <T,>(p: PromiseSettledResult<T>): T | undefined =>
-  p.status === "fulfilled" ? p.value : undefined;
-
-export const getServerSideProps: GetServerSideProps<
-  GetServerSidePropsData
-> = async () => {
-  const accessToken = await getAccessToken();
-
-  if (accessToken === undefined) {
-    return {
-      props: {
-        isCurrentlyPlaying: false,
-      },
-    };
-  }
-
-  const { topTracks, currentlyPlayingItem, lastPlayedTrack, githubEvents } =
-    await Promise.allSettled([
-      getTopTracks(accessToken),
-      getCurrentlyPlayingTrack(accessToken),
-      getRecentlyPlayedTracks(accessToken, 1).then(
-        (res) => res?.items.find(Boolean)?.track
-      ),
-      getGitHubEvents(),
-    ]).then(
-      ([topTracks, currentlyPlayingItem, lastPlayedTrack, githubEvents]) => {
-        return {
-          topTracks: getFulfilled(topTracks),
-          currentlyPlayingItem: getFulfilled(currentlyPlayingItem),
-          lastPlayedTrack: getFulfilled(lastPlayedTrack),
-          githubEvents: getFulfilled(githubEvents),
-        };
-      }
-    );
-
-  const lastCommit = getLastCommitFromEvents(githubEvents || []);
-
-  return {
-    props: {
-      topTracks: topTracks,
-      isCurrentlyPlaying: currentlyPlayingItem?.is_playing || false,
-      lastPlayedTrack: currentlyPlayingItem?.item || lastPlayedTrack,
-      lastCommit: lastCommit,
-    },
-  };
-};

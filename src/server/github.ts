@@ -26,6 +26,7 @@ const GitHubEvent = z.object({
 
 export type GitHubEvent = z.infer<typeof GitHubEvent>;
 
+// TODO: Authenticate this request with a PAT to avoid rate limiting.
 export async function getGitHubEvents(): Promise<GitHubEvent[] | undefined> {
   const response = await fetch(
     "https://api.github.com/users/andrewjleung/events/public",

@@ -102,7 +102,7 @@ export const SPOTIFY_CLIENT_CREDENTIALS = Buffer.from(
   `${env.SPOTIFY_CLIENT_ID}:${env.SPOTIFY_CLIENT_SECRET}`
 ).toString("base64");
 
-export async function getAccessToken(): Promise<
+export async function getSpotifyAccessToken(): Promise<
   SpotifyAccessTokenResponse["access_token"] | undefined
 > {
   const response = await fetch("https://accounts.spotify.com/api/token", {
