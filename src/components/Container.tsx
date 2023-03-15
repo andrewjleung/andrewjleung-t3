@@ -96,7 +96,6 @@ export default function Container({
   metadata?: Metadata;
   className?: string;
   id?: string;
-  animateNavBar?: boolean;
 }) {
   const m = { ...INITIAL_METADATA, ...metadata };
 

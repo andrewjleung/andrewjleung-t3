@@ -8,12 +8,16 @@ import Link from "next/link";
 import Image from "next/image";
 import Layout from "../components/Layout";
 import useIntersection from "../hooks/useIntersection";
-import SpotifyCurrentlyListening from "../components/SpotifyCurrentlyListening";
 import { CodeIcon, DeviceSpeakerIcon } from "../components/Icons";
 import relativeTime from "dayjs/plugin/relativeTime";
 import dayjs from "dayjs";
 import Card from "../components/Card";
 import { api } from "../utils/api";
+import { Roboto_Mono } from "@next/font/google";
+import type { SpotifyPlayableItem } from "../server/spotify";
+import type { getLastCommitFromEvents } from "../server/github";
+
+const RobotoMono300 = Roboto_Mono({ weight: "300", subsets: ["latin"] });
 
 dayjs.extend(relativeTime);
 
@@ -538,71 +542,216 @@ function Project({
   );
 }
 
+function useRandomTransition(
+  finalString?: string,
+  limit = 50,
+  tick = 15,
+  delay = 500
+): [string, boolean] {
+  const letters = "ABCDEFGHIJKLMNOPRSTUVWXYZ";
+  const [started, setStarted] = useState(false);
+  const [randomString, setRandomString] = useState("");
+  const [hasTransitioned, setHasTransitioned] = useState(false);
+  const [pointer, setPointer] = useState(0);
+
+  const makeRandomString = (length: number): string =>
+    Array(length)
+      .fill("0")
+      .map(() => letters[Math.floor(Math.random() * letters.length)])
+      .join("");
+
+  useInterval(() => {
+    setStarted(true);
+  }, delay);
+
+  useInterval(
+    () => {
+      if (finalString === undefined) {
+        setRandomString((randomString) =>
+          makeRandomString(Math.min(randomString.length + 1, limit))
+        );
+        return;
+      }
+
+      // if (randomString.length < finalString.length) {
+      //   setRandomString((randomString) =>
+      //     makeRandomString(randomString.length + 1)
+      //   );
+      //   return;
+      // }
+
+      if (randomString === finalString) {
+        setHasTransitioned(true);
+        setStarted(false);
+        return;
+      }
+
+      setRandomString((randomString) =>
+        finalString.slice(0, pointer).concat(
+          makeRandomString(
+            (() => {
+              if (randomString.length < finalString.length) {
+                return randomString.length - pointer + 1;
+              } else if (randomString.length > finalString.length) {
+                return randomString.length - pointer - 1;
+              } else {
+                return randomString.length - pointer;
+              }
+            })()
+          )
+        )
+      );
+
+      setPointer((pointer) => pointer + 1);
+    },
+    started ? tick : null
+  );
+
+  return [randomString, hasTransitioned];
+}
+
+function SpotifyCurrentlyListeningStat({
+  isCurrentlyPlaying,
+  lastPlayedTrack,
+  className,
+}: {
+  isCurrentlyPlaying?: boolean;
+  lastPlayedTrack?: SpotifyPlayableItem;
+  className?: string;
+}) {
+  const components = (() => {
+    if (isCurrentlyPlaying === undefined || lastPlayedTrack === undefined) {
+      return;
+    }
+
+    const artistNames =
+      lastPlayedTrack.artists.length < 1
+        ? "Unknown Artist"
+        : lastPlayedTrack.artists.map((artist) => artist.name).join(", ");
+
+    const [, type, id] = lastPlayedTrack.uri.split(":");
+    const href = `https://open.spotify.com/${type as string}/${id as string}`;
+
+    const preamble = isCurrentlyPlaying ? "Listening to" : "Last listened to";
+
+    return {
+      preamble,
+      href,
+      lastPlayedTrackName: lastPlayedTrack.name,
+      artistNames,
+    };
+  })();
+
+  const data = (() => {
+    if (components === undefined) {
+      return;
+    }
+    return `${components.preamble} ${components.lastPlayedTrackName} by ${components.artistNames}`;
+  })();
+
+  const [fallback, hasTransitioned] = useRandomTransition(data);
+
+  if (components === undefined || !hasTransitioned) {
+    return <div>{fallback}</div>;
+  }
+
+  return (
+    <div className={className}>
+      {components.preamble}{" "}
+      <Link
+        href={components.href}
+        className="hover:underline dark:hover:text-white"
+      >
+        {components.lastPlayedTrackName} by {components.artistNames}
+      </Link>
+    </div>
+  );
+}
+
+function GitLastCommitStat({
+  lastCommit,
+}: {
+  lastCommit: ReturnType<typeof getLastCommitFromEvents>;
+}) {
+  const components = (() => {
+    if (lastCommit === undefined) {
+      return;
+    }
+
+    return {
+      href: lastCommit.href,
+      sha: lastCommit.sha.substring(0, 7),
+      repo: lastCommit.repo,
+      createdAt: dayjs(lastCommit.createdAt).fromNow(),
+    };
+  })();
+
+  const data = (() => {
+    if (components === undefined) {
+      return;
+    }
+    return `Pushed ${components.sha} to ${components.repo} ${components.createdAt}`;
+  })();
+
+  const [fallback, hasTransitioned] = useRandomTransition(data);
+
+  if (components === undefined || !hasTransitioned) {
+    return <div className="whitespace-pre-wrap">{fallback}</div>;
+  }
+
+  return (
+    <div>
+      Pushed{" "}
+      <Link
+        href={components.href}
+        className="hover:underline dark:hover:text-white"
+      >
+        {components.sha}
+      </Link>{" "}
+      to{" "}
+      <Link
+        href={`https://github.com/${lastCommit.repo}`}
+        className="hover:underline dark:hover:text-white"
+      >
+        {components.repo}
+      </Link>{" "}
+      {components.createdAt}
+    </div>
+  );
+}
+
 function Stats() {
   const { data } = api.home.stats.useQuery();
 
   return (
-    <div className="mt-6 text-xs text-black motion-safe:animate-fade-up-2 dark:text-neutral-400 sm:text-sm">
-      <div className="flex flex-row items-center gap-2">
+    <div
+      className={cn(
+        RobotoMono300.className,
+        "mt-6 text-xs text-black motion-safe:animate-fade-up-2 dark:text-neutral-400 sm:text-sm"
+      )}
+    >
+      <div className="flex flex-row gap-2">
         <div className="flex h-4 w-4 items-center justify-center sm:h-5 sm:w-5">
           <MapPinIcon className="inline h-4 w-4" />
         </div>
         Open to remote or near Dallas–Fort Worth, TX
       </div>
-      {data?.lastPlayedTrack ? (
-        <div className="mt-1 flex flex-row gap-2">
-          <div className="flex h-4 w-4 items-center justify-center sm:h-5 sm:w-5">
-            <DeviceSpeakerIcon className="inline h-4 w-4" />
-          </div>
-          <SpotifyCurrentlyListening
-            topTracks={data?.topTracks}
-            isCurrentlyPlaying={data?.isCurrentlyPlaying}
-            lastPlayedTrack={data?.lastPlayedTrack}
-          />
+      <div className="mt-1 flex flex-row gap-2">
+        <div className="flex h-4 w-4 items-center justify-center sm:h-5 sm:w-5">
+          <DeviceSpeakerIcon className="inline h-4 w-4" />
         </div>
-      ) : (
-        <div className="mt-1 flex flex-row gap-2">
-          <div className="flex h-4 w-4 items-center justify-center sm:h-5 sm:w-5">
-            <DeviceSpeakerIcon className="inline h-4 w-4" />
-          </div>
-          {/* TODO: Make a better loading indicator. */}
-          <div className="animate-pulse">
-            Not listening to anything at the moment...
-          </div>
-        </div>
-      )}
+        <SpotifyCurrentlyListeningStat
+          isCurrentlyPlaying={data?.isCurrentlyPlaying}
+          lastPlayedTrack={data?.lastPlayedTrack}
+        />
+      </div>
       {/* TODO: Derive this via a static prop with ~1 hour invalidation to avoid rate limits. */}
-      {data?.lastCommit ? (
-        <div className="mt-1 flex flex-row gap-2">
-          <div className="flex h-4 w-4 items-center justify-center sm:h-5 sm:w-5">
-            <CodeIcon className="inline h-4 w-4" />
-          </div>
-          <div>
-            Pushed{" "}
-            <Link
-              href={data?.lastCommit.href}
-              className="hover:underline dark:hover:text-white"
-            >
-              {data?.lastCommit.sha.substring(0, 7)}
-            </Link>{" "}
-            to{" "}
-            <Link
-              href={`https://github.com/${data?.lastCommit.repo}`}
-              className="hover:underline dark:hover:text-white"
-            >
-              {data?.lastCommit.repo}
-            </Link>{" "}
-            {dayjs(data?.lastCommit.createdAt).fromNow()}
-          </div>
+      <div className="mt-1 flex flex-row gap-2">
+        <div className="flex h-4 w-4 items-center justify-center sm:h-5 sm:w-5">
+          <CodeIcon className="inline h-4 w-4" />
         </div>
-      ) : (
-        <div className="mt-1 flex flex-row gap-2">
-          <div className="flex h-4 w-4 items-center justify-center sm:h-5 sm:w-5">
-            <CodeIcon className="inline h-4 w-4" />
-          </div>
-          <div className="animate-pulse">Working on something...</div>
-        </div>
-      )}
+        <GitLastCommitStat lastCommit={data?.lastCommit} />
+      </div>
     </div>
   );
 }
@@ -611,14 +760,14 @@ export default function Home() {
   return (
     <div className="relative overflow-hidden">
       <div className="invisible absolute top-[50vh] left-[50vw] -z-10 h-5/6 w-full -translate-x-1/2 -translate-y-1/2 -rotate-45 skew-y-6 rounded-full bg-transparent bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-neutral-400 via-neutral-900 to-neutral-900 opacity-20 blur-3xl motion-safe:animate-light-up dark:visible xl:w-5/6" />
-      <Container id="container" animateNavBar>
+      <Container id="container">
         <Section id="top-section" className="">
           <Layout className="relative flex h-full w-full flex-col items-center justify-center px-6">
             <div className="relative flex flex-col">
               <div
                 className={cn(
                   inter700.className,
-                  "relative whitespace-nowrap text-4xl motion-safe:animate-fade-up-0 sm:text-6xl"
+                  "relative whitespace-nowrap text-5xl motion-safe:animate-fade-up-0 sm:text-6xl"
                 )}
               >
                 Andrew Leung
