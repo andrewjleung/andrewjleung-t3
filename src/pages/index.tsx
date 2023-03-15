@@ -710,7 +710,7 @@ function GitLastCommitStat({
       </Link>{" "}
       to{" "}
       <Link
-        href={`https://github.com/${lastCommit.repo}`}
+        href={`https://github.com/${components.repo}`}
         className="hover:underline dark:hover:text-white"
       >
         {components.repo}
