@@ -600,7 +600,7 @@ function Stats() {
           <div className="flex h-4 w-4 items-center justify-center sm:h-5 sm:w-5">
             <CodeIcon className="inline h-4 w-4" />
           </div>
-          <div>Working on something...</div>
+          <div className="animate-pulse">Working on something...</div>
         </div>
       )}
     </div>
