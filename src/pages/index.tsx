@@ -16,6 +16,7 @@ import { api } from "../utils/api";
 import { Roboto_Mono } from "@next/font/google";
 import type { SpotifyPlayableItem } from "../server/spotify";
 import type { getLastCommitFromEvents } from "../server/github";
+import { z } from "zod";
 
 const RobotoMono300 = Roboto_Mono({ weight: "300", subsets: ["latin"] });
 
@@ -625,26 +626,49 @@ function SpotifyCurrentlyListeningStat({
   lastPlayedTrack?: SpotifyPlayableItem;
   className?: string;
 }) {
+  const getHrefFromUri = (uri: string): string | undefined => {
+    const result = z
+      .tuple([z.string(), z.string(), z.string()])
+      .safeParse(uri.split(":"));
+
+    if (!result.success) {
+      return;
+    }
+
+    const [, type, id] = result.data;
+    return `https://open.spotify.com/${type}/${id}`;
+  };
+
   const components = (() => {
     if (isCurrentlyPlaying === undefined || lastPlayedTrack === undefined) {
       return;
     }
 
-    const artistNames =
-      lastPlayedTrack.artists.length < 1
-        ? "Unknown Artist"
-        : lastPlayedTrack.artists.map((artist) => artist.name).join(", ");
+    const lastPlayedTrackHref = getHrefFromUri(lastPlayedTrack.uri);
+    if (lastPlayedTrackHref === undefined) {
+      return;
+    }
 
-    const [, type, id] = lastPlayedTrack.uri.split(":");
-    const href = `https://open.spotify.com/${type as string}/${id as string}`;
+    const artists = lastPlayedTrack.artists.flatMap((artist) => {
+      const href = getHrefFromUri(artist.uri);
 
-    const preamble = isCurrentlyPlaying ? "Listening to" : "Last listened to";
+      if (href === undefined) {
+        return [];
+      }
+
+      return [
+        {
+          name: artist.name,
+          href,
+        },
+      ];
+    });
 
     return {
-      preamble,
-      href,
+      preamble: isCurrentlyPlaying ? "Listening to" : "Last listened to",
+      lastPlayedTrackHref,
       lastPlayedTrackName: lastPlayedTrack.name,
-      artistNames,
+      lastPlayedTrackArtists: artists,
     };
   })();
 
@@ -652,7 +676,12 @@ function SpotifyCurrentlyListeningStat({
     if (components === undefined) {
       return;
     }
-    return `${components.preamble} ${components.lastPlayedTrackName} by ${components.artistNames}`;
+
+    const artistNames = components.lastPlayedTrackArtists
+      .map(({ name }) => name)
+      .join(", ");
+
+    return `${components.preamble} ${components.lastPlayedTrackName} by ${artistNames}`;
   })();
 
   const [fallback, hasTransitioned] = useRandomTransition(data, 44);
@@ -665,11 +694,22 @@ function SpotifyCurrentlyListeningStat({
     <div className={className}>
       {components.preamble}{" "}
       <Link
-        href={components.href}
+        href={components.lastPlayedTrackHref}
         className="hover:underline dark:hover:text-white"
       >
-        {components.lastPlayedTrackName} by {components.artistNames}
-      </Link>
+        {components.lastPlayedTrackName}
+      </Link>{" "}
+      by{" "}
+      {components.lastPlayedTrackArtists.map(({ name, href }, i) => [
+        i > 0 ? ", " : null,
+        <Link
+          key={`artist-${name}`}
+          href={href}
+          className="hover:underline dark:hover:text-white"
+        >
+          {name}
+        </Link>,
+      ])}
     </div>
   );
 }
@@ -738,26 +778,20 @@ function Stats({ className }: { className?: string }) {
 
   return (
     <div className={cn(RobotoMono300.className, className)}>
-      <div className="flex flex-row gap-2">
-        <div className="flex h-4 w-4 items-center justify-center sm:h-5 sm:w-5">
-          <MapPinIcon className="inline h-4 w-4" />
-        </div>
+      <div className="flex max-w-2xl flex-row gap-2">
+        <MapPinIcon className="inline h-4 w-4 flex-shrink-0 sm:m-[0.125rem]" />
         Open to remote or near Dallas–Fort Worth, TX
       </div>
-      <div className="mt-1 flex flex-row gap-2">
-        <div className="flex h-4 w-4 items-center justify-center sm:h-5 sm:w-5">
-          <DeviceSpeakerIcon className="inline h-4 w-4" />
-        </div>
+      <div className="mt-1 flex max-w-2xl flex-row gap-2">
+        <DeviceSpeakerIcon className="inline h-4 w-4 flex-shrink-0 sm:m-[0.125rem]" />
         <SpotifyCurrentlyListeningStat
           isCurrentlyPlaying={data?.isCurrentlyPlaying}
           lastPlayedTrack={data?.lastPlayedTrack}
         />
       </div>
       {/* TODO: Derive this via a static prop with ~1 hour invalidation to avoid rate limits. */}
-      <div className="mt-1 flex flex-row gap-2">
-        <div className="flex h-4 w-4 items-center justify-center sm:h-5 sm:w-5">
-          <CodeIcon className="inline h-4 w-4" />
-        </div>
+      <div className="mt-1 flex max-w-2xl flex-row gap-2">
+        <CodeIcon className="inline h-4 w-4 flex-shrink-0 sm:m-[0.125rem]" />
         <GitLastCommitStat lastCommit={data?.lastCommit} />
       </div>
     </div>
