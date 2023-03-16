@@ -112,8 +112,7 @@ export default function Container({
         id={id}
         className={cn(
           inter300.className,
-          "mx-auto flex min-h-screen flex-col overflow-hidden",
-          className
+          "mx-auto flex min-h-screen flex-col overflow-hidden"
         )}
       >
         <NavBar>
@@ -123,7 +122,7 @@ export default function Container({
           {/* <NavItem title="Bits" href="/bits" /> */}
           <ThemeToggler className="ml-auto" />
         </NavBar>
-        <div className="relative my-auto">{children}</div>
+        <div className={className}>{children}</div>
         <Footer>
           <span className="ml-auto whitespace-nowrap text-2xs dark:text-neutral-400">
             © {new Date().getFullYear()} Andrew Leung. All rights reserved.

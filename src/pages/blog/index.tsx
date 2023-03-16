@@ -30,7 +30,7 @@ function BlogPost({
 
 export default function Blog() {
   return (
-    <Container>
+    <Container className="flex grow">
       <Layout className="flex flex-col items-center gap-6 px-6 sm:px-24">
         <BlogPost
           title="Quitters"
