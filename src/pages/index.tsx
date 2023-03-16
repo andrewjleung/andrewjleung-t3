@@ -649,7 +649,7 @@ function SpotifyCurrentlyListeningStat({
     return `${components.preamble} ${components.lastPlayedTrackName} by ${components.artistNames}`;
   })();
 
-  const [fallback, hasTransitioned] = useRandomTransition(data);
+  const [fallback, hasTransitioned] = useRandomTransition(data, 44);
 
   if (components === undefined || !hasTransitioned) {
     return <div>{fallback}</div>;
@@ -678,10 +678,17 @@ function GitLastCommitStat({
       return;
     }
 
+    const [org, repo] = lastCommit.repo.split("/");
+
+    if (org === undefined || repo === undefined) {
+      return undefined;
+    }
+
     return {
       href: lastCommit.href,
       sha: lastCommit.sha.substring(0, 7),
-      repo: lastCommit.repo,
+      org,
+      repo,
       createdAt: dayjs(lastCommit.createdAt).fromNow(),
     };
   })();
@@ -693,10 +700,10 @@ function GitLastCommitStat({
     return `Pushed ${components.sha} to ${components.repo} ${components.createdAt}`;
   })();
 
-  const [fallback, hasTransitioned] = useRandomTransition(data);
+  const [fallback, hasTransitioned] = useRandomTransition(data, 44);
 
   if (components === undefined || !hasTransitioned) {
-    return <div className="whitespace-pre-wrap">{fallback}</div>;
+    return <div>{fallback}</div>;
   }
 
   return (
@@ -710,7 +717,7 @@ function GitLastCommitStat({
       </Link>{" "}
       to{" "}
       <Link
-        href={`https://github.com/${components.repo}`}
+        href={`https://github.com/${components.org}/${components.repo}`}
         className="hover:underline dark:hover:text-white"
       >
         {components.repo}
@@ -720,16 +727,11 @@ function GitLastCommitStat({
   );
 }
 
-function Stats() {
+function Stats({ className }: { className?: string }) {
   const { data } = api.home.stats.useQuery();
 
   return (
-    <div
-      className={cn(
-        RobotoMono300.className,
-        "mt-6 text-xs text-black motion-safe:animate-fade-up-2 dark:text-neutral-400 sm:text-sm"
-      )}
-    >
+    <div className={cn(RobotoMono300.className, className)}>
       <div className="flex flex-row gap-2">
         <div className="flex h-4 w-4 items-center justify-center sm:h-5 sm:w-5">
           <MapPinIcon className="inline h-4 w-4" />
@@ -780,31 +782,27 @@ export default function Home() {
                 Software engineer seeking full-time, full-stack opportunities.
                 Looking to improve the lives of developers and users alike.
               </Balancer>
-              <Stats />
-              <div className="mt-8 flex flex-row items-center gap-3 text-sm text-black dark:text-neutral-400">
+              <Stats className="mt-6 text-xs text-black motion-safe:animate-fade-up-2 dark:text-neutral-400 sm:text-sm" />
+              <div className="mt-8 flex flex-row items-center gap-3 text-sm text-black motion-safe:animate-fade-up-2 dark:text-neutral-400">
                 <IconLink
                   href="https://github.com/andrewjleung"
                   Icon={GitHubIcon}
-                  className="motion-safe:animate-fade-up-2"
                 />
                 <IconLink
                   href="https://www.linkedin.com/in/andrewjleung-"
                   Icon={LinkedInIcon}
-                  className="motion-safe:animate-fade-up-3"
                 />
                 <IconLink
                   href="https://open.spotify.com/artist/00zDjeTQDVOFlNttOnv9bc"
                   Icon={SpotifyIcon}
-                  className="motion-safe:animate-fade-up-4"
                 />
                 <IconLink
                   href="https://www.youtube.com/channel/UCVxaN-2GATE-3Ag9RTGrIXw"
                   Icon={YouTubeIcon}
-                  className="motion-safe:animate-fade-up-5"
                 />
                 <Link
                   href="https://raw.githubusercontent.com/andrewjleung/resumes/main/AndrewLeung_Resume.pdf"
-                  className="ml-2 flex w-fit flex-row items-center gap-1 rounded-full border-1 border-black px-4 py-2 transition-all duration-200 hover:bg-black hover:text-white motion-safe:animate-fade-up-6 motion-safe:animate-fade-up-5 dark:border-neutral-400 dark:hover:border-white dark:hover:bg-transparent dark:hover:text-white"
+                  className="ml-2 flex w-fit flex-row items-center gap-1 rounded-full border-1 border-black px-4 py-2 transition-all duration-200 hover:bg-black hover:text-white dark:border-neutral-400 dark:hover:border-white dark:hover:bg-transparent dark:hover:text-white"
                 >
                   <span className="whitespace-nowrap text-sm">My resume</span>
                   <RightChevronIcon className="h-4 w-4" />
