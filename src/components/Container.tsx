@@ -112,7 +112,7 @@ export default function Container({
         id={id}
         className={cn(
           inter300.className,
-          "mx-auto flex min-h-screen flex-col overflow-hidden"
+          "mx-auto flex min-h-screen min-w-fit flex-col"
         )}
       >
         <NavBar>
