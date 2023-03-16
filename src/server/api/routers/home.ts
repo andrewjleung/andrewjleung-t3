@@ -43,9 +43,13 @@ export const homeRouter = createTRPCRouter({
 
     const lastCommit = getLastCommitFromEvents(githubEvents || []);
 
+    // TODO: As of now, podcasts are ignored. Only tracks are considered.
     return {
       topTracks: topTracks,
-      isCurrentlyPlaying: currentlyPlayingItem?.is_playing || false,
+      isCurrentlyPlaying:
+        (currentlyPlayingItem?.is_playing &&
+          currentlyPlayingItem?.currently_playing_type === "track") ||
+        false,
       lastPlayedTrack: currentlyPlayingItem?.item || lastPlayedTrack,
       lastCommit,
     };

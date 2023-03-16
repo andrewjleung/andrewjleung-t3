@@ -67,14 +67,16 @@ const SpotifyRecentlyPlayedTracksResponse = z.object({
     z.object({
       track: SpotifyPlayableItem,
       played_at: z.string(),
-      context: z.object({
-        type: z.string(),
-        external_urls: z.object({
-          spotify: z.string(),
-        }),
-        href: z.string(),
-        uri: z.string(),
-      }),
+      context: z.nullable(
+        z.object({
+          type: z.string(),
+          external_urls: z.object({
+            spotify: z.string(),
+          }),
+          href: z.string(),
+          uri: z.string(),
+        })
+      ),
     })
   ),
   limit: z.number(),
@@ -90,8 +92,8 @@ type SpotifyRecentlyPlayedTracksResponse = z.infer<
 
 const SpotifyGetCurrentlyPlayingTrackResponse = z.object({
   is_playing: z.boolean(),
-  item: SpotifyPlayableItem,
-  currently_playing_type: z.string(),
+  item: z.nullable(SpotifyPlayableItem),
+  currently_playing_type: z.enum(["track", "episode", "ad", "unknown"]),
 });
 
 type SpotifyGetCurrentlyPlayingTrackResponse = z.infer<
