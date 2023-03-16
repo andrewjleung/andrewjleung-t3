@@ -560,9 +560,12 @@ function useRandomTransition(
       .map(() => letters[Math.floor(Math.random() * letters.length)])
       .join("");
 
-  useInterval(() => {
-    setStarted(true);
-  }, delay);
+  useInterval(
+    () => {
+      setStarted(true);
+    },
+    started ? null : delay
+  );
 
   useInterval(
     () => {
@@ -589,22 +592,25 @@ function useRandomTransition(
       setRandomString((randomString) =>
         finalString.slice(0, pointer).concat(
           makeRandomString(
-            (() => {
-              if (randomString.length < finalString.length) {
-                return randomString.length - pointer + 1;
-              } else if (randomString.length > finalString.length) {
-                return randomString.length - pointer - 1;
-              } else {
-                return randomString.length - pointer;
-              }
-            })()
+            Math.max(
+              0,
+              (() => {
+                if (randomString.length < finalString.length) {
+                  return randomString.length - pointer + 1;
+                } else if (randomString.length > finalString.length) {
+                  return randomString.length - pointer - 1;
+                } else {
+                  return randomString.length - pointer;
+                }
+              })()
+            )
           )
         )
       );
 
       setPointer((pointer) => pointer + 1);
     },
-    started ? tick : null
+    started && !hasTransitioned ? tick : null
   );
 
   return [randomString, hasTransitioned];
