@@ -576,11 +576,11 @@ export default function Home() {
         className="flex grow items-center justify-center"
       >
         <Layout className="relative flex h-full w-full flex-col items-center justify-center px-6">
-          <div className="relative flex flex-col">
+          <div className="relative">
             <div
               className={cn(
                 inter700.className,
-                "relative whitespace-nowrap text-5xl motion-safe:animate-fade-up-0 sm:text-6xl"
+                "relative whitespace-nowrap text-4xl motion-safe:animate-fade-up-0 xs:text-5xl sm:text-6xl"
               )}
             >
               Andrew Leung
@@ -588,12 +588,12 @@ export default function Home() {
             <Balancer
               ratio={1}
               as="div"
-              className="mt-6 text-base text-black motion-safe:animate-fade-up-1 dark:text-neutral-300 sm:text-lg md:text-xl"
+              className="mt-6 text-base text-black motion-safe:animate-fade-up-1 dark:text-neutral-300 sm:text-xl"
             >
               Software engineer seeking full-time, full-stack opportunities.
               Looking to improve the lives of developers and users alike.
             </Balancer>
-            <Stats className="mt-6 text-xs text-black motion-safe:animate-fade-up-2 dark:text-neutral-400 sm:text-sm" />
+            <Stats className="mt-6 w-0 min-w-full text-xs text-black motion-safe:animate-fade-up-2 dark:text-neutral-400 sm:text-sm" />
             <div className="mt-8 flex flex-row items-center gap-3 text-sm text-black motion-safe:animate-fade-up-2 dark:text-neutral-400">
               <IconLink
                 href="https://github.com/andrewjleung"
