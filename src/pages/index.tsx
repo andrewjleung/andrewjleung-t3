@@ -585,10 +585,16 @@ export default function Home() {
             >
               Andrew Leung
             </div>
+            {/* TODO: Cursed hack to avoid horizontal layout shifting with long, wrapping stat text.
+                This more or less invisible div matches the pixel widths of the short bio below at 
+                different breakpoints, ensuring that the stat component will never get wider than the
+                width of the bio.
+            */}
+            <div className="w-[305px] xs:w-[453px] sm:w-[566px]"></div>
             <Balancer
               ratio={1}
               as="div"
-              className="mt-6 text-base text-black motion-safe:animate-fade-up-1 dark:text-neutral-300 sm:text-xl"
+              className="mt-6 w-0 min-w-full  text-base text-black motion-safe:animate-fade-up-1 dark:text-neutral-300 sm:text-xl"
             >
               Software engineer seeking full-time, full-stack opportunities.
               Looking to improve the lives of developers and users alike.
