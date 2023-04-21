@@ -545,11 +545,17 @@ function Stats({ className }: { className?: string }) {
 
   return (
     <div className={cn(RobotoMono300.className, className)}>
-      <div className="flex max-w-2xl flex-row gap-2">
+      {/* The breakpoint-based height here is used to avoid vertical layout
+          shift on smaller screens where stats span multiple lines. In such 
+          cases, text that loads in will may cause layout shift as they appear
+          otherwise. This is not robust against stats that span more than two
+          lines, and this will cause stats to remain spaced as if they contained
+          two lines on small screens even if they only span one. */}
+      <div className="flex h-8 max-w-2xl flex-row gap-2 xs:h-full">
         <MapPinIcon className="inline h-4 w-4 flex-shrink-0 sm:m-[0.125rem]" />
         Open to remote or near Dallas–Fort Worth, TX
       </div>
-      <div className="mt-1 flex max-w-2xl flex-row gap-2">
+      <div className="mt-1 flex h-8 max-w-2xl flex-row gap-2 xs:h-full">
         <DeviceSpeakerIcon className="inline h-4 w-4 flex-shrink-0 sm:m-[0.125rem]" />
         <SpotifyCurrentlyListeningStat
           isCurrentlyPlaying={data?.isCurrentlyPlaying}
@@ -557,7 +563,7 @@ function Stats({ className }: { className?: string }) {
         />
       </div>
       {/* TODO: Derive this via a static prop with ~1 hour invalidation to avoid rate limits. */}
-      <div className="mt-1 flex max-w-2xl flex-row gap-2">
+      <div className="mt-1 flex h-8 max-w-2xl flex-row gap-2 xs:h-full">
         <CodeIcon className="inline h-4 w-4 flex-shrink-0 sm:m-[0.125rem]" />
         <GitLastCommitStat lastCommit={data?.lastCommit} />
       </div>
@@ -580,7 +586,7 @@ export default function Home() {
             <div
               className={cn(
                 inter700.className,
-                "relative -mb-2 h-full w-fit whitespace-nowrap bg-gradient-to-br from-black via-transparent to-transparent bg-400% bg-clip-text pb-2 text-4xl leading-5 text-transparent motion-safe:animate-background-pan dark:from-white dark:via-black xs:text-5xl sm:text-6xl"
+                "relative -my-3 h-full w-fit whitespace-nowrap bg-gradient-to-br from-black via-transparent to-transparent bg-400% bg-clip-text py-3  text-4xl leading-5 text-transparent motion-safe:animate-background-pan dark:from-white dark:via-black xs:text-5xl sm:-mb-2 sm:pb-2 sm:text-6xl"
               )}
             >
               Andrew Leung
