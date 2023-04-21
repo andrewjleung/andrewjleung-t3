@@ -10,7 +10,7 @@ module.exports = {
     },
     extend: {
       animation: {
-        "fade-up": "fade-up 2s ease-in-out",
+        "fade-up": "fade-up 1.75s ease-in-out",
         "light-up": "light-up 3s ease-in-out",
         stretch: "stretch 3s",
         "background-pan": "background-pan 2s",
