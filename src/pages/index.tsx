@@ -580,7 +580,7 @@ export default function Home() {
             <div
               className={cn(
                 inter700.className,
-                "relative whitespace-nowrap text-4xl motion-safe:animate-fade-up-0 xs:text-5xl sm:text-6xl"
+                "relative -mb-2 h-full w-fit whitespace-nowrap bg-gradient-to-br from-black via-transparent to-transparent bg-400% bg-clip-text pb-2 text-4xl leading-5 text-transparent motion-safe:animate-background-pan dark:from-white dark:via-black xs:text-5xl sm:text-6xl"
               )}
             >
               Andrew Leung
@@ -591,39 +591,41 @@ export default function Home() {
                 width of the bio.
             */}
             <div className="w-[305px] xs:w-[453px] sm:w-[566px]"></div>
-            <Balancer
-              ratio={1}
-              as="div"
-              className="mt-6 w-0 min-w-full  text-base text-black motion-safe:animate-fade-up-1 dark:text-neutral-300 sm:text-xl"
-            >
-              Software engineer seeking full-time, full-stack opportunities.
-              Looking to improve the lives of developers and users alike.
-            </Balancer>
-            <Stats className="mt-6 w-0 min-w-full text-xs text-black motion-safe:animate-fade-up-2 dark:text-neutral-400 sm:text-sm" />
-            <div className="mt-8 flex flex-row items-center gap-3 text-sm text-black motion-safe:animate-fade-up-2 dark:text-neutral-400">
-              <IconLink
-                href="https://github.com/andrewjleung"
-                Icon={GitHubIcon}
-              />
-              <IconLink
-                href="https://www.linkedin.com/in/andrewjleung-"
-                Icon={LinkedInIcon}
-              />
-              <IconLink
-                href="https://open.spotify.com/artist/00zDjeTQDVOFlNttOnv9bc"
-                Icon={SpotifyIcon}
-              />
-              <IconLink
-                href="https://www.youtube.com/channel/UCVxaN-2GATE-3Ag9RTGrIXw"
-                Icon={YouTubeIcon}
-              />
-              <Link
-                href="https://raw.githubusercontent.com/andrewjleung/resumes/main/AndrewLeung_Resume.pdf"
-                className="ml-2 flex w-fit flex-row items-center gap-1 rounded-full border-1 border-black px-4 py-2 transition-all duration-200 hover:bg-black hover:text-white dark:border-neutral-400 dark:hover:border-white dark:hover:bg-transparent dark:hover:text-white"
+            <div className="motion-safe:animate-fade-up">
+              <Balancer
+                ratio={1}
+                as="div"
+                className="mt-6 w-0 min-w-full text-base text-black dark:text-neutral-300 sm:text-xl"
               >
-                <span className="whitespace-nowrap text-sm">My resume</span>
-                <RightChevronIcon className="h-4 w-4" />
-              </Link>
+                Software engineer seeking full-time, full-stack opportunities.
+                Looking to improve the lives of developers and users alike.
+              </Balancer>
+              <Stats className="mt-6 w-0 min-w-full text-xs text-black dark:text-neutral-400 sm:text-sm" />
+              <div className="mt-8 flex flex-row items-center gap-3 text-sm text-black dark:text-neutral-400">
+                <IconLink
+                  href="https://github.com/andrewjleung"
+                  Icon={GitHubIcon}
+                />
+                <IconLink
+                  href="https://www.linkedin.com/in/andrewjleung-"
+                  Icon={LinkedInIcon}
+                />
+                <IconLink
+                  href="https://open.spotify.com/artist/00zDjeTQDVOFlNttOnv9bc"
+                  Icon={SpotifyIcon}
+                />
+                <IconLink
+                  href="https://www.youtube.com/channel/UCVxaN-2GATE-3Ag9RTGrIXw"
+                  Icon={YouTubeIcon}
+                />
+                <Link
+                  href="https://raw.githubusercontent.com/andrewjleung/resumes/main/AndrewLeung_Resume.pdf"
+                  className="ml-2 flex w-fit flex-row items-center gap-1 rounded-full border-1 border-black px-4 py-2 transition-all duration-200 hover:bg-black hover:text-white dark:border-neutral-400 dark:hover:border-white dark:hover:bg-transparent dark:hover:text-white"
+                >
+                  <span className="whitespace-nowrap text-sm">My resume</span>
+                  <RightChevronIcon className="h-4 w-4" />
+                </Link>
+              </div>
             </div>
           </div>
         </Layout>
