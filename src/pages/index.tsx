@@ -1,13 +1,11 @@
 import Container from "../components/Container";
-import { inter700, inter800, RobotoMono300 } from "../components/Fonts";
+import { inter700, RobotoMono300 } from "../components/Fonts";
 import cn from "classnames";
 import Balancer from "react-wrap-balancer";
 import useInterval from "../hooks/useInterval";
 import React, { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import Layout from "../components/Layout";
-import useIntersection from "../hooks/useIntersection";
 import {
   CodeIcon,
   DeviceSpeakerIcon,
@@ -20,158 +18,12 @@ import {
 } from "../components/Icons";
 import relativeTime from "dayjs/plugin/relativeTime";
 import dayjs from "dayjs";
-import Card from "../components/Card";
 import { api } from "../utils/api";
 import type { SpotifyPlayableItem } from "../server/spotify";
 import type { getLastCommitFromEvents } from "../server/github";
 import { z } from "zod";
 
 dayjs.extend(relativeTime);
-
-type Experience = {
-  startDate: Date;
-  endDate: Date;
-  company: string;
-  title: string;
-  description: string;
-  image: string;
-  link: string;
-  animation: string; // TODO: Bad separation of concerns. Instead zip with an array of animation classes.
-};
-
-const EXPERIENCES: Experience[] = [
-  {
-    startDate: new Date("2021-01-01T00:00:00"),
-    endDate: new Date("2021-08-01T00:00:00"),
-    company: "Poloniex",
-    title: "Software Engineer Co-op",
-    description:
-      "Developed internal web tools with TypeScript, React, and PHP. Led migration to a CMS and helped design and implement a permissions microservice.",
-    image: "/poloniex.png",
-    link: "https://www.poloniex.com/",
-    animation: "motion-safe:animate-fade-up-0",
-  },
-
-  {
-    startDate: new Date("2020-09-01T00:00:00"),
-    endDate: new Date("2021-05-02"),
-    company: "Sandbox @ NU",
-    title: "Software Developer",
-    description:
-      "Implemented full-stack features for GraduateNU, a course-planning web app for students, using TypeScript, React, and Ruby on Rails.",
-    image: "/sandboxnu.png",
-    link: "https://www.sandboxnu.com/",
-    animation: "motion-safe:animate-fade-up-1",
-  },
-  {
-    startDate: new Date("2020-01-01T00:00:00"),
-    endDate: new Date("2020-08-01T00:00:00"),
-    company: "Teikametrics",
-    title: "Software Engineer Co-op",
-    description:
-      "Picked up web development for the first time working on a TypeScript and React frontend and a functional Scala with Cats backend.",
-    image: "/teikametrics.png",
-    link: "https://www.teikametrics.com/",
-    animation: "motion-safe:animate-fade-up-2",
-  },
-  {
-    startDate: new Date("2019-01-01T00:00:00"),
-    endDate: new Date("2019-07-01T00:00:00"),
-    company: "Curriculum Associates",
-    title: "Software Engineer Co-op",
-    description:
-      "Worked on QA, database migrations with Liquibase, and SQL query templates in Java.",
-    image: "/curriculum-associates.jpg",
-    link: "https://www.curriculumassociates.com/",
-    animation: "motion-safe:animate-fade-up-3",
-  },
-];
-
-type Project = {
-  title: string;
-  description: string;
-  image: string;
-  link?: string;
-  github: string;
-  animation: string;
-  className?: string;
-};
-
-const PROJECTS: Project[] = [
-  {
-    title: "Raudi",
-    description:
-      "Get random sounds for instant inspiration, made for audio creatives prone to overthinking. Built off of the Freesound API.",
-    image: "/raudi.png",
-    link: "https://raudi.xyz/",
-    github: "https://github.com/andrewjleung/raudi",
-    animation: "motion-safe:animate-fade-up-0",
-    className: "col-span-1 md:col-span-2",
-  },
-  {
-    title: "TND Reviews",
-    description:
-      "Generating/live-updating a dataset containing all of Anthony Fantano's scored music reviews using the YouTube Data API.",
-    image: "/tnd-reviews.png",
-    github: "https://github.com/andrewjleung/fantano-reviews",
-    animation: "motion-safe:animate-fade-up-1",
-    className: "col-span-1",
-  },
-];
-
-function SectionNavItem({
-  id,
-  title,
-  icon,
-}: {
-  id: string;
-  title: string;
-  icon: React.ReactNode;
-}) {
-  const { intersecting } = useIntersection(id, { threshold: 0.7 });
-
-  return (
-    <button
-      className="cursor-pointer"
-      onClick={() => {
-        const element = document.getElementById(id);
-        if (element !== null) {
-          element.scrollIntoView({ behavior: "smooth" });
-        }
-      }}
-    >
-      <div
-        className={cn(
-          "flex flex-row items-center rounded-full p-1",
-          intersecting
-            ? "bg-black text-white dark:bg-transparent dark:text-white"
-            : "text-black dark:text-neutral-500 dark:hover:text-neutral-400"
-        )}
-      >
-        {icon}
-      </div>
-    </button>
-  );
-}
-
-function SectionNav({ children }: { children: React.ReactNode }) {
-  const [panelNavCanAnimate, setPanelNavCanAnimate] = useState(false);
-
-  useInterval(() => {
-    setPanelNavCanAnimate(true);
-  }, 3000); // TODO: Magic number, make a single source of truth for this and the `stretch` animation.
-
-  return (
-    <div
-      className={cn(
-        "duration-400 fixed left-1/2 top-5 z-40 flex w-fit -translate-x-1/2 flex-row gap-4 rounded-full border-1 border-black bg-white py-2 px-4 transition-all ease-in dark:border-neutral-500 dark:bg-black sm:motion-safe:animate-stretch",
-        { "hover:px-8": panelNavCanAnimate }
-      )}
-    >
-      {children}
-    </div>
-  );
-}
 
 function IconLink({
   Icon,
@@ -192,121 +44,6 @@ function IconLink({
     >
       <Icon className="m-1 inline h-6 w-6" />
     </Link>
-  );
-}
-
-function Experiences({
-  children,
-  className,
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) {
-  return (
-    <div id="experiences" className={cn("relative", className)}>
-      <div className="flex h-full w-fit flex-col">
-        <div className="ml-1 h-10 w-[0.0625rem] -translate-x-1/2 bg-gradient-to-b from-transparent to-neutral-200 dark:from-black dark:to-neutral-800" />
-        {children}
-        <div className="ml-1 h-10 w-[0.0625rem] -translate-x-1/2 bg-gradient-to-t from-transparent to-neutral-200 dark:from-black dark:to-neutral-800" />
-      </div>
-    </div>
-  );
-}
-
-function Experience({
-  experience: { startDate, endDate, company, title, description, image, link },
-  className,
-}: {
-  experience: Experience;
-  className?: string;
-}) {
-  const [formattedStartDate, formattedEndDate] = [startDate, endDate].map(
-    (date) =>
-      date.toLocaleString("default", { month: "short", year: "numeric" })
-  );
-
-  return (
-    <div className="group group flex flex-row items-stretch gap-6 sm:gap-8">
-      <div className="relative">
-        <div className="absolute top-1/2 z-10 h-2 w-2 scale-110 rounded-full bg-neutral-200 transition-all duration-200 group-hover:bg-black dark:bg-neutral-800 dark:group-hover:bg-neutral-400" />
-        <div className="ml-1 h-full w-[0.0625rem] -translate-x-1/2 bg-neutral-200 dark:bg-neutral-800" />
-      </div>
-      <Card
-        className={cn(
-          "relative my-4 flex w-full flex-row items-center gap-4 p-6 md:gap-6",
-          className
-        )}
-      >
-        <Link
-          className="relative h-12 w-12 shrink-0 sm:h-16 sm:w-16"
-          href={link}
-        >
-          <Image
-            src={image}
-            fill
-            className="rounded-xl object-cover transition-all duration-300 ease-in-out dark:opacity-80 dark:brightness-75 dark:grayscale dark:group-hover:opacity-100 dark:group-hover:brightness-100 dark:group-hover:grayscale-0"
-            alt={`${company} logo`}
-          />
-        </Link>
-        <div className="shrink">
-          <div className="flex flex-col-reverse justify-between md:flex-row">
-            <Link
-              className={cn(inter800.className, "w-fit text-xl md:text-2xl")}
-              href={link}
-            >
-              {company}
-            </Link>
-            <span className="mb-2 text-xs text-black dark:text-neutral-400 md:mb-0 lg:text-sm">
-              {formattedStartDate} - {formattedEndDate}
-            </span>
-          </div>
-          <div className="text-base italic dark:text-neutral-200 md:text-lg">
-            {title}
-          </div>
-          <div className="mt-2 text-xs dark:text-neutral-400 md:text-base">
-            {description}
-          </div>
-        </div>
-      </Card>
-    </div>
-  );
-}
-
-function Projects({
-  children,
-  className,
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) {
-  return (
-    <div className="grid grid-cols-1 gap-6 md:grid-cols-3">{children}</div>
-  );
-}
-
-function Project({
-  project: {
-    title,
-    description,
-    image,
-    link,
-    github,
-    className: projectClassName,
-  },
-  className,
-}: {
-  project: Project;
-  className?: string;
-}) {
-  return (
-    <Card className={cn("p-6", className, projectClassName)}>
-      <div className={cn(inter700.className, "text-2xl sm:text-4xl")}>
-        {title}
-      </div>
-      <Balancer className="mt-6" ratio={0.5}>
-        {description}
-      </Balancer>
-    </Card>
   );
 }
 
@@ -343,13 +80,6 @@ function useRandomTransition(
         );
         return;
       }
-
-      // if (randomString.length < finalString.length) {
-      //   setRandomString((randomString) =>
-      //     makeRandomString(randomString.length + 1)
-      //   );
-      //   return;
-      // }
 
       if (randomString === finalString) {
         setHasTransitioned(true);
