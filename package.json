@@ -54,7 +54,7 @@
     "autoprefixer": "^10.4.7",
     "change-case-all": "^1.0.15",
     "eslint": "^8.30.0",
-    "eslint-config-next": "13.1.1",
+    "eslint-config-next": "^13.3.1",
     "postcss": "^8.4.14",
     "prettier": "^2.8.1",
     "prettier-plugin-tailwindcss": "^0.2.1",
