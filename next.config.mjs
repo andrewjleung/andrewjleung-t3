@@ -23,6 +23,9 @@ const withMDX = mdx({
 const config = {
   pageExtensions: ["js", "jsx", "ts", "tsx", "md", "mdx"],
   reactStrictMode: true,
+  experimental: {
+    appDir: true,
+  },
   swcMinify: true,
   i18n: {
     locales: ["en"],
