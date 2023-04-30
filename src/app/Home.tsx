@@ -1,4 +1,5 @@
-import Container from "../components/Container";
+"use client";
+
 import { inter700, RobotoMono300 } from "../components/Fonts";
 import cn from "classnames";
 import Balancer from "react-wrap-balancer";
@@ -18,10 +19,10 @@ import {
 } from "../components/Icons";
 import relativeTime from "dayjs/plugin/relativeTime";
 import dayjs from "dayjs";
-import { api } from "../utils/api";
 import type { SpotifyPlayableItem } from "../server/spotify";
 import type { getLastCommitFromEvents } from "../server/github";
 import { z } from "zod";
+import Container from "../components/Container";
 
 dayjs.extend(relativeTime);
 
@@ -270,9 +271,7 @@ function GitLastCommitStat({
   );
 }
 
-function Stats({ className }: { className?: string }) {
-  const { data } = api.home.stats.useQuery();
-
+function Stats({ className, stats }: { className?: string; stats: Stats }) {
   return (
     <div className={cn(RobotoMono300.className, className)}>
       {/* The breakpoint-based height here is used to avoid vertical layout
@@ -288,29 +287,36 @@ function Stats({ className }: { className?: string }) {
       <div className="mt-1 flex h-8 max-w-2xl flex-row gap-2 xs:h-full">
         <DeviceSpeakerIcon className="inline h-4 w-4 flex-shrink-0 sm:m-[0.125rem]" />
         <SpotifyCurrentlyListeningStat
-          isCurrentlyPlaying={data?.isCurrentlyPlaying}
-          lastPlayedTrack={data?.lastPlayedTrack}
+          isCurrentlyPlaying={stats.spotify.isCurrentlyPlaying}
+          lastPlayedTrack={stats.spotify.lastPlayedTrack}
         />
       </div>
       {/* TODO: Derive this via a static prop with ~1 hour invalidation to avoid rate limits. */}
       <div className="mt-1 flex h-8 max-w-2xl flex-row gap-2 xs:h-full">
         <CodeIcon className="inline h-4 w-4 flex-shrink-0 sm:m-[0.125rem]" />
-        <GitLastCommitStat lastCommit={data?.lastCommit} />
+        <GitLastCommitStat lastCommit={stats.github.lastCommit} />
       </div>
     </div>
   );
 }
 
-export default function Home() {
+export type Stats = {
+  spotify: {
+    isCurrentlyPlaying?: boolean;
+    lastPlayedTrack?: SpotifyPlayableItem;
+  };
+  github: {
+    lastCommit: ReturnType<typeof getLastCommitFromEvents>;
+  };
+};
+
+export default function Home({ stats }: { stats: Stats }) {
   return (
     <div className="relative">
       <div className="absolute -z-10 h-screen w-screen overflow-hidden">
         <div className="invisible absolute top-[50vh] left-[50vw] -z-10 h-5/6 w-full -translate-x-1/2 -translate-y-1/2 -rotate-45 skew-y-6 rounded-full bg-transparent bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-neutral-400 via-neutral-900 to-neutral-900 opacity-20 blur-3xl motion-safe:animate-light-up dark:visible xl:w-5/6 " />
       </div>
-      <Container
-        id="container"
-        className="flex grow items-center justify-center"
-      >
+      <Container className="flex grow items-center justify-center">
         <Layout className="relative flex h-full w-full flex-col items-center justify-center px-6">
           <div className="relative">
             <div
@@ -336,7 +342,10 @@ export default function Home() {
                 Software engineer seeking full-time, full-stack opportunities.
                 Looking to improve the lives of developers and users alike.
               </Balancer>
-              <Stats className="mt-6 w-0 min-w-full text-xs text-black dark:text-neutral-400 sm:text-sm" />
+              <Stats
+                stats={stats}
+                className="mt-6 w-0 min-w-full text-xs text-black dark:text-neutral-400 sm:text-sm"
+              />
               <div className="mt-8 flex flex-row items-center gap-3 text-sm text-black dark:text-neutral-400">
                 <IconLink
                   href="https://github.com/andrewjleung"

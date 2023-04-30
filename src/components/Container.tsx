@@ -3,7 +3,6 @@ import Link from "next/link";
 import cn from "classnames";
 import ThemeToggler from "./ThemeToggler";
 import { inter300 } from "./Fonts";
-import { useRouter } from "next/router";
 
 type Metadata = {
   title: string;
@@ -26,18 +25,12 @@ function NavItem({
   href: string;
   className?: string;
 }) {
-  const { pathname } = useRouter();
-  const isSelected =
-    href === "/" ? href === pathname : pathname.startsWith(href);
-
   return (
     <Link
       href={href}
       className={cn(
         "w-fit text-black",
-        isSelected
-          ? "underline dark:text-white dark:no-underline"
-          : "dark:text-neutral-500 dark:hover:text-neutral-400",
+        "dark:text-neutral-500 dark:hover:text-neutral-400",
         className
       )}
     >

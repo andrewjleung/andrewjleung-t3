@@ -45,13 +45,17 @@ export const homeRouter = createTRPCRouter({
 
     // TODO: As of now, podcasts are ignored. Only tracks are considered.
     return {
-      topTracks: topTracks,
-      isCurrentlyPlaying:
-        (currentlyPlayingItem?.is_playing &&
-          currentlyPlayingItem?.currently_playing_type === "track") ||
-        false,
-      lastPlayedTrack: currentlyPlayingItem?.item || lastPlayedTrack,
-      lastCommit,
+      spotify: {
+        topTracks: topTracks,
+        isCurrentlyPlaying:
+          (currentlyPlayingItem?.is_playing &&
+            currentlyPlayingItem?.currently_playing_type === "track") ||
+          false,
+        lastPlayedTrack: currentlyPlayingItem?.item || lastPlayedTrack,
+      },
+      github: {
+        lastCommit,
+      },
     };
   }),
 });
