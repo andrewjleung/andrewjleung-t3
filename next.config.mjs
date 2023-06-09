@@ -25,6 +25,7 @@ const config = {
   reactStrictMode: true,
   experimental: {
     appDir: true,
+    mdxRs: true,
   },
   swcMinify: true,
   i18n: {

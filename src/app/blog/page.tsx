@@ -1,6 +1,4 @@
 import Link from "next/link";
-import Container from "../../components/Container";
-import Layout from "../../components/Layout";
 import cn from "classnames";
 import { inter700 } from "../../components/Fonts";
 import Card from "../../components/Card";
@@ -28,17 +26,15 @@ function BlogPost({
   );
 }
 
-export default function Blog() {
+export default function Page() {
   return (
-    <Container className="flex grow">
-      <Layout className="flex flex-col items-center gap-6 px-6 sm:px-24">
-        <BlogPost
-          title="Quitters"
-          description="A road trip through my past and present perspectives on making music, being a musician, finding meaning in that, and losing meaning in that. Undertones of DAW hatred."
-          date="2021-08-26"
-          slug="quitters"
-        />
-      </Layout>
-    </Container>
+    <>
+      <BlogPost
+        title="Quitters"
+        description="A road trip through my past and present perspectives on making music, being a musician, finding meaning in that, and losing meaning in that. Undertones of DAW hatred."
+        date="2021-08-26"
+        slug="quitters"
+      />
+    </>
   );
 }
