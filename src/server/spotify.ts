@@ -15,7 +15,7 @@ export type SpotifyAccessTokenResponse = z.infer<
   typeof SpotifyAccessTokenResponse
 >;
 
-const SpotifyPlayableItem = z.object({
+export const SpotifyPlayableItem = z.object({
   album: z.object({
     album_type: z.string(),
     artists: z.array(

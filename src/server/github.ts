@@ -45,6 +45,16 @@ export async function getGitHubEvents(): Promise<GitHubEvent[] | undefined> {
   }
 }
 
+export const CommitEvent = z.object({
+  href: z.string(),
+  repo: z.string(),
+  sha: z.string(),
+  message: z.string(),
+  createdAt: z.string().datetime(),
+});
+
+export type CommitEvent = z.infer<typeof CommitEvent>;
+
 export function getLastCommitFromEvents(events: GitHubEvent[]):
   | {
       href: string;
