@@ -17,7 +17,3 @@ It's cool, and my personal website is low stakes. If I ever want to introduce mo
 ## Why Prisma?
 
 See the above.
-
-## Why GraphQL? Aren't you using tRPC?
-
-In its current state, I'm not really using much of either to be honest. However, GraphQL is used here to query content from DatoCMS with end-to-end type-safety, albeit relying on [code generation](https://the-guild.dev/graphql/codegen).
