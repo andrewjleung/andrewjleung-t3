@@ -11,6 +11,8 @@ import { RobotoMono300 } from "../components/Fonts";
 import cn from "classnames";
 import { useQuery } from "@tanstack/react-query";
 import { Stats } from "./api/stats";
+import type { SpotifyPlayableItem } from "../server/spotify";
+import type { CommitEvent } from "../server/github";
 
 dayjs.extend(relativeTime);
 
