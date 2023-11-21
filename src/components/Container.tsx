@@ -14,7 +14,7 @@ type Metadata = {
 const INITIAL_METADATA: Metadata = {
   title: "Andrew Leung",
   description: "My personal landing and portfolio for development and music.",
-  image: "/profile.png",
+  image: "/favicon.ico",
 };
 
 function NavItem({
