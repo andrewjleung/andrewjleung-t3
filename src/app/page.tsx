@@ -55,8 +55,8 @@ export default async function Home() {
           as="div"
           className="mt-6 w-0 min-w-full text-base text-black dark:text-neutral-300 sm:text-xl"
         >
-          Software Engineer at PayPal, building for Braintree funding. Looking
-          to improve the lives of users and developers alike.
+          Software Engineer at PayPal, Braintree Post-Processing. Looking to
+          improve the lives of users and developers alike.
         </Balancer>
         <Stats className="mt-6 w-0 min-w-full text-xs text-black dark:text-neutral-400 sm:text-sm" />
         <div className="mt-8 flex flex-row items-center gap-3 text-sm text-black dark:text-neutral-400">
