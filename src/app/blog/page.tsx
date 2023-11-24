@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const inter700 = Inter({ weight: "700", subsets: ["latin"] });
 
-export function Card({
+function Card({
   children,
   className,
 }: {
