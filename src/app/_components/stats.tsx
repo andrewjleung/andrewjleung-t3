@@ -172,9 +172,20 @@ function GitLastCommitStat({
   );
 }
 
+function LocationAndWeatherStat({ weather }: { weather?: string }) {
+  const [fallback, hasTransitioned] = useRandomTransition(weather, 44);
+
+  if (weather === undefined || !hasTransitioned) {
+    return <div>{fallback}</div>;
+  }
+
+  return <div>Based in {weather} Fort Worth, TX</div>;
+}
+
 export function Stats({ className }: { className?: string }) {
   const { data: spotifyData } = api.spotify.getCurrentTrack.useQuery();
   const { data: githubData } = api.github.getLastCommit.useQuery();
+  const { data: weather } = api.weather.getCurrentWeather.useQuery();
 
   return (
     <div className={clsx(robotoMono300.className, className)}>
@@ -184,12 +195,11 @@ export function Stats({ className }: { className?: string }) {
           otherwise. This is not robust against stats that span more than two
           lines, and this will cause stats to remain spaced as if they contained
           two lines on small screens even if they only span one. */}
-      <div className="xs:h-full flex h-8 max-w-2xl flex-row gap-2">
+      <div className="flex h-8 max-w-2xl flex-row gap-2 xs:h-full">
         <MapPinIcon className="inline h-4 w-4 flex-shrink-0 sm:m-[0.125rem]" />
-        Based in Fort Worth, TX
-        {/* TODO: Say the weather e.g. "Based in sunny Fort Worth, TX" */}
+        <LocationAndWeatherStat weather={weather} />
       </div>
-      <div className="xs:h-full mt-1 flex h-8 max-w-2xl flex-row gap-2">
+      <div className="mt-1 flex h-8 max-w-2xl flex-row gap-2 xs:h-full">
         <DeviceSpeakerIcon className="inline h-4 w-4 flex-shrink-0 sm:m-[0.125rem]" />
         <SpotifyCurrentlyListeningStat
           isCurrentlyPlaying={spotifyData?.isCurrentlyPlaying ?? false}
@@ -197,7 +207,7 @@ export function Stats({ className }: { className?: string }) {
         />
       </div>
       {/* TODO: Derive this via a static prop with ~1 hour invalidation to avoid rate limits. */}
-      <div className="xs:h-full mt-1 flex h-8 max-w-2xl flex-row gap-2">
+      <div className="mt-1 flex h-8 max-w-2xl flex-row gap-2 xs:h-full">
         <CodeIcon className="inline h-4 w-4 flex-shrink-0 sm:m-[0.125rem]" />
         <GitLastCommitStat lastCommit={githubData} />
       </div>

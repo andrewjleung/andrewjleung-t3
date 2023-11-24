@@ -5,8 +5,6 @@ import { usePathname } from "next/navigation";
 export function Spotlight() {
   const pathname = usePathname();
 
-  console.log(pathname);
-
   if (pathname === "/") {
     return (
       <div className="absolute -z-10 h-screen w-screen overflow-hidden">

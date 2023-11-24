@@ -55,7 +55,6 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={inter300.className}>
         <Providers>
-          {/* TODO: This can be made to only show on the home screen by pulling this into a client component. */}
           <Spotlight />
           <div className="flex min-h-screen min-w-fit flex-col">
             <NavBar>

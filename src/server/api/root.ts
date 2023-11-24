@@ -1,6 +1,7 @@
 import { createTRPCRouter } from "~/server/api/trpc";
 import { spotifyRouter } from "./routers/spotify";
 import { githubRouter } from "./routers/github";
+import { weatherRouter } from "./routers/weather";
 
 /**
  * This is the primary router for your server.
@@ -10,6 +11,7 @@ import { githubRouter } from "./routers/github";
 export const appRouter = createTRPCRouter({
   spotify: spotifyRouter,
   github: githubRouter,
+  weather: weatherRouter,
 });
 
 // export type definition of API
