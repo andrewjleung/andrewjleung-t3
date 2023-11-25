@@ -9,7 +9,7 @@ const inter700 = Inter({ weight: "700", subsets: ["latin"] });
 
 export default function QuittersBlogPost() {
   return (
-    <article className="prose prose-neutral mt-4 max-w-screen-lg p-6 dark:prose-invert">
+    <article className="prose prose-neutral mt-2 max-w-screen-lg p-6 dark:prose-invert">
       <div className="text-lg text-neutral-500">
         {dayjs("2022-08-26").fromNow()}
       </div>
