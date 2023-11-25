@@ -80,7 +80,7 @@ export default function ThemeToggler({ className }: { className?: string }) {
     return (
       <div
         className={clsx(
-          "border-1 h-7 w-7 cursor-pointer rounded-md border-black dark:border-neutral-500",
+          "h-7 w-7 cursor-pointer rounded-md outline outline-1 outline-black dark:outline-neutral-500",
           className,
         )}
       ></div>
@@ -91,7 +91,7 @@ export default function ThemeToggler({ className }: { className?: string }) {
     <button
       onClick={toggleTheme}
       className={clsx(
-        "flex h-7 w-7 cursor-pointer items-center justify-center rounded-md outline outline-1 outline-black transition-all duration-200  ease-in-out hover:bg-black hover:text-white dark:text-neutral-500 dark:outline-neutral-500 dark:hover:text-white dark:hover:outline-white dark:active:bg-transparent",
+        "flex h-7 w-7 cursor-pointer items-center justify-center rounded-md outline outline-1 outline-black transition-all duration-200 ease-in-out hover:bg-black hover:text-white dark:text-neutral-500 dark:outline-neutral-500 dark:hover:text-white dark:hover:outline-white dark:active:bg-transparent",
         className,
       )}
     >

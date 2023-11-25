@@ -1,7 +1,19 @@
+import { Inter } from "next/font/google";
+import clsx from "clsx";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+
+dayjs.extend(relativeTime);
+
+const inter700 = Inter({ weight: "700", subsets: ["latin"] });
+
 export default function QuittersBlogPost() {
   return (
-    <article className="prose prose-neutral max-w-screen-lg p-6 dark:prose-invert">
-      <h1>Quitters</h1>
+    <article className="prose prose-neutral mt-4 max-w-screen-lg p-6 dark:prose-invert">
+      <div className="text-lg text-neutral-500">
+        {dayjs("2022-08-26").fromNow()}
+      </div>
+      <div className={clsx(inter700.className, "mt-1 text-4xl")}>Quitters</div>
       <p>
         By sophomore year of high school, I had rather large hands. On smaller
         phones, I fumbled keys. My fingers squeezed between half steps on the
