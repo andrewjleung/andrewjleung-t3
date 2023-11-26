@@ -2,8 +2,10 @@ import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { env } from "~/env";
+import { kv } from "@vercel/kv";
 
 const SPOTIFY_API_BASE_URL = "https://api.spotify.com/v1";
+const CURRENT_TRACK_KEY = "track";
 
 export const handle200 = <T>(
   response: Response,
@@ -74,35 +76,6 @@ const SpotifyPlayableItem = z.object({
 
 export type SpotifyPlayableItem = z.infer<typeof SpotifyPlayableItem>;
 
-const SpotifyRecentlyPlayedTracksResponse = z.object({
-  href: z.string(),
-  items: z.array(
-    z.object({
-      track: SpotifyPlayableItem,
-      played_at: z.string(),
-      context: z.nullable(
-        z.object({
-          type: z.string(),
-          external_urls: z.object({
-            spotify: z.string(),
-          }),
-          href: z.string(),
-          uri: z.string(),
-        }),
-      ),
-    }),
-  ),
-  limit: z.number(),
-  next: z.string(),
-  cursors: z.object({
-    after: z.string(),
-  }),
-});
-
-type SpotifyRecentlyPlayedTracksResponse = z.infer<
-  typeof SpotifyRecentlyPlayedTracksResponse
->;
-
 const SpotifyGetCurrentlyPlayingTrackResponse = z.object({
   is_playing: z.boolean(),
   item: z.nullable(SpotifyPlayableItem),
@@ -139,29 +112,6 @@ export async function getSpotifyAccessToken(): Promise<
   }
 }
 
-export async function getRecentlyPlayedTracks(
-  accessToken: string,
-  limit: number,
-): Promise<SpotifyRecentlyPlayedTracksResponse | undefined> {
-  const queryParams = new URLSearchParams({
-    limit: limit.toString(),
-  }).toString();
-
-  const response = await fetch(
-    `${SPOTIFY_API_BASE_URL}/me/player/recently-played?${queryParams}`,
-    {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    },
-  );
-
-  if (response.status === 200) {
-    return handle200(response, SpotifyRecentlyPlayedTracksResponse);
-  }
-}
-
 export async function getCurrentlyPlayingTrack(
   accessToken: string,
 ): Promise<SpotifyGetCurrentlyPlayingTrackResponse | undefined> {
@@ -182,28 +132,62 @@ export async function getCurrentlyPlayingTrack(
   // TODO: For this and all other endpoint wrappers, report other error codes.
 }
 
-export const spotifyRouter = createTRPCRouter({
-  getCurrentTrack: publicProcedure.query(async () => {
-    const accessToken = await getSpotifyAccessToken();
-
-    if (accessToken === undefined) {
-      return undefined;
-    }
-
-    const currentlyPlayingTrack = await getCurrentlyPlayingTrack(accessToken);
-    const mostRecentlyPlayedTrack = await getRecentlyPlayedTracks(
-      accessToken,
-      1,
-    ).then((res) => res?.items.find(Boolean)?.track);
-    // TODO: Get the most recent track from the database and persist/return the latest one.
-
-    return {
-      isCurrentlyPlaying:
-        (currentlyPlayingTrack?.is_playing &&
-          currentlyPlayingTrack?.currently_playing_type === "track") ??
-        false,
-      track:
-        currentlyPlayingTrack?.item ?? mostRecentlyPlayedTrack ?? undefined,
-    };
+const getCurrentTrackResponseSchema = z.discriminatedUnion("status", [
+  z.object({
+    status: z.literal("success"),
+    isCurrentlyPlaying: z.boolean(),
+    track: SpotifyPlayableItem,
   }),
+  z.object({
+    status: z.literal("failure"),
+  }),
+]);
+
+type GetCurrentTrackResponse = z.infer<typeof getCurrentTrackResponseSchema>;
+
+async function getCachedTrackOrFailure(): Promise<GetCurrentTrackResponse> {
+  const cachedTrack = await kv.hgetall(CURRENT_TRACK_KEY);
+
+  if (cachedTrack !== null) {
+    return {
+      status: "success",
+      isCurrentlyPlaying: false,
+      track: SpotifyPlayableItem.parse(cachedTrack),
+    };
+  }
+
+  return {
+    status: "failure",
+  };
+}
+
+export const spotifyRouter = createTRPCRouter({
+  getCurrentTrack: publicProcedure.query(
+    async (): Promise<GetCurrentTrackResponse> => {
+      const accessToken = await getSpotifyAccessToken();
+
+      if (accessToken === undefined) {
+        return {
+          status: "failure",
+        };
+      }
+
+      const currentlyPlayingTrack = await getCurrentlyPlayingTrack(accessToken);
+
+      if (currentlyPlayingTrack === undefined) {
+        return getCachedTrackOrFailure();
+      }
+
+      if (currentlyPlayingTrack.item !== null) {
+        await kv.hset(CURRENT_TRACK_KEY, currentlyPlayingTrack.item);
+        return {
+          status: "success",
+          isCurrentlyPlaying: currentlyPlayingTrack.is_playing,
+          track: currentlyPlayingTrack.item,
+        };
+      }
+
+      return getCachedTrackOrFailure();
+    },
+  ),
 });

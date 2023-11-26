@@ -199,13 +199,15 @@ export function Stats({ className }: { className?: string }) {
         <MapPinIcon className="inline h-4 w-4 flex-shrink-0 sm:m-[0.125rem]" />
         <LocationAndWeatherStat weather={weather} />
       </div>
-      <div className="mt-1 flex h-8 max-w-2xl flex-row gap-2 xs:h-full">
-        <DeviceSpeakerIcon className="inline h-4 w-4 flex-shrink-0 sm:m-[0.125rem]" />
-        <SpotifyCurrentlyListeningStat
-          isCurrentlyPlaying={spotifyData?.isCurrentlyPlaying ?? false}
-          track={spotifyData?.track}
-        />
-      </div>
+      {spotifyData?.status === "success" ? (
+        <div className="mt-1 flex h-8 max-w-2xl flex-row gap-2 xs:h-full">
+          <DeviceSpeakerIcon className="inline h-4 w-4 flex-shrink-0 sm:m-[0.125rem]" />
+          <SpotifyCurrentlyListeningStat
+            isCurrentlyPlaying={spotifyData.isCurrentlyPlaying}
+            track={spotifyData.track}
+          />
+        </div>
+      ) : null}
       {/* TODO: Derive this via a static prop with ~1 hour invalidation to avoid rate limits. */}
       <div className="mt-1 flex h-8 max-w-2xl flex-row gap-2 xs:h-full">
         <CodeIcon className="inline h-4 w-4 flex-shrink-0 sm:m-[0.125rem]" />
