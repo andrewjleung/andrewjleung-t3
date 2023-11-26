@@ -9,7 +9,10 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import dayjs from "dayjs";
 import { api } from "../../trpc/react";
 import { Roboto_Mono } from "next/font/google";
-import type { SpotifyPlayableItem } from "~/server/api/routers/spotify";
+import type {
+  GetCurrentTrackResponse,
+  SpotifyPlayableItem,
+} from "~/server/api/routers/spotify";
 import type { getLastCommitFromEvents } from "~/server/api/routers/github";
 
 const robotoMono300 = Roboto_Mono({ weight: "300", subsets: ["latin"] });
@@ -17,12 +20,10 @@ const robotoMono300 = Roboto_Mono({ weight: "300", subsets: ["latin"] });
 dayjs.extend(relativeTime);
 
 function SpotifyCurrentlyListeningStat({
-  isCurrentlyPlaying,
-  track,
+  currentTrackResponse,
   className,
 }: {
-  isCurrentlyPlaying: boolean;
-  track?: SpotifyPlayableItem;
+  currentTrackResponse?: GetCurrentTrackResponse;
   className?: string;
 }) {
   const getHrefFromUri = (uri: string): string | undefined => {
@@ -39,16 +40,20 @@ function SpotifyCurrentlyListeningStat({
   };
 
   const components = (() => {
-    if (track === undefined) {
+    if (currentTrackResponse === undefined) {
       return;
     }
 
-    const trackHref = getHrefFromUri(track.uri);
+    if (currentTrackResponse.status === "failure") {
+      return;
+    }
+
+    const trackHref = getHrefFromUri(currentTrackResponse.track.uri);
     if (trackHref === undefined) {
       return;
     }
 
-    const artists = track.artists.flatMap((artist) => {
+    const artists = currentTrackResponse.track.artists.flatMap((artist) => {
       const href = getHrefFromUri(artist.uri);
 
       if (href === undefined) {
@@ -64,9 +69,11 @@ function SpotifyCurrentlyListeningStat({
     });
 
     return {
-      preamble: isCurrentlyPlaying ? "Listening to" : "Last listened to",
+      preamble: currentTrackResponse.isCurrentlyPlaying
+        ? "Listening to"
+        : "Last listened to",
       trackHref,
-      trackName: track.name,
+      trackName: currentTrackResponse.track.name,
       lastPlayedTrackArtists: artists,
     };
   })();
@@ -199,15 +206,10 @@ export function Stats({ className }: { className?: string }) {
         <MapPinIcon className="inline h-4 w-4 flex-shrink-0 sm:m-[0.125rem]" />
         <LocationAndWeatherStat weather={weather} />
       </div>
-      {spotifyData?.status === "success" ? (
-        <div className="mt-1 flex h-8 max-w-2xl flex-row gap-2 xs:h-full">
-          <DeviceSpeakerIcon className="inline h-4 w-4 flex-shrink-0 sm:m-[0.125rem]" />
-          <SpotifyCurrentlyListeningStat
-            isCurrentlyPlaying={spotifyData.isCurrentlyPlaying}
-            track={spotifyData.track}
-          />
-        </div>
-      ) : null}
+      <div className="mt-1 flex h-8 max-w-2xl flex-row gap-2 xs:h-full">
+        <DeviceSpeakerIcon className="inline h-4 w-4 flex-shrink-0 sm:m-[0.125rem]" />
+        <SpotifyCurrentlyListeningStat currentTrackResponse={spotifyData} />
+      </div>
       {/* TODO: Derive this via a static prop with ~1 hour invalidation to avoid rate limits. */}
       <div className="mt-1 flex h-8 max-w-2xl flex-row gap-2 xs:h-full">
         <CodeIcon className="inline h-4 w-4 flex-shrink-0 sm:m-[0.125rem]" />
