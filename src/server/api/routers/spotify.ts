@@ -143,7 +143,9 @@ const getCurrentTrackResponseSchema = z.discriminatedUnion("status", [
   }),
 ]);
 
-type GetCurrentTrackResponse = z.infer<typeof getCurrentTrackResponseSchema>;
+export type GetCurrentTrackResponse = z.infer<
+  typeof getCurrentTrackResponseSchema
+>;
 
 async function getCachedTrackOrFailure(): Promise<GetCurrentTrackResponse> {
   const cachedTrack = await kv.hgetall(CURRENT_TRACK_KEY);
