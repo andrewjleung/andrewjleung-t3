@@ -97,7 +97,7 @@ function SpotifyCurrentlyListeningStat({
   }
 
   return (
-    <div className={className}>
+    <div className={clsx("line-clamp-2", className)}>
       {components.preamble}{" "}
       <Link
         href={components.trackHref}
@@ -159,7 +159,7 @@ function GitLastCommitStat({
   }
 
   return (
-    <div>
+    <div className="line-clamp-2">
       Pushed{" "}
       <Link
         href={components.href}
@@ -186,7 +186,7 @@ function LocationAndWeatherStat({ weather }: { weather?: string }) {
     return <div>{fallback}</div>;
   }
 
-  return <div>Based in {weather} Fort Worth, TX</div>;
+  return <div className="line-clamp-2">Based in {weather} Fort Worth, TX</div>;
 }
 
 export function Stats({ className }: { className?: string }) {
