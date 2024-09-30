@@ -1,6 +1,6 @@
 import { createTRPCRouter } from "~/server/api/trpc";
-import { spotifyRouter } from "./routers/spotify";
 import { githubRouter } from "./routers/github";
+import { spotifyRouter } from "./routers/spotify";
 import { weatherRouter } from "./routers/weather";
 
 /**
@@ -9,9 +9,9 @@ import { weatherRouter } from "./routers/weather";
  * All routers added in /api/routers should be manually added here.
  */
 export const appRouter = createTRPCRouter({
-  spotify: spotifyRouter,
-  github: githubRouter,
-  weather: weatherRouter,
+	spotify: spotifyRouter,
+	github: githubRouter,
+	weather: weatherRouter,
 });
 
 // export type definition of API
