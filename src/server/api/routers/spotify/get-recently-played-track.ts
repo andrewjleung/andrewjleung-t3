@@ -1,7 +1,8 @@
 import { z } from "zod";
-import { SPOTIFY_API_BASE_URL } from ".";
 import { handle200 } from "../utils";
 import { SpotifyPlayableItem } from "./types";
+
+const SPOTIFY_API_BASE_URL = "https://api.spotify.com/v1";
 
 const SpotifyRecentlyPlayedTrack = z.object({
 	track: SpotifyPlayableItem,

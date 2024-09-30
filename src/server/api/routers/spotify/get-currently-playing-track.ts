@@ -1,12 +1,14 @@
 import { z } from "zod";
-import { SPOTIFY_API_BASE_URL } from ".";
 import { handle200 } from "../utils";
 import { SpotifyPlayableItem } from "./types";
+
+const SPOTIFY_API_BASE_URL = "https://api.spotify.com/v1";
 
 const SpotifyGetCurrentlyPlayingTrackResponse = z.object({
 	is_playing: z.boolean(),
 	item: z.nullable(SpotifyPlayableItem),
 	currently_playing_type: z.enum(["track", "episode", "ad", "unknown"]),
+	timestamp: z.number(),
 });
 
 type SpotifyGetCurrentlyPlayingTrackResponse = z.infer<

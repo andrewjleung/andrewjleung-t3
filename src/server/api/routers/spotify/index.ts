@@ -6,7 +6,6 @@ import { getCurrentlyPlayingTrack } from "./get-currently-playing-track";
 import { getRecentlyPlayedTrack } from "./get-recently-played-track";
 import { SpotifyPlayableItem } from "./types";
 
-export const SPOTIFY_API_BASE_URL = "https://api.spotify.com/v1";
 const CURRENT_TRACK_KEY = "track";
 
 const getCurrentTrackResponseSchema = z.discriminatedUnion("status", [
@@ -24,20 +23,21 @@ export type GetCurrentTrackResponse = z.infer<
 	typeof getCurrentTrackResponseSchema
 >;
 
-async function getCachedTrackOrFailure(): Promise<GetCurrentTrackResponse> {
+const CachedTrack = z.object({
+	track: SpotifyPlayableItem,
+	timestamp: z.coerce.number(),
+});
+
+type CachedTrack = z.infer<typeof CachedTrack>;
+
+async function getCachedTrack(): Promise<CachedTrack | undefined> {
 	const cachedTrack = await kv.hgetall(CURRENT_TRACK_KEY);
 
-	if (cachedTrack !== null) {
-		return {
-			status: "success",
-			isCurrentlyPlaying: false,
-			track: SpotifyPlayableItem.parse(cachedTrack),
-		};
+	if (cachedTrack === null) {
+		return undefined;
 	}
 
-	return {
-		status: "failure",
-	};
+	return CachedTrack.parse(cachedTrack);
 }
 
 export const spotifyRouter = createTRPCRouter({
@@ -54,7 +54,10 @@ export const spotifyRouter = createTRPCRouter({
 			const currentlyPlayingTrack = await getCurrentlyPlayingTrack(accessToken);
 
 			if (currentlyPlayingTrack?.item) {
-				await kv.hset(CURRENT_TRACK_KEY, currentlyPlayingTrack.item);
+				await kv.hset(CURRENT_TRACK_KEY, {
+					track: currentlyPlayingTrack.item,
+					timestamp: currentlyPlayingTrack.timestamp,
+				});
 
 				return {
 					status: "success",
@@ -64,18 +67,41 @@ export const spotifyRouter = createTRPCRouter({
 			}
 
 			const recentlyPlayedTrack = await getRecentlyPlayedTrack(accessToken);
+			const cachedTrack = await getCachedTrack();
 
 			if (recentlyPlayedTrack) {
-				await kv.hset(CURRENT_TRACK_KEY, recentlyPlayedTrack.track);
+				const recentlyPlayedTrackTimestamp = new Date(
+					recentlyPlayedTrack.played_at,
+				).getTime();
 
+				if (
+					!cachedTrack ||
+					recentlyPlayedTrackTimestamp > cachedTrack.timestamp
+				) {
+					await kv.hset(CURRENT_TRACK_KEY, {
+						track: recentlyPlayedTrack.track,
+						timestamp: recentlyPlayedTrackTimestamp,
+					});
+
+					return {
+						status: "success",
+						isCurrentlyPlaying: false,
+						track: recentlyPlayedTrack.track,
+					};
+				}
+			}
+
+			if (cachedTrack !== undefined) {
 				return {
 					status: "success",
 					isCurrentlyPlaying: false,
-					track: recentlyPlayedTrack.track,
+					track: cachedTrack.track,
 				};
 			}
 
-			return getCachedTrackOrFailure();
+			return {
+				status: "failure",
+			};
 		},
 	),
 });
