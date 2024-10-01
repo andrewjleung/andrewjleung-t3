@@ -26,7 +26,7 @@ function IconLink({
 		<Link
 			href={href}
 			className={clsx(
-				"flex flex-row items-center gap-2 dark:hover:bg-transparent dark:hover:text-white",
+				"flex flex-row items-center gap-2 dark:hover:bg-transparent dark:hover:text-white transition-all duration-200",
 				className,
 			)}
 		>
