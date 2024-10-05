@@ -12,6 +12,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@phosphor-icons/react": "^2.1.7",
     "@planetscale/database": "^1.11.0",
     "@t3-oss/env-nextjs": "^0.7.1",
     "@tanstack/react-query": "^4.36.1",

@@ -1,5 +1,6 @@
 "use client";
 
+import { Code, MapPin, SpeakerHifi } from "@phosphor-icons/react/dist/ssr";
 import clsx from "clsx";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -9,7 +10,6 @@ import { z } from "zod";
 import type { getLastCommitFromEvents } from "~/server/api/routers/github";
 import type { GetCurrentTrackResponse } from "~/server/api/routers/spotify";
 import { api } from "../../trpc/react";
-import { CodeIcon, DeviceSpeakerIcon, MapPinIcon } from "../_components/icons";
 import { useRandomTransition } from "../_hooks/use-random-transition";
 
 const robotoMono300 = Roboto_Mono({ weight: "300", subsets: ["latin"] });
@@ -90,11 +90,11 @@ function SpotifyCurrentlyListeningStat({
 	const [fallback, hasTransitioned] = useRandomTransition(data, 44);
 
 	if (components === undefined || !hasTransitioned) {
-		return <div>{fallback}</div>;
+		return <div className="font-extrabold">{fallback}</div>;
 	}
 
 	return (
-		<div className={clsx("line-clamp-2", className)}>
+		<div className={clsx("line-clamp-2 font-extrabold", className)}>
 			{components.preamble}{" "}
 			<Link
 				href={components.trackHref}
@@ -152,11 +152,11 @@ function GitLastCommitStat({
 	const [fallback, hasTransitioned] = useRandomTransition(data, 44);
 
 	if (components === undefined || !hasTransitioned) {
-		return <div>{fallback}</div>;
+		return <div className="font-extrabold">{fallback}</div>;
 	}
 
 	return (
-		<div className="line-clamp-2">
+		<div className="line-clamp-2 font-extrabold">
 			Pushed{" "}
 			<Link
 				href={components.href}
@@ -183,7 +183,11 @@ function LocationAndWeatherStat({ weather }: { weather?: string }) {
 		return <div>{fallback}</div>;
 	}
 
-	return <div className="line-clamp-2">Based in {weather} Fort Worth, TX</div>;
+	return (
+		<div className="line-clamp-2 font-extrabold">
+			Based in {weather} Fort Worth, TX
+		</div>
+	);
 }
 
 export function Stats({ className }: { className?: string }) {
@@ -200,16 +204,16 @@ export function Stats({ className }: { className?: string }) {
           lines, and this will cause stats to remain spaced as if they contained
           two lines on small screens even if they only span one. */}
 			<div className="flex h-8 max-w-2xl flex-row gap-2 xs:h-full">
-				<MapPinIcon className="inline h-4 w-4 flex-shrink-0 sm:m-[0.125rem]" />
+				<MapPin className="inline h-4 w-4 flex-shrink-0 sm:m-[0.125rem]" />
 				<LocationAndWeatherStat weather={weather} />
 			</div>
 			<div className="mt-1 flex h-8 max-w-2xl flex-row gap-2 xs:h-full">
-				<DeviceSpeakerIcon className="inline h-4 w-4 flex-shrink-0 sm:m-[0.125rem]" />
+				<SpeakerHifi className="inline h-4 w-4 flex-shrink-0 sm:m-[0.125rem]" />
 				<SpotifyCurrentlyListeningStat currentTrackResponse={spotifyData} />
 			</div>
 			{/* TODO: Derive this via a static prop with ~1 hour invalidation to avoid rate limits. */}
 			<div className="mt-1 flex h-8 max-w-2xl flex-row gap-2 xs:h-full">
-				<CodeIcon className="inline h-4 w-4 flex-shrink-0 sm:m-[0.125rem]" />
+				<Code className="inline h-4 w-4 flex-shrink-0 sm:m-[0.125rem]" />
 				<GitLastCommitStat lastCommit={githubData} />
 			</div>
 		</div>
