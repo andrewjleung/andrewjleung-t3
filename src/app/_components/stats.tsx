@@ -90,11 +90,11 @@ function SpotifyCurrentlyListeningStat({
 	const [fallback, hasTransitioned] = useRandomTransition(data, 44);
 
 	if (components === undefined || !hasTransitioned) {
-		return <div className="font-extrabold">{fallback}</div>;
+		return <div className="">{fallback}</div>;
 	}
 
 	return (
-		<div className={clsx("line-clamp-2 font-extrabold", className)}>
+		<div className={clsx("line-clamp-2", className)}>
 			{components.preamble}{" "}
 			<Link
 				href={components.trackHref}
@@ -152,11 +152,11 @@ function GitLastCommitStat({
 	const [fallback, hasTransitioned] = useRandomTransition(data, 44);
 
 	if (components === undefined || !hasTransitioned) {
-		return <div className="font-extrabold">{fallback}</div>;
+		return <div className="">{fallback}</div>;
 	}
 
 	return (
-		<div className="line-clamp-2 font-extrabold">
+		<div className="line-clamp-2">
 			Pushed{" "}
 			<Link
 				href={components.href}
@@ -183,11 +183,7 @@ function LocationAndWeatherStat({ weather }: { weather?: string }) {
 		return <div>{fallback}</div>;
 	}
 
-	return (
-		<div className="line-clamp-2 font-extrabold">
-			Based in {weather} Fort Worth, TX
-		</div>
-	);
+	return <div className="line-clamp-2">Based in {weather} Fort Worth, TX</div>;
 }
 
 export function Stats({ className }: { className?: string }) {
