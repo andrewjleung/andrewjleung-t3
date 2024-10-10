@@ -53,13 +53,13 @@ export default async function Home() {
 				<Balancer
 					ratio={1}
 					as="div"
-					className="mt-6 w-0 min-w-full text-base text-black dark:text-neutral-300 sm:text-xl"
+					className="mt-6 w-0 min-w-full text-base text-black dark:text-white sm:text-xl"
 				>
 					Software Engineer at PayPal, Braintree Post-Processing. Looking to
 					improve the lives of users and developers alike.
 				</Balancer>
-				<Stats className="mt-6 w-0 min-w-full text-xs text-black dark:text-neutral-300 sm:text-sm" />
-				<div className="mt-8 flex flex-row items-center gap-3 text-sm text-black dark:text-neutral-400">
+				<Stats className="mt-6 w-0 min-w-full text-xs text-black dark:text-white sm:text-sm" />
+				<div className="mt-8 flex flex-row items-center gap-3 text-sm text-black dark:text-white">
 					<IconLink href="https://github.com/andrewjleung">
 						<GithubLogo weight="fill" className="m-1 inline h-6 w-6" />
 					</IconLink>
@@ -74,7 +74,7 @@ export default async function Home() {
 					</IconLink>
 					<Link
 						href="https://raw.githubusercontent.com/andrewjleung/resumes/main/artifacts/AndrewLeung_Resume.pdf"
-						className="ml-2 flex w-fit flex-row items-center gap-1 rounded-full dark:bg-neutral-400 bg-black text-white dark:text-black px-4 py-2 transition-all duration-200 dark:hover:bg-white"
+						className="ml-2 flex w-fit flex-row items-center gap-1 rounded-full dark:bg-white bg-black text-white dark:text-black px-4 py-2 transition-all duration-200 dark:hover:bg-white"
 					>
 						<span className="whitespace-nowrap text-sm">My resume</span>
 						<RightChevronIcon className="h-4 w-4" />
