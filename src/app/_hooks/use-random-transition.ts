@@ -2,68 +2,93 @@ import { useState } from "react";
 import { useInterval } from "./use-interval";
 
 export function useRandomTransition(
-  finalString?: string,
-  limit = 50,
-  tick = 15,
-  delay = 500,
+	finalString?: string,
+	limit = 50,
+	tick = 15,
+	delay = 500,
 ): [string, boolean] {
-  const letters = "ABCDEFGHIJKLMNOPRSTUVWXYZ";
-  const [started, setStarted] = useState(false);
-  const [randomString, setRandomString] = useState("");
-  const [hasTransitioned, setHasTransitioned] = useState(false);
-  const [pointer, setPointer] = useState(0);
+	const letters = "ABCDEFGHIJKLMNOPRSTUVWXYZ";
+	const [started, setStarted] = useState(false);
+	const [randomString, setRandomString] = useState("");
+	const [hasTransitioned, setHasTransitioned] = useState(false);
+	const [pointer, setPointer] = useState(0);
 
-  const makeRandomString = (length: number): string =>
-    Array(length)
-      .fill("0")
-      .map(() => letters[Math.floor(Math.random() * letters.length)])
-      .join("");
+	const makeRandomString = (length: number): string =>
+		Array(length)
+			.fill("0")
+			.map(() => letters[Math.floor(Math.random() * letters.length)])
+			.join("");
 
-  useInterval(
-    () => {
-      setStarted(true);
-    },
-    started ? null : delay,
-  );
+	useInterval(
+		() => {
+			setStarted(true);
+		},
+		started ? null : delay,
+	);
 
-  useInterval(
-    () => {
-      if (finalString === undefined) {
-        setRandomString((randomString) =>
-          makeRandomString(Math.min(randomString.length + 1, limit)),
-        );
-        return;
-      }
+	useInterval(
+		() => {
+			if (finalString === undefined) {
+				setRandomString((randomString) =>
+					makeRandomString(Math.min(randomString.length + 1, limit)),
+				);
+				return;
+			}
 
-      if (randomString === finalString) {
-        setHasTransitioned(true);
-        setStarted(false);
-        return;
-      }
+			if (randomString === finalString) {
+				setHasTransitioned(true);
+				setStarted(false);
+				return;
+			}
 
-      setRandomString((randomString) =>
-        finalString.slice(0, pointer).concat(
-          makeRandomString(
-            Math.max(
-              0,
-              (() => {
-                if (randomString.length < finalString.length) {
-                  return randomString.length - pointer + 1;
-                } else if (randomString.length > finalString.length) {
-                  return randomString.length - pointer - 1;
-                } else {
-                  return randomString.length - pointer;
-                }
-              })(),
-            ),
-          ),
-        ),
-      );
+			setRandomString((randomString) =>
+				finalString.slice(0, pointer).concat(
+					makeRandomString(
+						Math.max(
+							0,
+							(() => {
+								if (randomString.length < finalString.length) {
+									return randomString.length - pointer + 1;
+								} else if (randomString.length > finalString.length) {
+									return randomString.length - pointer - 1;
+								} else {
+									return randomString.length - pointer;
+								}
+							})(),
+						),
+					),
+				),
+			);
 
-      setPointer((pointer) => pointer + 1);
-    },
-    started && !hasTransitioned ? tick : null,
-  );
+			setPointer((pointer) => pointer + 1);
+		},
+		started && !hasTransitioned ? tick : null,
+	);
 
-  return [randomString, hasTransitioned];
+	return [randomString, hasTransitioned];
+}
+
+export function useRandomTransitionWithTimeout(
+	timeoutString: string,
+	finalString?: string,
+	limit = 50,
+	tick = 15,
+	delay = 500,
+	timeout = 5000,
+): [string, boolean] {
+	const [timedOut, setTimedOut] = useState(false);
+
+	const results = useRandomTransition(
+		timedOut ? timeoutString : finalString,
+		limit,
+		tick,
+		delay,
+	);
+
+	useInterval(
+		() => setTimedOut(true),
+		finalString === undefined && !timedOut ? delay + timeout : null,
+	);
+
+	return results;
 }

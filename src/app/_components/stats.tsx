@@ -10,7 +10,10 @@ import { z } from "zod";
 import type { getLastCommitFromEvents } from "~/server/api/routers/github";
 import type { GetCurrentTrackResponse } from "~/server/api/routers/spotify";
 import { api } from "../../trpc/react";
-import { useRandomTransition } from "../_hooks/use-random-transition";
+import {
+	useRandomTransition,
+	useRandomTransitionWithTimeout,
+} from "../_hooks/use-random-transition";
 
 const robotoMono300 = Roboto_Mono({ weight: "300", subsets: ["latin"] });
 
@@ -87,10 +90,14 @@ function SpotifyCurrentlyListeningStat({
 		return `${components.preamble} ${components.trackName} by ${artistNames}`;
 	})();
 
-	const [fallback, hasTransitioned] = useRandomTransition(data, 44);
+	const [fallback, hasTransitioned] = useRandomTransitionWithTimeout(
+		"Failed to fetch Spotify data...",
+		data,
+		44,
+	);
 
 	if (components === undefined || !hasTransitioned) {
-		return <div className="">{fallback}</div>;
+		return <div>{fallback}</div>;
 	}
 
 	return (
@@ -149,10 +156,14 @@ function GitLastCommitStat({
 		return `Pushed ${components.sha} to ${components.repo} ${components.createdAt}`;
 	})();
 
-	const [fallback, hasTransitioned] = useRandomTransition(data, 44);
+	const [fallback, hasTransitioned] = useRandomTransitionWithTimeout(
+		"Failed to fetch GitHub data...",
+		data,
+		44,
+	);
 
 	if (components === undefined || !hasTransitioned) {
-		return <div className="">{fallback}</div>;
+		return <div>{fallback}</div>;
 	}
 
 	return (
@@ -177,7 +188,11 @@ function GitLastCommitStat({
 }
 
 function LocationAndWeatherStat({ weather }: { weather?: string }) {
-	const [fallback, hasTransitioned] = useRandomTransition(weather, 44);
+	const [fallback, hasTransitioned] = useRandomTransitionWithTimeout(
+		"Based in Fort Worth, TX",
+		weather,
+		44,
+	);
 
 	if (weather === undefined || !hasTransitioned) {
 		return <div>{fallback}</div>;
