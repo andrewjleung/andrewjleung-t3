@@ -1,107 +1,133 @@
-import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+import { kv } from "@vercel/kv";
 import { z } from "zod";
 import { env } from "~/env";
+import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+
+const LAST_COMMIT_KEY = "commit";
 
 export const handle200 = <T>(
-  response: Response,
-  schema: z.ZodSchema<T>,
+	response: Response,
+	schema: z.ZodSchema<T>,
 ): Promise<T | undefined> =>
-  response
-    .json()
-    .then((res) => schema.parse(res))
-    .catch((err) => {
-      console.error(err);
-      return undefined;
-    });
+	response
+		.json()
+		.then((res) => schema.parse(res))
+		.catch((err) => {
+			console.error(err);
+			return undefined;
+		});
 
 const GitHubPushEventPayload = z.object({
-  commits: z.optional(
-    z.array(
-      z.object({
-        sha: z.string(),
-        message: z.string(),
-        url: z.string(),
-      }),
-    ),
-  ),
+	commits: z.optional(
+		z.array(
+			z.object({
+				sha: z.string(),
+				message: z.string(),
+				url: z.string(),
+			}),
+		),
+	),
 });
 
 export type GitHubPushEventPayload = z.infer<typeof GitHubPushEventPayload>;
 
 const GitHubEvent = z.object({
-  type: z.string(),
-  repo: z.object({
-    name: z.string(),
-  }),
-  payload: GitHubPushEventPayload,
-  created_at: z.string().datetime(),
+	type: z.string(),
+	repo: z.object({
+		name: z.string(),
+	}),
+	payload: GitHubPushEventPayload,
+	created_at: z.string().datetime(),
 });
 
 export type GitHubEvent = z.infer<typeof GitHubEvent>;
 
-export async function getGitHubEvents(): Promise<GitHubEvent[] | undefined> {
-  const response = await fetch(
-    "https://api.github.com/users/andrewjleung/events",
-    {
-      method: "GET",
-      headers: {
-        Accept: "application/vnd.github+json",
-        Authorization: `Bearer ${env.GITHUB_PAT}`,
-        "X-GitHub-Api-Version": "2022-11-28",
-      },
-    },
-  );
+const Commit = z.object({
+	href: z.string(),
+	repo: z.string(),
+	sha: z.string(),
+	message: z.string(),
+	createdAt: z.string(),
+});
 
-  if (response.status === 200) {
-    return handle200(response, z.array(GitHubEvent));
-  }
+type Commit = z.infer<typeof Commit>;
+
+async function getCachedCommit(): Promise<Commit | undefined> {
+	const cachedCommit = await kv.hgetall(LAST_COMMIT_KEY);
+
+	if (cachedCommit === null) {
+		return undefined;
+	}
+
+	return Commit.parse(cachedCommit);
 }
 
-export function getLastCommitFromEvents(events: GitHubEvent[]):
-  | {
-      href: string;
-      repo: string;
-      sha: string;
-      message: string;
-      createdAt: GitHubEvent["created_at"];
-    }
-  | undefined {
-  const pushEvents = events.filter((event) => event.type === "PushEvent");
+export async function getGitHubEvents(): Promise<GitHubEvent[] | undefined> {
+	const response = await fetch(
+		"https://api.github.com/users/andrewjleung/events",
+		{
+			method: "GET",
+			headers: {
+				Accept: "application/vnd.github+json",
+				Authorization: `Bearer ${env.GITHUB_PAT}`,
+				"X-GitHub-Api-Version": "2022-11-28",
+			},
+		},
+	);
 
-  if (pushEvents.length < 1) {
-    return;
-  }
+	if (response.status === 200) {
+		return handle200(response, z.array(GitHubEvent));
+	}
+}
 
-  const mostRecentPushEvent = pushEvents.find(Boolean)!;
-  const mostRecentCommit = mostRecentPushEvent.payload?.commits
-    ?.reverse()
-    .find(Boolean);
+export function getLastCommitFromEvents(
+	events: GitHubEvent[],
+): Commit | undefined {
+	const pushEvents = events.filter((event) => event.type === "PushEvent");
 
-  if (mostRecentCommit === undefined) {
-    return;
-  }
+	if (pushEvents.length < 1) {
+		return;
+	}
 
-  // Convert the API URL to a web URL.
-  const url = new URL(mostRecentCommit.url);
-  url.hostname = url.hostname.replace("api.", "");
-  url.pathname = url.pathname
-    .replace("/repos", "")
-    .replace("/commits", "/commit");
+	const mostRecentPushEvent = pushEvents.find(Boolean)!;
+	const mostRecentCommit = mostRecentPushEvent.payload?.commits
+		?.reverse()
+		.find(Boolean);
 
-  return {
-    href: url.toString(),
-    repo: mostRecentPushEvent.repo.name,
-    sha: mostRecentCommit.sha,
-    message: mostRecentCommit.message,
-    createdAt: mostRecentPushEvent.created_at,
-  };
+	if (mostRecentCommit === undefined) {
+		return;
+	}
+
+	// Convert the API URL to a web URL.
+	const url = new URL(mostRecentCommit.url);
+	url.hostname = url.hostname.replace("api.", "");
+	url.pathname = url.pathname
+		.replace("/repos", "")
+		.replace("/commits", "/commit");
+
+	return {
+		href: url.toString(),
+		repo: mostRecentPushEvent.repo.name,
+		sha: mostRecentCommit.sha,
+		message: mostRecentCommit.message,
+		createdAt: mostRecentPushEvent.created_at,
+	};
 }
 
 export const githubRouter = createTRPCRouter({
-  getLastCommit: publicProcedure.query(async () => {
-    const events = await getGitHubEvents();
-    const lastCommit = getLastCommitFromEvents(events ?? []);
+	getLastCommit: publicProcedure.query(async () => {
+		const events = await getGitHubEvents();
+		const lastCommit = getLastCommitFromEvents(events ?? []);
+		const cachedCommit = await getCachedCommit();
 
-    return lastCommit;
-  }),
+		if (lastCommit === undefined && cachedCommit !== undefined) {
+			return cachedCommit;
+		}
+
+		if (lastCommit !== undefined) {
+			await kv.hset(LAST_COMMIT_KEY, lastCommit);
+		}
+
+		return lastCommit;
+	}),
 });
