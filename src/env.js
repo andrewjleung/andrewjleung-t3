@@ -19,7 +19,7 @@ export const env = createEnv({
     SPOTIFY_REFRESH_TOKEN: z.string(),
     GITHUB_PAT: z
       .string()
-      .refine((str) => str.startsWith("ghp_"), "Invalid GitHub PAT"),
+      .refine((str) => str.startsWith("github_pat_"), "Invalid GitHub PAT"),
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
