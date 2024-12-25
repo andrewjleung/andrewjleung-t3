@@ -3,12 +3,13 @@ import {
   LinkedinLogo,
   SpotifyLogo,
   YoutubeLogo,
+  CaretRight,
+  PaperPlaneTilt,
 } from "@phosphor-icons/react/dist/ssr";
 import clsx from "clsx";
 import { Inter } from "next/font/google";
 import Link from "next/link";
 import Balancer from "react-wrap-balancer";
-import { RightChevronIcon } from "./_components/icons";
 import { Stats } from "./_components/stats";
 
 const inter400 = Inter({ weight: "400", subsets: ["latin"] });
@@ -72,12 +73,15 @@ export default async function Home() {
           <IconLink href="https://www.youtube.com/channel/UCVxaN-2GATE-3Ag9RTGrIXw">
             <YoutubeLogo weight="fill" className="m-1 inline h-6 w-6" />
           </IconLink>
+          <IconLink href="mailto:andrewleung104@gmail.com">
+            <PaperPlaneTilt weight="fill" className="m-1 inline h-6 w-6" />
+          </IconLink>
           <Link
             href="https://raw.githubusercontent.com/andrewjleung/resumes/main/artifacts/AndrewLeung_Resume.pdf"
             className="ml-2 flex w-fit flex-row items-center gap-1 rounded-full dark:bg-white bg-black text-white dark:text-black px-4 py-2 transition-all duration-200 dark:hover:bg-white"
           >
             <span className="whitespace-nowrap text-sm">My resume</span>
-            <RightChevronIcon className="h-4 w-4" />
+            <CaretRight className="h-4 w-4" />
           </Link>
         </div>
       </div>

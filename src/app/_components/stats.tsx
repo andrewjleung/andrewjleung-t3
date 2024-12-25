@@ -145,7 +145,7 @@ function GitLastCommitStat({
       sha: lastCommit.sha.substring(0, 7),
       org,
       repo,
-      createdAt: dayjs(lastCommit.createdAt).fromNow(),
+      createdAt: lastCommit.createdAt,
     };
   })();
 
@@ -153,7 +153,7 @@ function GitLastCommitStat({
     if (components === undefined) {
       return;
     }
-    return `Pushed ${components.sha} to ${components.repo} ${components.createdAt}`;
+    return `Pushed ${components.sha} to ${components.repo} ${dayjs(components.createdAt).fromNow()}`;
   })();
 
   const [fallback, hasTransitioned] = useRandomTransitionWithTimeout(
@@ -182,7 +182,9 @@ function GitLastCommitStat({
       >
         {components.repo}
       </Link>{" "}
-      {components.createdAt}
+      <span title={dayjs(components.createdAt).toString()}>
+        {dayjs(components.createdAt).fromNow()}
+      </span>
     </div>
   );
 }
