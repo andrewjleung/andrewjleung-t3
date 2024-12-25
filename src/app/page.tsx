@@ -62,25 +62,42 @@ export default async function Home() {
         <Stats className="mt-6 w-0 min-w-full text-xs text-black dark:text-white sm:text-sm" />
         <div className="mt-8 flex flex-row items-center gap-3 text-sm text-black dark:text-white">
           <IconLink href="https://github.com/andrewjleung">
-            <GithubLogo weight="fill" className="m-1 inline h-6 w-6" />
+            <GithubLogo
+              weight="fill"
+              className="m-1 inline xs:h-6 xs:w-6 h-4 w-4"
+            />
           </IconLink>
           <IconLink href="https://www.linkedin.com/in/andrewjleung-">
-            <LinkedinLogo weight="fill" className="m-1 inline h-6 w-6" />
+            <LinkedinLogo
+              weight="fill"
+              className="m-1 inline xs:h-6 xs:w-6 h-4 w-4"
+            />
           </IconLink>
           <IconLink href="https://open.spotify.com/artist/00zDjeTQDVOFlNttOnv9bc">
-            <SpotifyLogo weight="fill" className="m-1 inline h-6 w-6" />
+            <SpotifyLogo
+              weight="fill"
+              className="m-1 inline xs:h-6 xs:w-6 h-4 w-4"
+            />
           </IconLink>
           <IconLink href="https://www.youtube.com/channel/UCVxaN-2GATE-3Ag9RTGrIXw">
-            <YoutubeLogo weight="fill" className="m-1 inline h-6 w-6" />
+            <YoutubeLogo
+              weight="fill"
+              className="m-1 inline xs:h-6 xs:w-6 h-4 w-4"
+            />
           </IconLink>
           <IconLink href="mailto:andrewleung104@gmail.com">
-            <PaperPlaneTilt weight="fill" className="m-1 inline h-6 w-6" />
+            <PaperPlaneTilt
+              weight="fill"
+              className="m-1 inline xs:h-6 xs:w-6 h-4 w-4"
+            />
           </IconLink>
           <Link
             href="https://raw.githubusercontent.com/andrewjleung/resumes/main/artifacts/AndrewLeung_Resume.pdf"
-            className="ml-2 flex w-fit flex-row items-center gap-1 rounded-full dark:bg-white bg-black text-white dark:text-black px-4 py-2 transition-all duration-200 dark:hover:bg-white"
+            className="flex w-fit flex-row items-center gap-1 rounded-full dark:bg-white bg-black text-white dark:text-black px-4 py-2 transition-all duration-200 dark:hover:bg-white"
           >
-            <span className="whitespace-nowrap text-sm">My resume</span>
+            <span className="whitespace-nowrap text-xs xs:text-sm">
+              My resume
+            </span>
             <CaretRight className="h-4 w-4" />
           </Link>
         </div>
