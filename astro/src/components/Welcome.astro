@@ -1,0 +1,27 @@
+---
+import "../styles/global.css";
+
+const year = new Date().getFullYear();
+---
+
+<div id="container" class="flex flex-col justify-center items-center h-full">
+  <nav class="max-w-screen-lg w-full">
+    <section id="links" class="">
+      <a href="/">Home</a>
+      <a href="/blog">Blog</a>
+    </section>
+  </nav>
+  <main class="max-w-screen-lg flex grow items-center justify-center w-full">
+		<section id="hero" class="">
+      <div class="whitespace-nowrap bg-gradient-to-br from-black via-transparent to-transparent text-6xl bg-[size:400%] animate-background-pan bg-clip-text text-transparent">
+        Andrew Leung
+      </div>
+		</section>
+	</main>
+  <footer class="w-full max-w-screen-lg flex flex-row items-center justify-end">
+    <span class="whitespace-nowrap">© {year} Andrew Leung. All rights reserved.</span>
+  </footer>
+</div>
+
+<style>
+</style>

@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", sans-serif;
+  --font-serif: "Inter", serif;
+  --font-mono: "Inter", monospace;
+
+  --breakpoint-xs: 475px;
+
+  --animate-background-pan: background-pan 2s;
+  --animate-fade-up: fade-up 1.75s ease-in-out;
+  --animate-light-up: light-up 3s ease-in-out;
+
+  @keyframes background-pan {
+    0% {
+      background-position: 100% 100%;
+    }
+    100% {
+      background-position: 0% 0%;
+    }
+  }
+
+  @keyframes fade-up {
+    0% {
+      opacity: 0;
+      transform: translateY(5%);
+    }
+    50% {
+      opacity: 0;
+      transform: translateY(5%);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes light-up {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 0.2;
+    }
+  }
+}
