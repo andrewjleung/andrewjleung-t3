@@ -192,7 +192,7 @@ function GitLastCommitStat({
 function LocationAndWeatherStat({ weather }: { weather?: string }) {
   const [fallback, hasTransitioned] = useRandomTransitionWithTimeout(
     "Based in Fort Worth, TX",
-    weather,
+    weather ? `Based in ${weather} Fort Worth, TX` : undefined,
     44,
   );
 
