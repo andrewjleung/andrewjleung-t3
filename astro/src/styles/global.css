@@ -7,7 +7,7 @@
 
   --breakpoint-xs: 475px;
 
-  --animate-background-pan: background-pan 2s;
+  --animate-background-pan: background-pan 2s ease-in-out;
   --animate-fade-up: fade-up 1.75s ease-in-out;
   --animate-light-up: light-up 3s ease-in-out;
 
