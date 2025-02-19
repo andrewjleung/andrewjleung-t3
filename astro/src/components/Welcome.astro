@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import Stats from "./Stats.astro";
 
 const year = new Date().getFullYear();
 ---
@@ -13,16 +14,17 @@ const year = new Date().getFullYear();
   </nav>
   <main class="max-w-screen-lg flex grow items-center justify-center w-full">
 		<section id="hero" class="prose-p:font-light">
-      <h1 class:list={["name", "whitespace-nowrap bg-gradient-to-br from-black via-transparent to-transparent text-6xl motion-safe:animate-background-pan text-transparent w-fit -my-3 py-3 -mb-2 pb-2 h-full bg-clip-text"]}>
+      <h1 class:list={["name", "whitespace-nowrap bg-gradient-to-br from-black via-transparent to-transparent text-6xl motion-safe:animate-background-pan text-transparent w-fit bg-clip-text"]}>
         Andrew Leung
       </h1>
-      <div class="w-[305px] xs:w-[453px] sm:w-[566px]" />
+      <!--<div class="w-[305px] xs:w-[453px] sm:w-[566px]" />-->
       <div class="motion-safe:animate-fade-up mt-6 text-xl">
         <p>Software Engineer at PayPal, Braintree Post-Processing.</p>
         <p>Looking to improve the lives of users and developers alike.</p>
 
         <!--<Stats className="mt-6 w-0 min-w-full text-xs text-black dark:text-white sm:text-sm" />-->
-        <div class="mt-8 flex flex-row items-center gap-3 text-sm text-black dark:text-white">
+        <Stats/>
+        <div class="mt-8 flex flex-row items-center gap-3 text-sm text-black">
         </div>
       </div>
 		</section>
