@@ -25,8 +25,34 @@ const WeatherResponse = z.object({
 
 type WeatherResponse = z.infer<typeof WeatherResponse>;
 
+async function getWeather() {
+  return await fetch(WEATHER_ENDPOINT)
+    .then((res) => res.json())
+    .then((res) => WeatherResponse.parse(res).current)
+    .then((currentWeather) => {
+      const adjectivesAndConditions: [string, boolean][] = [
+        ["snowy", currentWeather.snowfall > 0],
+        ["rainy", currentWeather.rain >= 0.01],
+        ["windy", currentWeather.wind_speed_10m > 20],
+        ["cloudy", currentWeather.cloud_cover > 45],
+        ["sunny", currentWeather.is_day],
+        ["peaceful", !currentWeather.is_day],
+      ];
+
+      const result = adjectivesAndConditions.find(
+        ([_, condition]) => condition,
+      );
+
+      if (result === undefined) {
+        return "Based in Fort Worth, TX";
+      } else {
+        return `Based in ${result[0]} Fort Worth, TX`;
+      }
+    });
+}
+
 export const weather = {
   getWeather: defineAction({
-    handler: async () => {},
+    handler: getWeather,
   }),
 };
