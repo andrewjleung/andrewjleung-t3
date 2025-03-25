@@ -92,7 +92,7 @@ export default async function Home() {
             />
           </IconLink>
           <Link
-            href="https://raw.githubusercontent.com/andrewjleung/resumes/main/artifacts/AndrewLeung_Resume.pdf"
+            href="https://andrewjleung.github.io/resumes/AndrewLeung_Resume.pdf"
             className="flex w-fit flex-row items-center gap-1 rounded-full dark:bg-white bg-black text-white dark:text-black px-4 py-2 transition-all duration-200 dark:hover:bg-white"
           >
             <span className="whitespace-nowrap text-xs xs:text-sm">
