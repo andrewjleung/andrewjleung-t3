@@ -74,7 +74,7 @@ export function useRandomTransitionWithTimeout(
   timeoutString: string,
   finalString?: string,
   limit = 50,
-  tick = 10,
+  tick = 15,
   delay = 500,
   timeout = 5000,
 ): [string, boolean] {
