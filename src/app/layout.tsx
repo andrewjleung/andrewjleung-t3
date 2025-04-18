@@ -1,7 +1,7 @@
 import "~/styles/globals.css";
 
 import { Inter } from "next/font/google";
-import { cookies } from "next/headers";
+import { cookies, type UnsafeUnwrappedCookies } from "next/headers";
 
 import clsx from "clsx";
 import { TRPCReactProvider } from "~/trpc/react";
@@ -38,9 +38,9 @@ function Footer({
   );
 }
 
-function Providers({ children }: { children: React.ReactNode }) {
+async function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <TRPCReactProvider cookies={cookies().toString()}>
+    <TRPCReactProvider cookies={(await cookies()).toString()}>
       <ThemeProvider>{children}</ThemeProvider>
     </TRPCReactProvider>
   );
