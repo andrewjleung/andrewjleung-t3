@@ -53,7 +53,7 @@ export function NavBar({
     <div className={clsx("flex w-full justify-center", className)}>
       <div
         className={clsx(
-          "flex w-full max-w-screen-lg flex-row items-center gap-5 p-6",
+          "flex w-full max-w-(--breakpoint-lg) flex-row items-center gap-5 p-6",
           className,
         )}
       >

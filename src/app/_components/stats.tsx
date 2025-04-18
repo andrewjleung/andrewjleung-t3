@@ -10,10 +10,7 @@ import { z } from "zod";
 import type { getLastCommitFromEvents } from "~/server/api/routers/github";
 import type { GetCurrentTrackResponse } from "~/server/api/routers/spotify";
 import { api } from "../../trpc/react";
-import {
-  useRandomTransition,
-  useRandomTransitionWithTimeout,
-} from "../_hooks/use-random-transition";
+import { useRandomTransitionWithTimeout } from "../_hooks/use-random-transition";
 
 const robotoMono300 = Roboto_Mono({ weight: "300", subsets: ["latin"] });
 
@@ -101,7 +98,7 @@ function SpotifyCurrentlyListeningStat({
   }
 
   return (
-    <div className={clsx("line-clamp-2", className)}>
+    <div className={clsx("line-clamp-3", className)}>
       {components.preamble}{" "}
       <Link
         href={components.trackHref}
@@ -211,16 +208,21 @@ export function Stats({ className }: { className?: string }) {
   return (
     <div className={clsx(robotoMono300.className, className)}>
       <div className="flex max-w-2xl flex-row gap-2 h-full">
-        <MapPin className="inline h-4 w-4 flex-shrink-0 sm:m-[0.125rem]" />
+        <div className="xs:h-6 h-5 flex items-center justify-center">
+          <MapPin className="h-4 w-4" />
+        </div>
         <LocationAndWeatherStat weather={weather} />
       </div>
       <div className="mt-1 flex max-w-2xl flex-row gap-2 h-full">
-        <SpeakerHifi className="inline h-4 w-4 flex-shrink-0 sm:m-[0.125rem]" />
+        <div className="xs:h-6 h-5 flex items-center justify-center">
+          <SpeakerHifi className="h-4 w-4" />
+        </div>
         <SpotifyCurrentlyListeningStat currentTrackResponse={spotifyData} />
       </div>
-      {/* TODO: Derive this via a static prop with ~1 hour invalidation to avoid rate limits. */}
       <div className="mt-1 flex max-w-2xl flex-row gap-2 h-full">
-        <Code className="inline h-4 w-4 flex-shrink-0 sm:m-[0.125rem]" />
+        <div className="xs:h-6 h-5 flex items-center justify-center">
+          <Code className="h-4 w-4" />
+        </div>
         <GitLastCommitStat lastCommit={githubData} />
       </div>
     </div>

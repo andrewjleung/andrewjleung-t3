@@ -3,5 +3,5 @@ export default function BlogLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <div className="mb-auto max-w-screen-md px-10">{children}</div>;
+  return <div className="mb-auto max-w-(--breakpoint-md) px-10">{children}</div>;
 }
