@@ -94,7 +94,7 @@ function SpotifyCurrentlyListeningStat({
   );
 
   if (components === undefined || !hasTransitioned) {
-    return <div>{fallback}</div>;
+    return <div className="overflow-hidden whitespace-nowrap [text-overflow:'']">{fallback}</div>;
   }
 
   return (
@@ -160,7 +160,7 @@ function GitLastCommitStat({
   );
 
   if (components === undefined || !hasTransitioned) {
-    return <div>{fallback}</div>;
+    return <div className="overflow-hidden whitespace-nowrap [text-overflow:'']">{fallback}</div>;
   }
 
   return (
@@ -194,7 +194,7 @@ function LocationAndWeatherStat({ weather }: { weather?: string }) {
   );
 
   if (weather === undefined || !hasTransitioned) {
-    return <div>{fallback}</div>;
+    return <div className="overflow-hidden whitespace-nowrap [text-overflow:'']">{fallback}</div>;
   }
 
   return <div className="line-clamp-2">Based in {weather} Fort Worth, TX</div>;
