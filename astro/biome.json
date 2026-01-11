@@ -1,0 +1,58 @@
+{
+    "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+    "assist": {
+        "enabled": true,
+        "actions": {
+            "recommended": true
+        }
+    },
+    "css": {
+        "parser": {
+            "tailwindDirectives": true
+        }
+    },
+    "formatter": {
+        "enabled": true,
+        "formatWithErrors": true,
+        "useEditorconfig": true
+    },
+    "html": {
+        "experimentalFullSupportEnabled": true,
+        "linter": {
+            "enabled": true
+        },
+        "formatter": {
+            "enabled": true,
+            "indentScriptAndStyle": true
+        }
+    },
+    "linter": {
+        "enabled": true,
+        "rules": {
+            "recommended": true,
+            "nursery": {
+                "useSortedClasses": {
+                    "level": "error",
+                    "fix": "safe"
+                }
+            }
+        }
+    },
+    "overrides": [
+        {
+            "includes": ["**/*.astro"],
+            "linter": {
+                "rules": {
+                    "style": {
+                        "useConst": "off",
+                        "useImportType": "off"
+                    },
+                    "correctness": {
+                        "noUnusedVariables": "off",
+                        "noUnusedImports": "off"
+                    }
+                }
+            }
+        }
+    ]
+}

@@ -1,0 +1,95 @@
+---
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
+} from "@/components/ui/card";
+
+import { Badge } from "@/components/ui/badge";
+import PayPal from "@/assets/paypal.svg";
+import Ruby from "@/assets/ruby.svg";
+import RubyOnRails from "@/assets/ruby_on_rails.svg";
+
+type InfoItem = {
+    key: string;
+    value: string;
+};
+
+const info: InfoItem[] = [
+    {
+        key: "Title",
+        value: "Software Engineer",
+    },
+    {
+        key: "Company",
+        value: "PayPal",
+    },
+];
+---
+
+<div id="container" class="flex flex-col items-center">
+    <main
+        class="max-w-2xl mt-24 flex flex-col gap-5 font-light tracking-wider leading-7"
+    >
+        <h2 class="dark:text-neutral-100">Lorem ipsum</h2>
+
+        <p class="dark:text-neutral-400">
+            Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque
+            faucibus ex sapien vitae pellentesque sem placerat.
+        </p>
+
+        <p class="dark:text-neutral-400">
+            Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque
+            faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi
+            pretium tellus duis convallis.
+        </p>
+
+        <Card
+            className="dark:bg-transparent blur-xs hover:blur-none ease-in-out transition-all"
+        >
+            <CardHeader>
+                <CardTitle>Coming soon...</CardTitle>
+                <CardDescription>
+                    Moving towards the next venture...
+                </CardDescription>
+            </CardHeader>
+        </Card>
+
+        <Card className="dark:bg-transparent">
+            <CardHeader>
+                <CardTitle
+                    className="flex flex-row items-center gap-2 font-light"
+                >
+                    PayPal
+                    <Badge
+                        className="rounded-full text-neutral-300 group"
+                        variant="outline"
+                    >
+                        <Ruby
+                            class="dark:fill-neutral-100 dark:group-hover:fill-red-700 transition-colors ease-in-out duration-200 mr-0.5"
+                        />
+                        Ruby
+                    </Badge>
+                    <Badge
+                        className="rounded-full text-neutral-300 group"
+                        variant="outline"
+                    >
+                        <RubyOnRails
+                            class="dark:fill-neutral-100 dark:group-hover:fill-red-700 transition-colors ease-in-out duration-200 mr-0.5"
+                        />
+                        Ruby on Rails
+                    </Badge>
+                </CardTitle>
+                <CardDescription>
+                    I did a bit of this and that, among other things.
+                </CardDescription>
+            </CardHeader>
+            <CardContent></CardContent>
+        </Card>
+    </main>
+</div>
+
+<style>
+</style>
