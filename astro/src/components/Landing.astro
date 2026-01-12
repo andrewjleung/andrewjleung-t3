@@ -1,9 +1,10 @@
 ---
 import Ruby from "@/assets/ruby.svg";
 import RubyOnRails from "@/assets/ruby_on_rails.svg";
+import Rust from "@/assets/rust.svg";
 import { Badge } from "@/components/ui/badge";
 import { ModeToggle } from "@/components/ModeToggle";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Notebook } from "lucide-react";
 
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
@@ -25,13 +26,19 @@ import { Card, CardContent } from "@/components/ui/card";
             >
             &mdash; I aim to build simple, satisfying software, for fun and
             friction. I've been writing code for nearly a decade, professionally
-            for the last three years. Currently exploring building personal
-            tools in
-            <a
-                href="https://rust-lang.org/"
-                class="underline text-foreground hover:text-chart-1 dark:hover:text-chart-3"
-                >Rust</a
-            >.
+            for the last three years. Lately exploring building personal tools
+            in
+            <a href="https://www.rust-lang.org/" class="hover:cursor-pointer">
+                <Badge
+                    className="rounded-full group text-midground"
+                    variant="secondary"
+                >
+                    <Rust
+                        class="fill-midground group-hover:fill-orange-600 transition-colors ease-in-out duration-150 mr-0.5"
+                    />
+                    Rust
+                </Badge>
+            </a>.
         </p>
 
         <p class="text-midground">
@@ -40,10 +47,30 @@ import { Card, CardContent } from "@/components/ui/card";
             makes you feel a little less alien.
         </p>
 
+        <ul class="list-disc list-inside text-midground px-4 my-2">
+            <li>
+                You can find my latest resume here &mdash;
+                <a
+                    href="https://andrewjleung.github.io/resumes/AndrewLeung_Resume.pdf"
+                    class="hover:cursor-pointer"
+                >
+                    <Badge
+                        className="rounded-full group text-midground"
+                        variant="secondary"
+                    >
+                        <Notebook
+                            className="text-midground group-hover:stroke-blue-600 transition-colors ease-in-out duration-150 mr-0.5"
+                        />
+                        Resume
+                    </Badge>
+                </a>
+            </li>
+        </ul>
+
         <p class="text-midground">As for my current employment:</p>
 
         <Card
-            className="shadow-sm hover:shadow-md hover:scale-[101.5%] transition-all duration-100 ease-out"
+            className="shadow-md hover:shadow-lg hover:scale-[101%] transition-all duration-100 ease-out"
         >
             <CardContent>
                 <div class="grid grid-cols-6 relative">
@@ -99,7 +126,7 @@ import { Card, CardContent } from "@/components/ui/card";
             </CardContent>
         </Card>
 
-        <h2 class="mt-8">Thoughts</h2>
+        <h2 class="mt-16">Thoughts</h2>
 
         <a
             href="/"
