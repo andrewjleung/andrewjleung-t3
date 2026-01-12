@@ -47,26 +47,6 @@ import { Card, CardContent } from "@/components/ui/card";
             makes you feel a little less alien.
         </p>
 
-        <ul class="list-disc list-inside text-midground px-4 my-2">
-            <li>
-                You can find my latest resume here &mdash;
-                <a
-                    href="https://andrewjleung.github.io/resumes/AndrewLeung_Resume.pdf"
-                    class="hover:cursor-pointer"
-                >
-                    <Badge
-                        className="rounded-full group text-midground"
-                        variant="secondary"
-                    >
-                        <Notebook
-                            className="text-midground group-hover:stroke-blue-600 transition-colors ease-in-out duration-150 mr-0.5"
-                        />
-                        Resume
-                    </Badge>
-                </a>
-            </li>
-        </ul>
-
         <p class="text-midground">As for my current employment:</p>
 
         <Card
@@ -126,7 +106,20 @@ import { Card, CardContent } from "@/components/ui/card";
             </CardContent>
         </Card>
 
-        <h2 class="mt-16">Thoughts</h2>
+        <p class="list-disc list-inside text-midground">
+            You can find my latest resume here &mdash;
+            <a
+                href="https://andrewjleung.github.io/resumes/AndrewLeung_Resume.pdf"
+                class="hover:cursor-pointer"
+            >
+                <Badge className="rounded-full group">
+                    <Notebook className="ease-in-out duration-150 mr-0.5" />
+                    Resume
+                </Badge>
+            </a>
+        </p>
+
+        <h2 class="mt-12">Thoughts</h2>
 
         <a
             href="/"
