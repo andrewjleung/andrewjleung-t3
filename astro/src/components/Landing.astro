@@ -1,93 +1,128 @@
 ---
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card";
-
-import { Badge } from "@/components/ui/badge";
-import PayPal from "@/assets/paypal.svg";
 import Ruby from "@/assets/ruby.svg";
 import RubyOnRails from "@/assets/ruby_on_rails.svg";
+import { Badge } from "@/components/ui/badge";
+import { ModeToggle } from "@/components/ModeToggle";
+import { ArrowRight } from "lucide-react";
 
-type InfoItem = {
-    key: string;
-    value: string;
-};
-
-const info: InfoItem[] = [
-    {
-        key: "Title",
-        value: "Software Engineer",
-    },
-    {
-        key: "Company",
-        value: "PayPal",
-    },
-];
+import { Separator } from "@/components/ui/separator";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 ---
 
 <div id="container" class="flex flex-col items-center">
-    <main
-        class="max-w-2xl mt-24 flex flex-col gap-5 font-light tracking-wider leading-7"
-    >
-        <h2 class="dark:text-neutral-100">Lorem ipsum</h2>
+    <main class="max-w-xl mt-24 flex flex-col gap-5 ">
+        <ModeToggle client:load />
 
-        <p class="dark:text-neutral-400">
-            Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque
-            faucibus ex sapien vitae pellentesque sem placerat.
+        <h2>Welcome in, shoes off if you please.</h2>
+
+        <p class="text-midground">
+            I'm
+            <span
+                class="text-foreground underline decoration-wavy decoration-foreground"
+            >
+                Andrew</span
+            >
+            &mdash; I aim to build simple, satisfying software, for fun and
+            friction. I've been writing code for nearly a decade, professionally
+            for the last three years. Currently exploring building personal
+            tools in
+            <a
+                href="https://rust-lang.org/"
+                class="underline text-foreground hover:text-chart-1 dark:hover:text-chart-3"
+                >Rust</a
+            >.
         </p>
 
-        <p class="dark:text-neutral-400">
-            Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque
-            faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi
-            pretium tellus duis convallis.
+        <p class="text-midground">
+            Striving for curiousity, empathy, and joy. Indulge a rabbit hole or
+            two. Write with your audience in mind. Take the scenic route if it
+            makes you feel a little less alien.
         </p>
+
+        <p class="text-midground">As for my current employment:</p>
 
         <Card
-            className="dark:bg-transparent blur-xs hover:blur-none ease-in-out transition-all"
+            className="shadow-sm hover:shadow-md hover:scale-[101.5%] transition-all duration-100 ease-out"
         >
-            <CardHeader>
-                <CardTitle>Coming soon...</CardTitle>
-                <CardDescription>
-                    Moving towards the next venture...
-                </CardDescription>
-            </CardHeader>
+            <CardContent>
+                <div class="grid grid-cols-6 relative">
+                    <h3 class="col-span-1">
+                        <a
+                            href="https://www.paypal.com/us/braintree"
+                            class="hover:underline"
+                        >
+                            PayPal
+                        </a>
+                    </h3>
+
+                    <div class="col-span-5">
+                        <h4>Software Engineer</h4>
+
+                        <p class="text-midground">
+                            Braintree, treasury, post-processing, merchant
+                            payouts.
+                        </p>
+
+                        <footer class="mt-2 flex flex-row items-center gap-1.5">
+                            <a
+                                href="https://www.ruby-lang.org/"
+                                class="hover:cursor-pointer"
+                            >
+                                <Badge
+                                    className="rounded-full group text-midground"
+                                    variant="secondary"
+                                >
+                                    <Ruby
+                                        class="fill-midground group-hover:fill-red-700 transition-colors ease-in-out duration-150 mr-0.5"
+                                    />
+                                    Ruby
+                                </Badge>
+                            </a>
+                            <a
+                                href="https://rubyonrails.org/"
+                                class="hover:cursor-pointer"
+                            >
+                                <Badge
+                                    className="rounded-full group text-midground"
+                                    variant="secondary"
+                                >
+                                    <RubyOnRails
+                                        class="fill-midground group-hover:fill-red-700 transition-colors ease-in-out duration-150 mr-0.5"
+                                    />
+                                    Ruby on Rails
+                                </Badge>
+                            </a>
+                        </footer>
+                    </div>
+                </div>
+            </CardContent>
         </Card>
 
-        <Card className="dark:bg-transparent">
-            <CardHeader>
-                <CardTitle
-                    className="flex flex-row items-center gap-2 font-light"
-                >
-                    PayPal
-                    <Badge
-                        className="rounded-full text-neutral-300 group"
-                        variant="outline"
-                    >
-                        <Ruby
-                            class="dark:fill-neutral-100 dark:group-hover:fill-red-700 transition-colors ease-in-out duration-200 mr-0.5"
-                        />
-                        Ruby
-                    </Badge>
-                    <Badge
-                        className="rounded-full text-neutral-300 group"
-                        variant="outline"
-                    >
-                        <RubyOnRails
-                            class="dark:fill-neutral-100 dark:group-hover:fill-red-700 transition-colors ease-in-out duration-200 mr-0.5"
-                        />
-                        Ruby on Rails
-                    </Badge>
-                </CardTitle>
-                <CardDescription>
-                    I did a bit of this and that, among other things.
-                </CardDescription>
-            </CardHeader>
-            <CardContent></CardContent>
-        </Card>
+        <h2 class="mt-8">Thoughts</h2>
+
+        <a
+            href="/"
+            class="grid grid-cols-6 relative group ease-out duration-200 hover:translate-x-2 border-t pt-2"
+        >
+            <!-- <div -->
+            <!--     class="absolute right-full mr-4 mt-2 opacity-0 group-hover:opacity-100 duration-200 ease-in-out h-full w-0.5 bg-foreground rounded-full" -->
+            <!-- /> -->
+            <div
+                class="absolute right-full mr-4 mt-2 opacity-0 group-hover:opacity-100 duration-100 ease-in-out"
+            >
+                <ArrowRight className="stroke-2 scale-75 stroke-foreground" />
+            </div>
+
+            <h3 class="col-span-1">Quitters</h3>
+
+            <div class="col-span-5">
+                <p class="text-midground">
+                    Present, past perspectives on music-making, finding meaning
+                    in that, losing meaning in that. Undertones of DAW hatred.
+                </p>
+            </div>
+        </a>
     </main>
 </div>
 
