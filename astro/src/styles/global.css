@@ -132,18 +132,18 @@
     p,
     div,
     span {
-        @apply tracking-wide;
+        @apply tracking-wide font-light;
     }
 
     p {
-        @apply leading-6;
+        @apply leading-6 font-light;
     }
 
     h1,
     h2,
     h3,
     h4 {
-        @apply tracking-normal;
+        @apply tracking-normal font-normal;
     }
 
     h1 {
