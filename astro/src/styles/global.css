@@ -5,6 +5,22 @@
 
 @theme {
     --font-sans: "Geist Variable", "sans-serif";
+
+    --animate-fade-in-up: fade-in-up 0.8s cubic-bezier(0.19, 0.46, 0.21, 0.96);
+
+    @keyframes fade-in-up {
+        0% {
+            opacity: 0;
+            transform: translate(0, 24px);
+            filter: blur(var(--blur-xs));
+        }
+
+        100% {
+            opacity: 100;
+            transform: translate(0, 0);
+            filter: ;
+        }
+    }
 }
 
 @theme inline {
@@ -52,7 +68,7 @@
 :root {
     --radius: 0.625rem;
     --background: oklch(1 0 0);
-    --foreground: oklch(0.145 0 0);
+    --foreground: oklch(0.2 0 0);
     --midground: oklch(0.5 0 0);
     --card: oklch(1 0 0);
     --card-foreground: oklch(0.145 0 0);
@@ -132,7 +148,7 @@
     p,
     div,
     span {
-        @apply tracking-wide font-light;
+        @apply tracking-wide font-light text-sm;
     }
 
     p {
@@ -147,10 +163,10 @@
     }
 
     h1 {
-        @apply text-2xl;
+        @apply text-xl;
     }
 
     h2 {
-        @apply text-xl;
+        @apply text-lg;
     }
 }

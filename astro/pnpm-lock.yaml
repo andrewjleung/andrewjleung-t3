@@ -14,6 +14,15 @@ importers:
       '@astrojs/react':
         specifier: ^4.4.2
         version: 4.4.2(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(jiti@2.6.1)(lightningcss@1.30.2)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      '@fontsource-variable/archivo':
+        specifier: ^5.2.8
+        version: 5.2.8
+      '@fontsource-variable/assistant':
+        specifier: ^5.2.9
+        version: 5.2.9
+      '@fontsource-variable/atkinson-hyperlegible-next':
+        specifier: ^5.2.6
+        version: 5.2.6
       '@fontsource-variable/geist':
         specifier: ^5.2.8
         version: 5.2.8
@@ -414,6 +423,15 @@ packages:
 
   '@floating-ui/utils@0.2.10':
     resolution: {integrity: sha512-aGTxbpbg8/b5JfU1HXSrbH3wXZuLPJcNEcZQFMxLs3oSzgtVu6nFPkbbGGUvBcUjKV2YyB9Wxxabo+HEH9tcRQ==}
+
+  '@fontsource-variable/archivo@5.2.8':
+    resolution: {integrity: sha512-R8EotpKHEsKv7d7oiUyjyPENRi2gtAlwdTlzDCOs5BfX/LJP7jvUYJ4fF/qyd3rnbgk3r1xp33g1P57bYJfhzQ==}
+
+  '@fontsource-variable/assistant@5.2.9':
+    resolution: {integrity: sha512-O7ipeZX2h3kd+gFYo+qcmUi/PjIbgDKkVT7/ZhFKlt9XH++Nr0fPpkmZq2fPOWQazjZG6exdW2K5x8rAIhZuTA==}
+
+  '@fontsource-variable/atkinson-hyperlegible-next@5.2.6':
+    resolution: {integrity: sha512-D0Z8peFkRGYACvmWp8Sl8YPGYLBEJbzqapugtsMEYSUUtpQDiZVDHjk9s7bqB4hSCRYCrKuW6V1V+mnHybVnPw==}
 
   '@fontsource-variable/geist@5.2.8':
     resolution: {integrity: sha512-cJ6m9e+8MQ5dCYJsLylfZrgBh6KkG4bOLckB35Tr9J/EqdkEM6QllH5PxqP1dhTvFup+HtMRPuz9xOjxXJggxw==}
@@ -2721,6 +2739,12 @@ snapshots:
       react-dom: 19.2.3(react@19.2.3)
 
   '@floating-ui/utils@0.2.10': {}
+
+  '@fontsource-variable/archivo@5.2.8': {}
+
+  '@fontsource-variable/assistant@5.2.9': {}
+
+  '@fontsource-variable/atkinson-hyperlegible-next@5.2.6': {}
 
   '@fontsource-variable/geist@5.2.8': {}
 
