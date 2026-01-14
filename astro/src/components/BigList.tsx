@@ -1,7 +1,13 @@
+import { useGSAP } from "@gsap/react";
 import clsx from "clsx";
+import { gsap } from "gsap";
+import { Observer } from "gsap/Observer";
 import { type HTMLMotionProps, motion } from "motion/react";
 import type { ComponentProps, MouseEventHandler } from "react";
-import { useState } from "react";
+import { useRef, useState } from "react";
+
+gsap.registerPlugin(useGSAP);
+gsap.registerPlugin(Observer);
 
 function useYSpotlight(
     threshold: number,
@@ -23,50 +29,54 @@ export function BigList({
     className,
     numItems,
     ...props
-}: HTMLMotionProps<"ul"> & { numItems: number }) {
-    const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-
-    const onMove: MouseEventHandler<HTMLUListElement> = (e) => {
-        const rect = e.currentTarget.getBoundingClientRect();
-        const x = Math.round(((e.clientX - rect.left) / rect.width) * 100);
-        const y = Math.round(((e.clientY - rect.top) / rect.height) * 100);
-
-        setMousePosition({ x, y });
-    };
-
+}: ComponentProps<"ul"> & { numItems: number }) {
     const threshold = 100 / numItems;
-    const { bottomFromPosition, topFromPosition } = useYSpotlight(
-        threshold,
-        mousePosition,
-    );
+    const ref = useRef(null);
+
+    const { contextSafe } = useGSAP({ scope: ref });
+
+    const onMove: MouseEventHandler<HTMLUListElement> = contextSafe((e) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        const mouseY = Math.round(((e.clientY - rect.top) / rect.height) * 100);
+
+        const bottomFromPosition =
+            mouseY < threshold
+                ? -threshold + (mouseY / threshold) * 2 * threshold
+                : mouseY;
+
+        const topFromPosition = 100 - bottomFromPosition;
+
+        gsap.to(ref.current, {
+            duration: 0.1,
+            ease: "power1.out",
+            "--tw-mask-bottom-from-position": `${bottomFromPosition}%`,
+            "--tw-mask-top-from-position": `${topFromPosition}%`,
+        });
+    });
+
+    const onLeave: MouseEventHandler<HTMLUListElement> = contextSafe(() => {
+        gsap.to(ref.current, {
+            duration: 0.3,
+            ease: "power1.out",
+            "--tw-mask-bottom-from-position": "0%",
+            "--tw-mask-top-from-position": "100%",
+        });
+    });
 
     return (
-        <motion.ul
-            transition={{
-                duration: 0.4,
-                ease: "easeOut",
-            }}
-            initial={{
-                "--tw-mask-bottom-from-position": "0%",
-                "--tw-mask-top-from-position": "100%",
-            }}
-            whileHover={{
-                "--tw-mask-bottom-from-position": `${bottomFromPosition}%`,
-                "--tw-mask-top-from-position": `${topFromPosition}%`,
-                transition: {
-                    duration: 0.1,
-                    ease: "easeOut",
-                },
-            }}
+        <ul
+            ref={ref}
             onMouseMove={onMove}
+            onMouseLeave={onLeave}
             className={clsx(
+                "big-list",
                 "not-has-[*:hover]:mask-b-from-0% hover:mask-t-from-0 hover:mask-b-from-0 ease-out",
                 className,
             )}
             {...props}
         >
             {children}
-        </motion.ul>
+        </ul>
     );
 }
 

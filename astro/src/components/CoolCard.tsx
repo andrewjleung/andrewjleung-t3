@@ -25,9 +25,9 @@ export function CoolCard({
             animate="initial"
             onMouseMove={onMove}
             whileHover="animate"
-            className={clsx("h-32 w-1/2", className)}
+            className={clsx("h-64 w-full", className)}
         >
-            <Card className="relative h-full flex-row items-center justify-center gap-0 overflow-hidden border-none bg-neutral-900/50">
+            <Card className="relative h-full flex-row items-center justify-center gap-2 overflow-hidden border-none bg-neutral-900/50">
                 <Aversion
                     mousePosition={mousePosition}
                     scale={0.4}
@@ -60,7 +60,7 @@ export function CoolCard({
                     <Asterisk className="h-full w-full stroke-neutral-800 opacity-10" />
                 </Aversion>
 
-                <div className="absolute left-8 mb-8" {...props}>
+                <div className="absolute top-8 left-8" {...props}>
                     {children}
                 </div>
             </Card>
