@@ -12,92 +12,88 @@ import PayPal from "@/assets/paypal.svg";
 import clsx from "clsx";
 import { BigList, BigListItem } from "@/components/BigList";
 import { CoolCard } from "@/components/CoolCard";
+
+type WorkItem = {
+    name: string;
+    detail: string;
+};
+
+const WORK_ITEMS: WorkItem[] = [
+    {
+        name: "PayPal",
+        detail: "2023—present",
+    },
+    {
+        name: "Poloniex",
+        detail: "2021",
+    },
+    {
+        name: "Teikametrics",
+        detail: "2020",
+    },
+    {
+        name: "Curriculum Associates",
+        detail: "2019",
+    },
+    {
+        name: "Veoneer",
+        detail: "2018",
+    },
+];
 ---
 
 <div id="container" class="flex flex-col items-center">
     <main class="max-w-md mt-32 flex flex-col gap-5 ">
-        <!-- <ModeToggle client:load /> -->
+        <ModeToggle client:load />
 
-        <h2 class="animate-fade-in-up">Welcome in, shoes off if you please.</h2>
-
-        <p class="text-midground animate-fade-in-up">
-            I'm
-            <span
-                class="text-foreground underline decoration-wavy decoration-foreground"
-            >
-                Andrew</span
-            >&mdash;I aim to build simple, satisfying software, for fun and
-            friction. I've been writing code for nearly a decade, professionally
-            for the last three years. Lately building personal tools in
-            <a
-                href="https://www.rust-lang.org/"
-                class="hover:cursor-pointer underline hover:text-chart-1 dark:hover:text-chart-3"
-            >
-                Rust</a
-            >.
-        </p>
+        <section class="flex flex-col gap-5">
+            <h2 class="animate-fade-in-up">
+                Welcome in, shoes off if you please.
+            </h2>
+            <p class="text-midground animate-fade-in-up">
+                I'm
+                <span
+                    class="text-foreground underline decoration-wavy decoration-foreground"
+                >
+                    Andrew</span
+                >&mdash;I aim to build simple, satisfying software, for fun and
+                friction. I've been writing code for nearly a decade,
+                professionally for the last three years. Lately building
+                personal tools in
+                <a
+                    href="https://www.rust-lang.org/"
+                    class="hover:cursor-pointer underline hover:text-chart-1 dark:hover:text-chart-3"
+                >
+                    Rust</a
+                >.
+            </p>
+        </section>
 
         <br>
 
         <section id="work-history" class="animate-fade-in-up">
-            <BigList client:load>
-                <BigListItem className="group flex flex-row items-center">
+            <BigList numItems={WORK_ITEMS.length} client:load>
+                {WORK_ITEMS.map(w =>(
+                <BigListItem key={`work-item-${w.name.toLowerCase()}`} className="group flex flex-row items-center">
                     <span
                         class="font-semibold text-2xl tracking-tight duration-200 ease-out group-hover:translate-x-2"
-                        >PayPal</span
+                    >{w.name}</span
                     >
                     <span
-                        class="text-xs ml-auto text-midground opacity-0 group-hover:opacity-85 ease-out duration-400 transition-all mr-2"
-                        >2023&mdash;present</span
+                        class="text-xs ml-auto text-midground opacity-0 group-hover:opacity-90 ease-out duration-400 transition-all mr-2"
+                    >{w.detail}</span
                     >
                 </BigListItem>
-                <BigListItem className="group flex flex-row items-center">
-                    <span
-                        class="font-semibold text-2xl tracking-tight duration-200 ease-out group-hover:translate-x-2"
-                        >Poloniex</span
-                    >
-                    <span
-                        class="text-xs ml-auto text-midground opacity-0 group-hover:opacity-85 ease-out duration-400 transition-all mr-2"
-                        >2021</span
-                    >
-                </BigListItem>
-                <BigListItem className="group flex flex-row items-center">
-                    <span
-                        class="font-semibold text-2xl tracking-tight duration-200 ease-out group-hover:translate-x-2"
-                        >Teikametrics</span
-                    >
-                    <span
-                        class="text-xs ml-auto text-midground opacity-0 group-hover:opacity-85 ease-out duration-400 transition-all mr-2"
-                        >2020</span
-                    >
-                </BigListItem>
-                <BigListItem className="group flex flex-row items-center">
-                    <span
-                        class="font-semibold text-2xl tracking-tight duration-200 ease-out group-hover:translate-x-2"
-                        >Curriculum Associates</span
-                    >
-                    <span
-                        class="text-xs ml-auto text-midground opacity-0 group-hover:opacity-85 ease-out duration-400 transition-all mr-2"
-                        >2019</span
-                    >
-                </BigListItem>
-                <BigListItem className="group flex flex-row items-center">
-                    <span
-                        class="font-semibold text-2xl tracking-tight duration-200 ease-out group-hover:translate-x-2"
-                        >Veoneer</span
-                    >
-                    <span
-                        class="text-xs ml-auto text-midground opacity-0 group-hover:opacity-85 ease-out duration-400 transition-all mr-2"
-                        >2018</span
-                    >
-                </BigListItem>
+                ) )}
             </BigList>
         </section>
 
         <br>
 
         <section class="mt-auto">
-            <CoolCard client:load></CoolCard>
+            <CoolCard client:load>
+                <h2 class="text-midground text-xl">Resume</h2>
+            </CoolCard>
 
             <p class="text-midground animate-fade-in-up hidden">
                 <a
