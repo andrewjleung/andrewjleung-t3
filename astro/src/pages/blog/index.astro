@@ -1,0 +1,57 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { ArrowRight } from "lucide-react";
+---
+
+<Layout>
+    <div id="container" class="flex flex-col items-center">
+        <main class="max-w-lg mt-24 flex flex-col gap-5 ">
+            <h2 class="mt-10 animate-fade-in-up">Thoughts</h2>
+
+            <a
+                href="/"
+                class="grid grid-cols-6 relative group ease-out duration-200 hover:translate-x-2 border-t pt-2 animate-fade-in-up-1"
+            >
+                <div
+                    class="absolute right-full mr-4 pt-1 opacity-0 group-hover:opacity-100 duration-100 ease-in-out"
+                >
+                    <ArrowRight
+                        className="stroke-2 scale-75 stroke-foreground"
+                    />
+                </div>
+
+                <h3 class="col-span-1">Belief</h3>
+
+                <div class="col-span-5">
+                    <p class="text-midground">
+                        Attention, and the slow, steady cascade of self belief I
+                        stumbled up through my first post-grad job hop.
+                    </p>
+                </div>
+            </a>
+
+            <a
+                href="/"
+                class="grid grid-cols-6 relative group ease-out duration-200 hover:translate-x-2 border-t pt-2 animate-fade-in-up-1"
+            >
+                <div
+                    class="absolute right-full mr-4 pt-1 opacity-0 group-hover:opacity-100 duration-100 ease-in-out"
+                >
+                    <ArrowRight
+                        className="stroke-2 scale-75 stroke-foreground"
+                    />
+                </div>
+
+                <h3 class="col-span-1">Quitters</h3>
+
+                <div class="col-span-5">
+                    <p class="text-midground">
+                        Present, past perspectives on music-making, finding
+                        meaning in that, losing meaning in that. Undertones of
+                        DAW hatred.
+                    </p>
+                </div>
+            </a>
+        </main>
+    </div>
+</Layout>

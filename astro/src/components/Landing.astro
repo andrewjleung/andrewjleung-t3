@@ -2,18 +2,21 @@
 import Ruby from "@/assets/ruby.svg";
 import RubyOnRails from "@/assets/ruby_on_rails.svg";
 import Rust from "@/assets/rust.svg";
+import { ArrowRight, Notebook, TableOfContents } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { ModeToggle } from "@/components/ModeToggle";
-import { ArrowRight, Notebook } from "lucide-react";
-
-import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { ModeToggle } from "@/components/ModeToggle";
+import { Separator } from "@/components/ui/separator";
+import PayPal from "@/assets/paypal.svg";
+import clsx from "clsx";
+import { BigList, BigListItem } from "@/components/BigList";
+import { CoolCard } from "@/components/CoolCard";
 ---
 
 <div id="container" class="flex flex-col items-center">
-    <main class="max-w-lg mt-24 flex flex-col gap-5 ">
-        <ModeToggle client:load />
+    <main class="max-w-md mt-32 flex flex-col gap-5 ">
+        <!-- <ModeToggle client:load /> -->
 
         <h2 class="animate-fade-in-up">Welcome in, shoes off if you please.</h2>
 
@@ -23,8 +26,7 @@ import { Card, CardContent } from "@/components/ui/card";
                 class="text-foreground underline decoration-wavy decoration-foreground"
             >
                 Andrew</span
-            >
-            &mdash; I aim to build simple, satisfying software, for fun and
+            >&mdash;I aim to build simple, satisfying software, for fun and
             friction. I've been writing code for nearly a decade, professionally
             for the last three years. Lately building personal tools in
             <a
@@ -35,128 +37,85 @@ import { Card, CardContent } from "@/components/ui/card";
             >.
         </p>
 
-        <p class="text-midground animate-fade-in-up">
-            Striving for curiousity, empathy, and joy. Indulge a rabbit hole or
-            two. Write with your audience in mind. Take the scenic route if it
-            makes you feel a little less alien.
-        </p>
+        <br>
 
-        <Card
-            className="shadow-md hover:shadow-lg hover:scale-[101%] transition-all duration-100 ease-out group hidden"
-        >
-            <CardContent>
-                <div class="grid grid-cols-6 relative text-sm">
-                    <h3 class="col-span-1">
-                        <a
-                            href="https://www.paypal.com/us/braintree"
-                            class="hover:underline"
-                        >
-                            PayPal
-                        </a>
-                    </h3>
+        <section id="work-history" class="animate-fade-in-up">
+            <BigList client:load>
+                <BigListItem className="group flex flex-row items-center">
+                    <span
+                        class="font-semibold text-2xl tracking-tight duration-200 ease-out group-hover:translate-x-2"
+                        >PayPal</span
+                    >
+                    <span
+                        class="text-xs ml-auto text-midground opacity-0 group-hover:opacity-85 ease-out duration-400 transition-all mr-2"
+                        >2023&mdash;present</span
+                    >
+                </BigListItem>
+                <BigListItem className="group flex flex-row items-center">
+                    <span
+                        class="font-semibold text-2xl tracking-tight duration-200 ease-out group-hover:translate-x-2"
+                        >Poloniex</span
+                    >
+                    <span
+                        class="text-xs ml-auto text-midground opacity-0 group-hover:opacity-85 ease-out duration-400 transition-all mr-2"
+                        >2021</span
+                    >
+                </BigListItem>
+                <BigListItem className="group flex flex-row items-center">
+                    <span
+                        class="font-semibold text-2xl tracking-tight duration-200 ease-out group-hover:translate-x-2"
+                        >Teikametrics</span
+                    >
+                    <span
+                        class="text-xs ml-auto text-midground opacity-0 group-hover:opacity-85 ease-out duration-400 transition-all mr-2"
+                        >2020</span
+                    >
+                </BigListItem>
+                <BigListItem className="group flex flex-row items-center">
+                    <span
+                        class="font-semibold text-2xl tracking-tight duration-200 ease-out group-hover:translate-x-2"
+                        >Curriculum Associates</span
+                    >
+                    <span
+                        class="text-xs ml-auto text-midground opacity-0 group-hover:opacity-85 ease-out duration-400 transition-all mr-2"
+                        >2019</span
+                    >
+                </BigListItem>
+                <BigListItem className="group flex flex-row items-center">
+                    <span
+                        class="font-semibold text-2xl tracking-tight duration-200 ease-out group-hover:translate-x-2"
+                        >Veoneer</span
+                    >
+                    <span
+                        class="text-xs ml-auto text-midground opacity-0 group-hover:opacity-85 ease-out duration-400 transition-all mr-2"
+                        >2018</span
+                    >
+                </BigListItem>
+            </BigList>
+        </section>
 
-                    <div class="col-span-5">
-                        <h4>Software Engineer</h4>
+        <br>
 
-                        <p class="text-midground">
-                            Braintree, treasury, post-processing, merchant
-                            payouts.
-                        </p>
+        <section class="mt-auto">
+            <CoolCard client:load></CoolCard>
 
-                        <footer class="mt-2 flex flex-row items-center gap-1">
-                            <a
-                                href="https://www.ruby-lang.org/"
-                                class="hover:cursor-pointer"
-                            >
-                                <Badge
-                                    className="rounded-full text-midground"
-                                    variant="secondary"
-                                >
-                                    <Ruby
-                                        class="fill-midground group-hover:fill-red-700 transition-colors ease-in-out duration-150 mr-0.5"
-                                    />
-                                    Ruby
-                                </Badge>
-                            </a>
-                            <a
-                                href="https://rubyonrails.org/"
-                                class="hover:cursor-pointer"
-                            >
-                                <Badge
-                                    className="rounded-full text-midground"
-                                    variant="secondary"
-                                >
-                                    <RubyOnRails
-                                        class="fill-midground group-hover:fill-red-700 transition-colors ease-in-out duration-150 mr-0.5"
-                                    />
-                                    Ruby on Rails
-                                </Badge>
-                            </a>
-                        </footer>
-                    </div>
-                </div>
-            </CardContent>
-        </Card>
-
-        <p class="list-disc list-inside text-midground animate-fade-in-up">
-            You can find my latest resume here &mdash;
-            <a
-                href="https://andrewjleung.github.io/resumes/AndrewLeung_Resume.pdf"
-                class="hover:cursor-pointer"
-            >
-                <Badge
-                    className="rounded-full group hover:scale-[103%]"
-                    variant="default"
+            <p class="text-midground animate-fade-in-up hidden">
+                <a
+                    href="https://andrewjleung.github.io/resumes/AndrewLeung_Resume.pdf"
+                    class="hover:cursor-pointer"
                 >
-                    <Notebook
-                        className="transition-all ease-out duration-150 mr-0.5 stroke-secondary"
-                    />
-                    Resume
-                </Badge>
-            </a>
-        </p>
-
-        <h2 class="mt-10">Thoughts</h2>
-
-        <a
-            href="/"
-            class="grid grid-cols-6 relative group ease-out duration-200 hover:translate-x-2 border-t pt-2"
-        >
-            <div
-                class="absolute right-full mr-4 pt-1 opacity-0 group-hover:opacity-100 duration-100 ease-in-out"
-            >
-                <ArrowRight className="stroke-2 scale-75 stroke-foreground" />
-            </div>
-
-            <h3 class="col-span-1">Belief</h3>
-
-            <div class="col-span-5">
-                <p class="text-midground">
-                    Attention, confidence, and the slow, steady cascade of
-                    belief I stumbled up through my first post-grad job hop.
-                </p>
-            </div>
-        </a>
-
-        <a
-            href="/"
-            class="grid grid-cols-6 relative group ease-out duration-200 hover:translate-x-2 border-t pt-2"
-        >
-            <div
-                class="absolute right-full mr-4 pt-1 opacity-0 group-hover:opacity-100 duration-100 ease-in-out"
-            >
-                <ArrowRight className="stroke-2 scale-75 stroke-foreground" />
-            </div>
-
-            <h3 class="col-span-1">Quitters</h3>
-
-            <div class="col-span-5">
-                <p class="text-midground">
-                    Present, past perspectives on music-making, finding meaning
-                    in that, losing meaning in that. Undertones of DAW hatred.
-                </p>
-            </div>
-        </a>
+                    <Badge
+                        className="rounded-full group hover:scale-[103%]"
+                        variant="default"
+                    >
+                        <Notebook
+                            className="transition-all ease-out duration-200 mr-0.5 stroke-secondary"
+                        />
+                        Resume
+                    </Badge>
+                </a>
+            </p>
+        </section>
     </main>
 </div>
 
