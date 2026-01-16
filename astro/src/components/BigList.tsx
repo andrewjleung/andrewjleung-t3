@@ -2,27 +2,11 @@ import { useGSAP } from "@gsap/react";
 import clsx from "clsx";
 import { gsap } from "gsap";
 import { Observer } from "gsap/Observer";
-import { type HTMLMotionProps, motion } from "motion/react";
 import type { ComponentProps, MouseEventHandler } from "react";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 
 gsap.registerPlugin(useGSAP);
 gsap.registerPlugin(Observer);
-
-function useYSpotlight(
-    threshold: number,
-    mousePosition: { x: number; y: number },
-): { bottomFromPosition: number; topFromPosition: number } {
-    const mouseY = Math.round(mousePosition.y);
-    const bottomFromPosition =
-        mouseY < threshold
-            ? -threshold + (mouseY / threshold) * 2 * threshold
-            : mouseY;
-
-    const topFromPosition = 100 - bottomFromPosition;
-
-    return { bottomFromPosition, topFromPosition };
-}
 
 export function BigList({
     children,
@@ -30,19 +14,21 @@ export function BigList({
     numItems,
     ...props
 }: ComponentProps<"ul"> & { numItems: number }) {
-    const threshold = 100 / numItems;
+    const threshold =
+        100 / gsap.utils.clamp(1, Number.POSITIVE_INFINITY, numItems * 2);
     const ref = useRef(null);
 
     const { contextSafe } = useGSAP({ scope: ref });
 
     const onMove: MouseEventHandler<HTMLUListElement> = contextSafe((e) => {
         const rect = e.currentTarget.getBoundingClientRect();
-        const mouseY = Math.round(((e.clientY - rect.top) / rect.height) * 100);
-
-        const bottomFromPosition =
-            mouseY < threshold
-                ? -threshold + (mouseY / threshold) * 2 * threshold
-                : mouseY;
+        const bottomFromPosition = gsap.utils.mapRange(
+            rect.top,
+            rect.bottom,
+            -threshold,
+            100 + threshold,
+            e.clientY,
+        );
 
         const topFromPosition = 100 - bottomFromPosition;
 
@@ -56,7 +42,6 @@ export function BigList({
 
     const onLeave: MouseEventHandler<HTMLUListElement> = contextSafe(() => {
         gsap.to(ref.current, {
-            duration: 0.3,
             ease: "power1.out",
             "--tw-mask-bottom-from-position": "0%",
             "--tw-mask-top-from-position": "100%",
@@ -69,8 +54,7 @@ export function BigList({
             onMouseMove={onMove}
             onMouseLeave={onLeave}
             className={clsx(
-                "big-list",
-                "not-has-[*:hover]:mask-b-from-0% hover:mask-t-from-0 hover:mask-b-from-0 ease-out",
+                "mask-intersect not-hover:mask-b-from-0 hover:mask-y-from-0",
                 className,
             )}
             {...props}

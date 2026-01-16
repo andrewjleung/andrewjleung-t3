@@ -5,7 +5,6 @@
 
 @theme {
     --font-sans: "Geist Variable", "sans-serif";
-
     --animate-fade-in-up: fade-in-up 0.75s cubic-bezier(0.19, 0.46, 0.21, 0.96);
 
     @keyframes fade-in-up {

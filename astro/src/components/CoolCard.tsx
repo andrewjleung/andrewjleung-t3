@@ -1,69 +1,108 @@
 import clsx from "clsx";
 import { Asterisk } from "lucide-react";
-import { motion } from "motion/react";
-import { type ComponentProps, type MouseEventHandler, useState } from "react";
-import { Aversion } from "@/components/Aversion";
-import { Card } from "@/components/ui/card";
+import { type ComponentProps, type MouseEventHandler, useRef } from "react";
+import { useAversion } from "@/components/Aversion";
+import { Card, CardContent } from "@/components/ui/card";
 
 export function CoolCard({
     className,
     children,
     ...props
 }: ComponentProps<"div">) {
-    const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+    const containerRef = useRef<HTMLDivElement>(null);
+
+    const { onMove: onMove1, onLeave: onLeave1 } = useAversion<HTMLDivElement>(
+        containerRef,
+        "#aversion-1",
+        "#aversion-static-1",
+        0.4,
+    );
+
+    const { onMove: onMove2, onLeave: onLeave2 } = useAversion<HTMLDivElement>(
+        containerRef,
+        "#aversion-2",
+        "#aversion-static-2",
+        0.3,
+    );
+
+    const { onMove: onMove3, onLeave: onLeave3 } = useAversion<HTMLDivElement>(
+        containerRef,
+        "#aversion-3",
+        "#aversion-static-3",
+        0.2,
+    );
 
     const onMove: MouseEventHandler<HTMLDivElement> = (e) => {
-        const x = e.clientX;
-        const y = e.clientY;
+        onMove1(e);
+        onMove2(e);
+        onMove3(e);
+    };
 
-        setMousePosition({ x, y });
+    const onLeave: MouseEventHandler<HTMLDivElement> = (e) => {
+        onLeave1(e);
+        onLeave2(e);
+        onLeave3(e);
     };
 
     return (
-        <motion.div
-            initial="initial"
-            animate="initial"
+        <Card
+            ref={containerRef}
             onMouseMove={onMove}
-            whileHover="animate"
-            className={clsx("h-64 w-full", className)}
+            onMouseLeave={onLeave}
+            className={clsx(
+                "group border-none bg-neutral-900/50 p-0",
+                className,
+            )}
+            {...props}
         >
-            <Card className="relative h-full flex-row items-center justify-center gap-2 overflow-hidden border-none bg-neutral-900/50">
-                <Aversion
-                    mousePosition={mousePosition}
-                    scale={0.4}
-                    className="h-24 w-24"
-                >
-                    <Asterisk className="h-full w-full stroke-neutral-800 opacity-40" />
-                </Aversion>
+            <div className="relative flex h-full w-full flex-row items-center justify-center overflow-hidden">
+                <div className="absolute h-4/5 w-4/5">
+                    <div className="relative h-full w-full">
+                        <div id="aversion-1" className="absolute h-full w-full">
+                            <div className="h-full w-full rounded-md bg-neutral-800 opacity-10 transition-all duration-300 ease-in-out group-hover:opacity-20" />
+                        </div>
 
-                <Aversion
-                    mousePosition={mousePosition}
-                    scale={0.3}
-                    className="h-20 w-20"
-                >
-                    <Asterisk className="h-full w-full stroke-neutral-800 opacity-30" />
-                </Aversion>
-
-                <Aversion
-                    mousePosition={mousePosition}
-                    scale={0.2}
-                    className="h-16 w-16"
-                >
-                    <Asterisk className="h-full w-full stroke-neutral-800 opacity-20" />
-                </Aversion>
-
-                <Aversion
-                    mousePosition={mousePosition}
-                    scale={0.1}
-                    className="h-12 w-12"
-                >
-                    <Asterisk className="h-full w-full stroke-neutral-800 opacity-10" />
-                </Aversion>
-
-                <div className="absolute top-8 left-8" {...props}>
-                    {children}
+                        <div
+                            id="aversion-static-1"
+                            className="absolute h-full w-full opacity-50"
+                        >
+                            <div className="h-full w-full opacity-0" />
+                        </div>
+                    </div>
                 </div>
-            </Card>
-        </motion.div>
+
+                <div className="absolute h-3/5 w-3/5">
+                    <div className="relative h-full w-full">
+                        <div id="aversion-2" className="absolute h-full w-full">
+                            <div className="h-full w-full rounded-md bg-neutral-800 opacity-13 transition-all duration-200 ease-in-out group-hover:opacity-25" />
+                        </div>
+
+                        <div
+                            id="aversion-static-2"
+                            className="absolute h-full w-full opacity-50"
+                        >
+                            <div className="h-full w-full opacity-0" />
+                        </div>
+                    </div>
+                </div>
+
+                <div className="absolute h-2/5 w-2/5">
+                    <div className="relative h-full w-full">
+                        <div id="aversion-3" className="absolute h-full w-full">
+                            <div className="h-full w-full rounded-md bg-neutral-800 opacity-18 transition-all duration-100 ease-in-out group-hover:opacity-35" />
+                        </div>
+
+                        <div
+                            id="aversion-static-3"
+                            className="absolute h-full w-full opacity-50"
+                        >
+                            <div className="h-full w-full opacity-0" />
+                        </div>
+                    </div>
+                </div>
+
+                <div className="z-10 h-full w-full">{children}</div>
+            </div>
+        </Card>
     );
 }

@@ -1,68 +1,85 @@
 ---
-import Ruby from "@/assets/ruby.svg";
-import RubyOnRails from "@/assets/ruby_on_rails.svg";
-import Rust from "@/assets/rust.svg";
-import { ArrowRight, Notebook, TableOfContents } from "lucide-react";
+import { Notebook } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { ModeToggle } from "@/components/ModeToggle";
-import { Separator } from "@/components/ui/separator";
-import PayPal from "@/assets/paypal.svg";
-import clsx from "clsx";
 import { BigList, BigListItem } from "@/components/BigList";
-import { CoolCard } from "@/components/CoolCard";
 
-type WorkItem = {
+type LinkItem = {
     name: string;
-    detail: string;
+    detail?: string;
+    href?: string;
 };
 
-const WORK_ITEMS: WorkItem[] = [
+const WORK_ITEMS: LinkItem[] = [
+    {
+        name: "Company",
+        detail: "coming soon",
+    },
     {
         name: "PayPal",
         detail: "2023—present",
+        href: "/work/paypal",
     },
     {
         name: "Poloniex",
         detail: "2021",
+        href: "/work/poloniex",
     },
     {
         name: "Teikametrics",
         detail: "2020",
+        href: "/work/teikametrics",
     },
     {
         name: "Curriculum Associates",
         detail: "2019",
+        href: "/work/curriculum-associates",
     },
     {
         name: "Veoneer",
         detail: "2018",
+        href: "/work/veoneer",
+    },
+];
+
+const LINK_ITEMS: LinkItem[] = [
+    {
+        name: "Resume",
+        href: "/resume",
+    },
+    {
+        name: "Blog",
+        href: "/blog",
+    },
+    {
+        name: "GitHub",
+        href: "/github",
+    },
+    {
+        name: "LinkedIn",
+        href: "/linkedin",
     },
 ];
 ---
 
 <div id="container" class="flex flex-col items-center">
     <main class="max-w-md mt-32 flex flex-col gap-5 ">
-        <ModeToggle client:load />
+        <!-- <ModeToggle client:load /> -->
 
         <section class="flex flex-col gap-5">
-            <h2 class="animate-fade-in-up">
-                Welcome in, shoes off if you please.
-            </h2>
-            <p class="text-midground animate-fade-in-up">
+            <h2 class="">Welcome in, shoes off if you please.</h2>
+            <p class="text-midground">
                 I'm
-                <span
-                    class="text-foreground underline decoration-wavy decoration-foreground"
-                >
-                    Andrew</span
+                <a
+                    href="/about"
+                    class="underline hover:text-chart-1 dark:hover:text-chart-3 hover:cursor-pointer"
+                    >Andrew</a
                 >&mdash;I aim to build simple, satisfying software, for fun and
                 friction. I've been writing code for nearly a decade,
                 professionally for the last three years. Lately building
                 personal tools in
                 <a
                     href="https://www.rust-lang.org/"
-                    class="hover:cursor-pointer underline hover:text-chart-1 dark:hover:text-chart-3"
+                    class="rust hover:cursor-pointer underline hover:text-chart-1 dark:hover:text-chart-3"
                 >
                     Rust</a
                 >.
@@ -71,18 +88,22 @@ const WORK_ITEMS: WorkItem[] = [
 
         <br>
 
-        <section id="work-history" class="animate-fade-in-up">
+        <section id="work-history" class="">
             <BigList numItems={WORK_ITEMS.length} client:load>
                 {WORK_ITEMS.map(w =>(
-                <BigListItem key={`work-item-${w.name.toLowerCase()}`} className="group flex flex-row items-center">
-                    <span
-                        class="font-semibold text-2xl tracking-tight duration-200 ease-out group-hover:translate-x-2"
-                    >{w.name}</span
-                    >
-                    <span
-                        class="text-xs ml-auto text-midground opacity-0 group-hover:opacity-90 ease-out duration-400 transition-all mr-2"
-                    >{w.detail}</span
-                    >
+                <BigListItem key={`work-item-${w.name.toLowerCase()}`} className="group">
+                    <a href={w.href} class="flex flex-row items-center">
+                        <span
+                            class="font-semibold text-2xl tracking-tight duration-200 ease-out group-hover:translate-x-2"
+                        >
+                            {w.name}
+                        </span>
+                        <span
+                            class="text-xs ml-auto text-midground opacity-0 group-hover:opacity-90 ease-out duration-400 transition-all mr-2"
+                        >
+                            {w.detail}  
+                        </span> 
+                    </a>
                 </BigListItem>
                 ) )}
             </BigList>
@@ -90,30 +111,22 @@ const WORK_ITEMS: WorkItem[] = [
 
         <br>
 
-        <section class="mt-auto">
-            <CoolCard client:load>
-                <h2 class="text-midground text-2xl">Resume</h2>
-                <h2 class="text-midground text-2xl">GitHub</h2>
-                <h2 class="text-midground text-2xl">LinkedIn</h2>
-            </CoolCard>
-
-            <p class="text-midground animate-fade-in-up hidden">
-                <a
-                    href="https://andrewjleung.github.io/resumes/AndrewLeung_Resume.pdf"
-                    class="hover:cursor-pointer"
+        <p class="text-midground hidden">
+            <a
+                href="https://andrewjleung.github.io/resumes/AndrewLeung_Resume.pdf"
+                class="hover:cursor-pointer"
+            >
+                <Badge
+                    className="rounded-full group hover:scale-[103%]"
+                    variant="default"
                 >
-                    <Badge
-                        className="rounded-full group hover:scale-[103%]"
-                        variant="default"
-                    >
-                        <Notebook
-                            className="transition-all ease-out duration-200 mr-0.5 stroke-secondary"
-                        />
-                        Resume
-                    </Badge>
-                </a>
-            </p>
-        </section>
+                    <Notebook
+                        className="transition-all ease-out duration-200 mr-0.5 stroke-secondary"
+                    />
+                    Resume
+                </Badge>
+            </a>
+        </p>
     </main>
 </div>
 
