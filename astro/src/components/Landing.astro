@@ -1,7 +1,8 @@
 ---
-import { Notebook } from "lucide-react";
+import { Notebook, Lightbulb } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { BigList, BigListItem } from "@/components/BigList";
+import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
 
 type LinkItem = {
     name: string;
@@ -40,25 +41,6 @@ const WORK_ITEMS: LinkItem[] = [
         href: "/work/veoneer",
     },
 ];
-
-const LINK_ITEMS: LinkItem[] = [
-    {
-        name: "Resume",
-        href: "/resume",
-    },
-    {
-        name: "Blog",
-        href: "/blog",
-    },
-    {
-        name: "GitHub",
-        href: "/github",
-    },
-    {
-        name: "LinkedIn",
-        href: "/linkedin",
-    },
-];
 ---
 
 <div id="container" class="flex flex-col items-center">
@@ -71,9 +53,10 @@ const LINK_ITEMS: LinkItem[] = [
                 I'm
                 <a
                     href="/about"
-                    class="underline hover:text-chart-1 dark:hover:text-chart-3 hover:cursor-pointer"
+                    class="underline hover:text-primary hover:cursor-pointer"
                     >Andrew</a
-                >&mdash;I aim to build simple, satisfying software, for fun and
+                >
+                &mdash; I aim to build simple, satisfying software, for fun and
                 friction. I've been writing code for nearly a decade,
                 professionally for the last three years. Lately building
                 personal tools in
@@ -86,20 +69,18 @@ const LINK_ITEMS: LinkItem[] = [
             </p>
         </section>
 
-        <br>
-
-        <section id="work-history" class="">
+        <section id="work-history" class="pt-2">
             <BigList numItems={WORK_ITEMS.length} client:load>
                 {WORK_ITEMS.map(w =>(
                 <BigListItem key={`work-item-${w.name.toLowerCase()}`} className="group">
                     <a href={w.href} class="flex flex-row items-center">
                         <span
-                            class="font-semibold text-2xl tracking-tight duration-200 ease-out group-hover:translate-x-2"
+                            class="font-semibold text-2xl tracking-tight duration-200 ease-out group-hover:translate-x-2 whitespace-nowrap"
                         >
                             {w.name}
                         </span>
                         <span
-                            class="text-xs ml-auto text-midground opacity-0 group-hover:opacity-90 ease-out duration-400 transition-all mr-2"
+                            class="text-xs ml-auto text-midground opacity-0 group-hover:opacity-90 ease-out duration-400 transition-all mr-2 whitespace-nowrap"
                         >
                             {w.detail}  
                         </span> 
@@ -110,6 +91,39 @@ const LINK_ITEMS: LinkItem[] = [
         </section>
 
         <br>
+
+        <section id="links" class="grid grid-cols-2 pt-2 gap-4">
+            <Card
+                className="flex flex-col gap-0.5 *:gap-0.5 border-none relative"
+            >
+                <CardHeader>
+                    <h3 class="">Personal</h3>
+                </CardHeader>
+                <CardContent>
+                    <nav
+                        class="col-span-1 flex flex-col *:text-xs *:hover:underline *:hover:text-foreground text-midground transition-all duration-100 ease-out"
+                    >
+                        <a href="/thoughts" class="peer/thoughts">Thoughts</a>
+                        <a href="/github">GitHub</a>
+                    </nav>
+                </CardContent>
+            </Card>
+
+            <Card className="flex flex-col gap-0.5 *:gap-0.5 border-none">
+                <CardHeader>
+                    <h3 class="">Professional</h3>
+                </CardHeader>
+                <CardContent>
+                    <nav
+                        class="col-span-1 flex flex-col *:text-xs *:hover:underline *:hover:text-foreground text-midground transition-all duration-100 ease-out"
+                    >
+                        <a href="mailto:andrewleung104@gmail.com">Contact</a>
+                        <a href="/resume">Resume</a>
+                        <a href="/linkedin">LinkedIn</a>
+                    </nav>
+                </CardContent>
+            </Card>
+        </section>
 
         <p class="text-midground hidden">
             <a

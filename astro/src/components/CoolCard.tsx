@@ -15,21 +15,21 @@ export function CoolCard({
         containerRef,
         "#aversion-1",
         "#aversion-static-1",
-        0.4,
+        0.3,
     );
 
     const { onMove: onMove2, onLeave: onLeave2 } = useAversion<HTMLDivElement>(
         containerRef,
         "#aversion-2",
         "#aversion-static-2",
-        0.3,
+        0.2,
     );
 
     const { onMove: onMove3, onLeave: onLeave3 } = useAversion<HTMLDivElement>(
         containerRef,
         "#aversion-3",
         "#aversion-static-3",
-        0.2,
+        0.1,
     );
 
     const onMove: MouseEventHandler<HTMLDivElement> = (e) => {
