@@ -28,7 +28,7 @@ export function ModeToggle() {
     return (
         <DropdownMenu modal={false}>
             <DropdownMenuTrigger asChild>
-                <span className="text-midground hover:cursor-pointer hover:text-foreground">
+                <span className="text-muted-foreground hover:cursor-pointer hover:text-foreground">
                     Set theme
                 </span>
             </DropdownMenuTrigger>

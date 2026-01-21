@@ -1,18 +1,28 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 import { ArrowRight, Home } from "lucide-react";
+import {
+    Breadcrumb,
+    BreadcrumbItem,
+    BreadcrumbLink,
+    BreadcrumbList,
+    BreadcrumbSeparator,
+    BreadcrumbPage,
+    BreadcrumbEllipsis,
+} from "@/components/ui/breadcrumb";
 ---
 
 <Layout>
     <main class="flex flex-col gap-5">
         <header class="animate-fade-in-up">
-            <a
-                href="/"
-                class="text-midground hover:underline hover:text-foreground"
-            >
-                Home
-            </a>
-            <h2 class="mt-0">Thoughts</h2>
+            <Breadcrumb>
+                <BreadcrumbList>
+                    <BreadcrumbItem>
+                        <BreadcrumbLink href="/">Home</BreadcrumbLink>
+                    </BreadcrumbItem>
+                </BreadcrumbList>
+            </Breadcrumb>
+            <h2 class="mt-0">Blog</h2>
         </header>
 
         <section class="flex flex-col gap-5">
@@ -31,7 +41,7 @@ import { ArrowRight, Home } from "lucide-react";
                 <h3 class="col-span-1">Belief</h3>
 
                 <div class="col-span-5">
-                    <p class="text-midground">
+                    <p class="">
                         Attention, and the slow, steady cascade of self belief I
                         stumbled up through my first post-grad job hop.
                     </p>
@@ -53,7 +63,7 @@ import { ArrowRight, Home } from "lucide-react";
                 <h3 class="col-span-1">Quitters</h3>
 
                 <div class="col-span-5">
-                    <p class="text-midground">
+                    <p class="">
                         Present, past perspectives on music-making, finding
                         meaning in that, losing meaning in that. Undertones of
                         DAW hatred.

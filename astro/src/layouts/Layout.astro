@@ -41,27 +41,27 @@ import { ModeToggle } from "@/components/ModeToggle";
         <meta name="generator" content={Astro.generator}>
         <title>Andrew Leung</title>
     </head>
-    <body class="h-screen py-48 *:max-w-xl">
+    <body class="h-screen py-42 *:max-w-xl">
         <div id="container" class="mx-auto flex flex-col h-full">
             <slot />
 
-            <footer class="w-full mt-auto pt-2 *:text-midground self-end">
-                <section id="links" class="grid grid-cols-4 pt-2 border-t **:text-xs mb-8">
+            <footer class="w-full mt-auto pt-2 self-end">
+                <section id="links" class="grid grid-cols-4 pt-2 border-t **:text-xs mb-10">
                     <div class="col-span-1 flex flex-col gap-1 *:gap-1">
-                        <h2 class="">Here</h2>
+                        <h2 class="">Pages</h2>
                         <nav
-                            class="flex flex-col *:hover:text-foreground text-midground transition-all duration-100 ease-out"
+                            class="flex flex-col *:hover:text-foreground transition-all duration-100 ease-out text-muted-foreground"
                         >
                             <a href="/">Home</a>
                             <a href="/about">About</a>
-                            <a href="/thoughts">Thoughts</a>
+                            <a href="/blog">Blog</a>
                         </nav>
                     </div>
 
                     <div class="col-span-1 flex flex-col gap-1 *:gap-1">
                         <h2 class="">Personal</h2>
                         <nav
-                            class="flex flex-col *:hover:text-foreground text-midground transition-all duration-100 ease-out"
+                            class="flex flex-col *:hover:text-foreground  transition-all duration-100 ease-out text-muted-foreground"
                         >
                             <a href="https://github.com/andrewjleung">GitHub</a>
                             <a href="https://open.spotify.com/artist/00zDjeTQDVOFlNttOnv9bc"
@@ -77,7 +77,7 @@ import { ModeToggle } from "@/components/ModeToggle";
                     <div class="col-span-1 flex flex-col gap-1 *:gap-1">
                         <h2 class="">Professional</h2>
                         <nav
-                            class="flex flex-col *:hover:text-foreground text-midground transition-all duration-100 ease-out"
+                            class="flex flex-col *:hover:text-foreground  transition-all duration-100 ease-out text-muted-foreground"
                         >
                             <a href="mailto:andrewleung104@gmail.com">Contact</a>
                             <a href="https://linkedin.com/in/andrewjleung-">LinkedIn</a>
@@ -86,7 +86,7 @@ import { ModeToggle } from "@/components/ModeToggle";
                     </div>
                 </section>
 
-                <section class="w-full mt-auto pt-2 *:text-midground *:text-[0.7em] border-t grid grid-cols-2">
+                <section class="w-full mt-auto pt-2 *: *:text-[0.7em] border-t grid grid-cols-2 *:text-muted-foreground">
                     <div class="col-span-1 flex flex-col gap-1">
                         © {new Date().getFullYear()} Andrew Leung. All rights reserved.
                         <div>

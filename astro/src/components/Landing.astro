@@ -3,6 +3,7 @@ import {
     VerticalSpotlightList,
     VerticalSpotlightListItem,
 } from "@/components/vertical-spotlight-list";
+import { Card } from "@/components/ui/card";
 
 type LinkItem = {
     name: string;
@@ -14,27 +15,27 @@ const WORK_ITEMS: LinkItem[] = [
     {
         name: "PayPal",
         detail: "2023—present",
-        href: "/work/paypal",
+        href: "https://www.paypal.com",
     },
     {
         name: "Poloniex",
         detail: "2021",
-        href: "/work/poloniex",
+        href: "https://www.poloniex.com",
     },
     {
         name: "Teikametrics",
         detail: "2020",
-        href: "/work/teikametrics",
+        href: "https://www.teikametrics.com",
     },
     {
         name: "Curriculum Associates",
         detail: "2019",
-        href: "/work/curriculum-associates",
+        href: "https://www.curriculumassociates.com",
     },
     {
         name: "Veoneer",
         detail: "2018",
-        href: "/work/veoneer",
+        href: "https://www.veoneer.com",
     },
 ];
 ---
@@ -43,7 +44,7 @@ const WORK_ITEMS: LinkItem[] = [
     <section class="flex flex-col gap-5 animate-fade-in-up">
         <h2 class="">Welcome in, shoes by the door if you please.</h2>
 
-        <p class="text-midground">
+        <p class="">
             I'm
             <a
                 href="/about"
@@ -55,9 +56,13 @@ const WORK_ITEMS: LinkItem[] = [
             the last three years.
         </p>
 
-        <p class="text-midground">
-            Currently at PayPal Braintree, orchestrating merchant payouts.
-            Lately building personal tools in
+        <p class="">
+            Currently at
+            <a
+                href="https://www.paypal.com/us/braintree"
+                class="hover:text-foreground underline"
+                >PayPal Braintree</a
+            >, orchestrating merchant payouts. Lately building personal tools in
             <a
                 href="https://www.rust-lang.org/"
                 class="rust hover:cursor-pointer underline hover:text-chart-1 dark:hover:text-chart-3"
@@ -69,10 +74,10 @@ const WORK_ITEMS: LinkItem[] = [
 
     <br>
 
-    <section id="work-history" class="mb-42 animate-fade-in-up">
+    <section id="work-history" class="mb-36 animate-fade-in-up pt-2 border-t">
         <VerticalSpotlightList numItems={WORK_ITEMS.length} client:load>
             {WORK_ITEMS.map(w =>(
-            <VerticalSpotlightListItem key={`work-item-${w.name.toLowerCase()}`} className="group">
+            <VerticalSpotlightListItem key={`work-item-${w.name.toLowerCase()}`} className="group not-last:mb-0.5">
                 <a href={w.href} class="flex flex-row items-center">
                     <span
                         class="font-semibold text-3xl tracking-tight duration-200 ease-out group-hover:translate-x-2 whitespace-nowrap"
@@ -80,7 +85,7 @@ const WORK_ITEMS: LinkItem[] = [
                         {w.name}
                     </span>
                     <span
-                        class="text-xs ml-auto text-midground opacity-0 group-hover:opacity-90 ease-out duration-400 transition-all mr-2 whitespace-nowrap"
+                        class="text-xs ml-auto  opacity-0 group-hover:opacity-90 ease-out duration-400 transition-all mr-2 whitespace-nowrap"
                     >
                         {w.detail}  
                     </span> 
