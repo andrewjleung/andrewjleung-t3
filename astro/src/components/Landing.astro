@@ -1,8 +1,8 @@
 ---
-import { Notebook, Lightbulb } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { BigList, BigListItem } from "@/components/BigList";
-import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
+import {
+    VerticalSpotlightList,
+    VerticalSpotlightListItem,
+} from "@/components/vertical-spotlight-list";
 
 type LinkItem = {
     name: string;
@@ -11,10 +11,6 @@ type LinkItem = {
 };
 
 const WORK_ITEMS: LinkItem[] = [
-    {
-        name: "Company",
-        detail: "coming soon",
-    },
     {
         name: "PayPal",
         detail: "2023—present",
@@ -43,106 +39,57 @@ const WORK_ITEMS: LinkItem[] = [
 ];
 ---
 
-<div id="container" class="flex flex-col items-center">
-    <main class="max-w-md mt-32 flex flex-col gap-5 ">
-        <!-- <ModeToggle client:load /> -->
+<main class="flex flex-col gap-5">
+    <section class="flex flex-col gap-5 animate-fade-in-up">
+        <h2 class="">Welcome in, shoes by the door if you please.</h2>
 
-        <section class="flex flex-col gap-5">
-            <h2 class="">Welcome in, shoes off if you please.</h2>
-            <p class="text-midground">
-                I'm
-                <a
-                    href="/about"
-                    class="underline hover:text-primary hover:cursor-pointer"
-                    >Andrew</a
-                >
-                &mdash; I aim to build simple, satisfying software, for fun and
-                friction. I've been writing code for nearly a decade,
-                professionally for the last three years. Lately building
-                personal tools in
-                <a
-                    href="https://www.rust-lang.org/"
-                    class="rust hover:cursor-pointer underline hover:text-chart-1 dark:hover:text-chart-3"
-                >
-                    Rust</a
-                >.
-            </p>
-        </section>
-
-        <section id="work-history" class="pt-2">
-            <BigList numItems={WORK_ITEMS.length} client:load>
-                {WORK_ITEMS.map(w =>(
-                <BigListItem key={`work-item-${w.name.toLowerCase()}`} className="group">
-                    <a href={w.href} class="flex flex-row items-center">
-                        <span
-                            class="font-semibold text-2xl tracking-tight duration-200 ease-out group-hover:translate-x-2 whitespace-nowrap"
-                        >
-                            {w.name}
-                        </span>
-                        <span
-                            class="text-xs ml-auto text-midground opacity-0 group-hover:opacity-90 ease-out duration-400 transition-all mr-2 whitespace-nowrap"
-                        >
-                            {w.detail}  
-                        </span> 
-                    </a>
-                </BigListItem>
-                ) )}
-            </BigList>
-        </section>
-
-        <br>
-
-        <section id="links" class="grid grid-cols-2 pt-2 gap-4">
-            <Card
-                className="flex flex-col gap-0.5 *:gap-0.5 border-none relative"
-            >
-                <CardHeader>
-                    <h3 class="">Personal</h3>
-                </CardHeader>
-                <CardContent>
-                    <nav
-                        class="col-span-1 flex flex-col *:text-xs *:hover:underline *:hover:text-foreground text-midground transition-all duration-100 ease-out"
-                    >
-                        <a href="/thoughts" class="peer/thoughts">Thoughts</a>
-                        <a href="/github">GitHub</a>
-                    </nav>
-                </CardContent>
-            </Card>
-
-            <Card className="flex flex-col gap-0.5 *:gap-0.5 border-none">
-                <CardHeader>
-                    <h3 class="">Professional</h3>
-                </CardHeader>
-                <CardContent>
-                    <nav
-                        class="col-span-1 flex flex-col *:text-xs *:hover:underline *:hover:text-foreground text-midground transition-all duration-100 ease-out"
-                    >
-                        <a href="mailto:andrewleung104@gmail.com">Contact</a>
-                        <a href="/resume">Resume</a>
-                        <a href="/linkedin">LinkedIn</a>
-                    </nav>
-                </CardContent>
-            </Card>
-        </section>
-
-        <p class="text-midground hidden">
+        <p class="text-midground">
+            I'm
             <a
-                href="https://andrewjleung.github.io/resumes/AndrewLeung_Resume.pdf"
-                class="hover:cursor-pointer"
+                href="/about"
+                class="underline hover:text-primary hover:cursor-pointer"
+                >Andrew</a
             >
-                <Badge
-                    className="rounded-full group hover:scale-[103%]"
-                    variant="default"
-                >
-                    <Notebook
-                        className="transition-all ease-out duration-200 mr-0.5 stroke-secondary"
-                    />
-                    Resume
-                </Badge>
-            </a>
+            &mdash; I aim to build simple, satisfying software, for fun and
+            friction. I've been writing code for a decade, professionally for
+            the last three years.
         </p>
-    </main>
-</div>
+
+        <p class="text-midground">
+            Currently at PayPal Braintree, orchestrating merchant payouts.
+            Lately building personal tools in
+            <a
+                href="https://www.rust-lang.org/"
+                class="rust hover:cursor-pointer underline hover:text-chart-1 dark:hover:text-chart-3"
+            >
+                Rust</a
+            >. Curiosity and empathy.
+        </p>
+    </section>
+
+    <br>
+
+    <section id="work-history" class="mb-42 animate-fade-in-up">
+        <VerticalSpotlightList numItems={WORK_ITEMS.length} client:load>
+            {WORK_ITEMS.map(w =>(
+            <VerticalSpotlightListItem key={`work-item-${w.name.toLowerCase()}`} className="group">
+                <a href={w.href} class="flex flex-row items-center">
+                    <span
+                        class="font-semibold text-3xl tracking-tight duration-200 ease-out group-hover:translate-x-2 whitespace-nowrap"
+                    >
+                        {w.name}
+                    </span>
+                    <span
+                        class="text-xs ml-auto text-midground opacity-0 group-hover:opacity-90 ease-out duration-400 transition-all mr-2 whitespace-nowrap"
+                    >
+                        {w.detail}  
+                    </span> 
+                </a>
+            </VerticalSpotlightListItem>
+            ) )}
+        </VerticalSpotlightList>
+    </section>
+</main>
 
 <style>
 </style>
