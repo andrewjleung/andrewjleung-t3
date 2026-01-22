@@ -1,8 +1,142 @@
 ---
-import Landing from "@/components/Landing.astro";
 import Layout from "@/layouts/Layout.astro";
+import {
+    Card,
+    CardContent,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+    CardDescription,
+} from "@/components/ui/card";
+import { SiGithub, SiPaypal } from "@icons-pack/react-simple-icons";
+import { Badge } from "@/components/ui/badge";
+
+type LinkItem = {
+    name: string;
+    detail?: string;
+    href?: string;
+};
+
+const WORK_ITEMS: LinkItem[] = [
+    {
+        name: "PayPal",
+        detail: "2023—present",
+        href: "https://www.paypal.com",
+    },
+    {
+        name: "Poloniex",
+        detail: "2021",
+        href: "https://www.poloniex.com",
+    },
+    {
+        name: "Teikametrics",
+        detail: "2020",
+        href: "https://www.teikametrics.com",
+    },
+    {
+        name: "Curriculum Associates",
+        detail: "2019",
+        href: "https://www.curriculumassociates.com",
+    },
+    {
+        name: "Veoneer",
+        detail: "2018",
+        href: "https://www.veoneer.com",
+    },
+];
 ---
 
 <Layout>
-    <Landing />
+    <main class="flex flex-col">
+        <section class="flex flex-col">
+            <h1
+                class="text-4xl tracking-tight animate-fade-in-up pt-2 border-t"
+            >
+                Welcome in!
+                <br>
+                Shoes by the door, if you please.
+            </h1>
+
+            <div
+                id="cards"
+                class="grid grid-cols-2 gap-4 mt-8 mb-16 animate-fade-in-up-1"
+            >
+                <Card className="border-0 rounded-xl col-span-2">
+                    <CardHeader>
+                        <CardTitle>
+                            <h2 class="text-2xl tracking-tight">I'm Andrew.</h2>
+                        </CardTitle>
+                        <CardDescription className="text-lg tracking-tight">
+                            I aim to build simple, satisfying software, for fun
+                            and against friction. I've been writing code for
+                            nearly a decade, professionally for the last three
+                            years.
+                        </CardDescription>
+                    </CardHeader>
+                    <CardFooter
+                        className="text-muted-foreground mt-auto flex flex-row gap-2"
+                    >
+                        <a href="/resume">
+                            <Badge className="bg-muted-foreground">
+                                Resume
+                            </Badge>
+                        </a>
+                        <a href="/blog">
+                            <Badge className="bg-muted-foreground">Blog</Badge>
+                        </a>
+                    </CardFooter>
+                </Card>
+
+                <Card className="border-0 rounded-xl">
+                    <CardHeader>
+                        <CardTitle>
+                            <h2 class="text-2xl tracking-tight">Work</h2>
+                        </CardTitle>
+                        <CardDescription>
+                            Orchestrating merchant payouts at
+                            <a
+                                href="https://paypal.com/us/braintree"
+                                class="hover:cursor-pointer underline hover:text-foreground"
+                            >
+                                PayPal Braintree</a
+                            >. Sending out over $1.5B a day around the world.
+                        </CardDescription>
+                    </CardHeader>
+
+                    <CardFooter className="text-muted-foreground mt-auto">
+                        <a href="https://paypal.com">
+                            <SiPaypal />
+                        </a>
+                    </CardFooter>
+                </Card>
+
+                <Card className="border-0 rounded-xl">
+                    <CardHeader>
+                        <CardTitle>
+                            <h2 class="text-2xl tracking-tight">Projects</h2>
+                        </CardTitle>
+                        <CardDescription>
+                            Lately building personal tools in
+                            <a
+                                href="https://www.rust-lang.org/"
+                                class="hover:cursor-pointer underline hover:text-foreground"
+                            >
+                                Rust</a
+                            >. Whatever gets the job done. Whatever makes the
+                            job fun.
+                        </CardDescription>
+                    </CardHeader>
+
+                    <CardFooter className="text-muted-foreground mt-auto">
+                        <a href="https://github.com/andrewjleung">
+                            <SiGithub />
+                        </a>
+                    </CardFooter>
+                </Card>
+            </div>
+        </section>
+    </main>
 </Layout>
+
+<style>
+</style>

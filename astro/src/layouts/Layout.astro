@@ -3,6 +3,7 @@ import "@/styles/global.css";
 import "@fontsource-variable/geist";
 import "@/styles/global.css";
 import { ModeToggle } from "@/components/ModeToggle";
+import { Header } from "@/components/header";
 ---
 
 <script is:inline>
@@ -41,7 +42,7 @@ import { ModeToggle } from "@/components/ModeToggle";
         <meta name="generator" content={Astro.generator}>
         <title>Andrew Leung</title>
     </head>
-    <body class="h-screen py-42 *:max-w-xl">
+    <body class="h-screen py-42 *:max-w-2xl">
         <div id="container" class="mx-auto flex flex-col h-full">
             <slot />
 
@@ -53,8 +54,8 @@ import { ModeToggle } from "@/components/ModeToggle";
                             class="flex flex-col *:hover:text-foreground transition-all duration-100 ease-out text-muted-foreground"
                         >
                             <a href="/">Home</a>
-                            <a href="/about">About</a>
                             <a href="/blog">Blog</a>
+                            <a href="/work">Work</a>
                         </nav>
                     </div>
 
