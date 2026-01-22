@@ -1,0 +1,36 @@
+---
+import { getCollection, render } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
+import { formatDistanceToNowStrict } from "date-fns";
+import Breadcrumbs from "@/components/breadcrumbs.astro";
+
+export async function getStaticPaths() {
+    const posts = await getCollection("blog");
+    return posts.map((post) => ({
+        params: { id: post.id },
+        props: { post },
+    }));
+}
+// 2. For your template, you can get the entry directly from the prop
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const formattedDate = formatDistanceToNowStrict(post.data.publishDate, {
+    addSuffix: true,
+});
+---
+
+<Layout>
+    <header class="animate-fade-in-up pt-2 border-t mb-6">
+        <Breadcrumbs />
+        <h2 class="text-4xl">{post.data.title}</h2>
+        <h3 class="text-muted-foreground font-normal">{formattedDate}</h3>
+    </header>
+
+    <article class="animate-fade-in-up-1 prose-lg mb-24">
+        <Content />
+    </article>
+</Layout>
+
+<style>
+</style>

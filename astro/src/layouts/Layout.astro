@@ -42,11 +42,11 @@ import { Header } from "@/components/header";
         <meta name="generator" content={Astro.generator}>
         <title>Andrew Leung</title>
     </head>
-    <body class="h-screen py-42 *:max-w-2xl">
-        <div id="container" class="mx-auto flex flex-col h-full">
+    <body class="h-screen *:max-w-2xl">
+        <div id="container" class="py-42 mx-auto flex flex-col min-h-full h-fit justify-between">
             <slot />
 
-            <footer class="w-full mt-auto pt-2 self-end">
+            <footer class="w-full pt-2">
                 <section id="links" class="grid grid-cols-4 pt-2 border-t **:text-xs mb-10">
                     <div class="col-span-1 flex flex-col gap-1 *:gap-1">
                         <h2 class="">Pages</h2>

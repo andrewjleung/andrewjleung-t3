@@ -61,7 +61,7 @@ const WORK_ITEMS: LinkItem[] = [
                 id="cards"
                 class="grid grid-cols-2 gap-4 mt-8 mb-16 animate-fade-in-up-1"
             >
-                <Card className="border-0 rounded-xl col-span-2">
+                <Card className="dark:border-0 rounded-xl col-span-2">
                     <CardHeader>
                         <CardTitle>
                             <h2 class="text-2xl tracking-tight">I'm Andrew.</h2>
@@ -74,20 +74,45 @@ const WORK_ITEMS: LinkItem[] = [
                         </CardDescription>
                     </CardHeader>
                     <CardFooter
-                        className="text-muted-foreground mt-auto flex flex-row gap-2"
+                        className="text-muted-foreground mt-auto flex flex-row gap-2 "
                     >
-                        <a href="/resume">
-                            <Badge className="bg-muted-foreground">
+                        <a href="/blog" class="group">
+                            <Badge
+                                variant="outline"
+                                className="group-hover:bg-accent"
+                            >
+                                Blog
+                            </Badge>
+                        </a>
+                        <a href="/work" class="group">
+                            <Badge
+                                variant="outline"
+                                className="group-hover:bg-accent"
+                            >
+                                Work
+                            </Badge>
+                        </a>
+
+                        <a href="/resume" class="group ml-auto">
+                            <Badge
+                                variant="outline"
+                                className="group-hover:bg-accent"
+                            >
                                 Resume
                             </Badge>
                         </a>
-                        <a href="/blog">
-                            <Badge className="bg-muted-foreground">Blog</Badge>
+                        <a href="/contact" class="group">
+                            <Badge
+                                variant="outline"
+                                className="group-hover:bg-accent"
+                            >
+                                Contact
+                            </Badge>
                         </a>
                     </CardFooter>
                 </Card>
 
-                <Card className="border-0 rounded-xl">
+                <Card className="dark:border-0 rounded-xl">
                     <CardHeader>
                         <CardTitle>
                             <h2 class="text-2xl tracking-tight">Work</h2>
@@ -110,7 +135,7 @@ const WORK_ITEMS: LinkItem[] = [
                     </CardFooter>
                 </Card>
 
-                <Card className="border-0 rounded-xl">
+                <Card className="dark:border-0 rounded-xl">
                     <CardHeader>
                         <CardTitle>
                             <h2 class="text-2xl tracking-tight">Projects</h2>

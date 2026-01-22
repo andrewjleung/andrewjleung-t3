@@ -1,75 +1,61 @@
 ---
 import Layout from "@/layouts/Layout.astro";
-import { ArrowRight, Home } from "lucide-react";
-import {
-    Breadcrumb,
-    BreadcrumbItem,
-    BreadcrumbLink,
-    BreadcrumbList,
-    BreadcrumbSeparator,
-    BreadcrumbPage,
-    BreadcrumbEllipsis,
-} from "@/components/ui/breadcrumb";
+import { ArrowRight } from "lucide-react";
+import Breadcrumbs from "@/components/breadcrumbs.astro";
+import { getCollection } from "astro:content";
+import { compareDesc, formatDistanceToNowStrict } from "date-fns";
+
+const blogPosts = (await getCollection("blog"))
+    .filter((post) => post.data.live)
+    .sort(
+        (a, b) =>
+            compareDesc(a.data.publishDate, b.data.publishDate) ||
+            a.data.title.localeCompare(b.data.title),
+    )
+    .map((post) => ({
+        ...post,
+        data: {
+            ...post.data,
+            formattedDate: formatDistanceToNowStrict(post.data.publishDate, {
+                addSuffix: true,
+            }),
+        },
+    }));
 ---
 
 <Layout>
     <main class="flex flex-col gap-5">
-        <header class="animate-fade-in-up pt-2 border-t mb-4">
-            <Breadcrumb>
-                <BreadcrumbList>
-                    <BreadcrumbItem>
-                        <BreadcrumbLink href="/">Home</BreadcrumbLink>
-                    </BreadcrumbItem>
-                </BreadcrumbList>
-            </Breadcrumb>
+        <header class="animate-fade-in-up pt-2 border-t mb-6">
+            <Breadcrumbs />
             <h2 class="text-4xl">Blog</h2>
         </header>
 
         <section class="flex flex-col gap-5">
+            {blogPosts.map(post => (
             <a
-                href="/"
+                href={`/blog/${post.id}`}
                 class="grid grid-cols-6 relative group ease-out duration-200 hover:translate-x-2 border-t pt-2 animate-fade-in-up-1"
             >
                 <div
-                    class="absolute right-full mr-4 pt-1 opacity-0 group-hover:opacity-100 duration-100 ease-in-out"
+                    class="absolute right-full mr-4 pt-2 opacity-0 group-hover:opacity-100 duration-100 ease-in-out"
                 >
                     <ArrowRight
                         className="stroke-2 scale-75 stroke-foreground"
                     />
                 </div>
 
-                <h3 class="col-span-1">Belief</h3>
+                <div class="col-span-1 flex flex-col">
+                    <h3 class="text-lg">{post.data.title}</h3>
+                    <h4 class="text-muted-foreground text-xs font-normal">{post.data.formattedDate}</h4>
+                </div>
 
                 <div class="col-span-5">
                     <p class="">
-                        Attention, and the slow, steady cascade of self belief I
-                        stumbled up through my first post-grad job hop.
+                        {post.data.description}
                     </p>
                 </div>
             </a>
-
-            <a
-                href="/"
-                class="grid grid-cols-6 relative group ease-out duration-200 hover:translate-x-2 border-t pt-2 animate-fade-in-up-1"
-            >
-                <div
-                    class="absolute right-full mr-4 pt-1 opacity-0 group-hover:opacity-100 duration-100 ease-in-out"
-                >
-                    <ArrowRight
-                        className="stroke-2 scale-75 stroke-foreground"
-                    />
-                </div>
-
-                <h3 class="col-span-1">Quitters</h3>
-
-                <div class="col-span-5">
-                    <p class="">
-                        Present, past perspectives on music-making, finding
-                        meaning in that, losing meaning in that. Undertones of
-                        DAW hatred.
-                    </p>
-                </div>
-            </a>
+            ))}
         </section>
     </main>
 </Layout>
