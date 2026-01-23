@@ -30,7 +30,7 @@ const blogPosts = (await getCollection("blog"))
             <h2 class="text-4xl">Blog</h2>
         </header>
 
-        <section class="flex flex-col gap-5">
+        <section class="flex flex-col gap-5 mb-24">
             {blogPosts.map(post => (
             <a
                 href={`/blog/${post.id}`}
