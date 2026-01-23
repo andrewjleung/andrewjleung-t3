@@ -108,6 +108,7 @@ export function useVerticalSpotlight<T extends Element>(
     return {
         onMove,
         onLeave,
-        className: "mask-intersect not-hover:mask-b-from-0 hover:mask-y-from-0",
+        className:
+            "sm:mask-intersect sm:not-hover:mask-b-from-0 sm:hover:mask-y-from-0",
     };
 }

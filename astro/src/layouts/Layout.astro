@@ -38,16 +38,16 @@ import { Header } from "@/components/header";
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width">
-        <!-- <link rel="icon" type="image/svg+xml" href="/favicon.svg" /> -->
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
         <meta name="generator" content={Astro.generator}>
         <title>Andrew Leung</title>
     </head>
-    <body class="h-screen *:max-w-2xl">
-        <div id="container" class="py-42 mx-auto flex flex-col min-h-full h-fit justify-between">
+    <body class="h-screen sm:*:max-w-2xl">
+        <div id="container" class="py-8 px-6 lg:px-0 sm:py-42 mx-auto flex flex-col min-h-full h-fit justify-between">
             <slot />
 
             <footer class="w-full pt-2">
-                <section id="links" class="grid grid-cols-4 pt-2 border-t **:text-xs mb-10">
+                <section id="links" class="grid grid-cols-4 pt-2 border-t **:text-sm sm:**:text-xs mb-10">
                     <div class="col-span-1 flex flex-col gap-1 *:gap-1">
                         <h2 class="">Pages</h2>
                         <nav
@@ -62,7 +62,7 @@ import { Header } from "@/components/header";
                     <div class="col-span-1 flex flex-col gap-1 *:gap-1">
                         <h2 class="">Personal</h2>
                         <nav
-                            class="flex flex-col *:hover:text-foreground  transition-all duration-100 ease-out text-muted-foreground"
+                            class="flex flex-col *:hover:text-foreground transition-all duration-100 ease-out text-muted-foreground"
                         >
                             <a href="https://github.com/andrewjleung">GitHub</a>
                             <a href="https://open.spotify.com/artist/00zDjeTQDVOFlNttOnv9bc"
@@ -87,8 +87,8 @@ import { Header } from "@/components/header";
                     </div>
                 </section>
 
-                <section class="w-full mt-auto pt-2 *: *:text-[0.7em] border-t grid grid-cols-2 *:text-muted-foreground">
-                    <div class="col-span-1 flex flex-col gap-1">
+                <section class="w-full mt-auto pt-2 *:text-[0.75em] sm:*:text-[0.7em] border-t grid grid-cols-2 *:text-muted-foreground">
+                    <div class="col-span-1 flex flex-col gap-1 whitespace-nowrap">
                         © {new Date().getFullYear()} Andrew Leung. All rights reserved.
                         <div>
                             <a href="https://github.com/andrewjleung/andrewjleung-t3" class="whitespace-nowrap hover:text-foreground">Source on GitHub</a>

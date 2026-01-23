@@ -22,8 +22,8 @@ const paths = pathElements.map(
 );
 ---
 
-{Astro.url.pathname !== "/" && <Breadcrumb className="mb-2">
-    <BreadcrumbList>
+{Astro.url.pathname !== "/" && <Breadcrumb className="mb-4">
+    <BreadcrumbList className="text-lg sm:text-sm">
         <BreadcrumbItem>
             <BreadcrumbLink href="/">
                 Home

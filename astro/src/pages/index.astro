@@ -10,47 +10,13 @@ import {
 } from "@/components/ui/card";
 import { SiGithub, SiPaypal } from "@icons-pack/react-simple-icons";
 import { Badge } from "@/components/ui/badge";
-
-type LinkItem = {
-    name: string;
-    detail?: string;
-    href?: string;
-};
-
-const WORK_ITEMS: LinkItem[] = [
-    {
-        name: "PayPal",
-        detail: "2023—present",
-        href: "https://www.paypal.com",
-    },
-    {
-        name: "Poloniex",
-        detail: "2021",
-        href: "https://www.poloniex.com",
-    },
-    {
-        name: "Teikametrics",
-        detail: "2020",
-        href: "https://www.teikametrics.com",
-    },
-    {
-        name: "Curriculum Associates",
-        detail: "2019",
-        href: "https://www.curriculumassociates.com",
-    },
-    {
-        name: "Veoneer",
-        detail: "2018",
-        href: "https://www.veoneer.com",
-    },
-];
 ---
 
 <Layout>
     <main class="flex flex-col">
         <section class="flex flex-col">
             <h1
-                class="text-4xl tracking-tight animate-fade-in-up pt-2 border-t"
+                class="text-4xl tracking-tight animate-fade-in-up sm:pt-2 sm:border-t text-balance sm:text-normal"
             >
                 Welcome in!
                 <br>
@@ -74,7 +40,7 @@ const WORK_ITEMS: LinkItem[] = [
                         </CardDescription>
                     </CardHeader>
                     <CardFooter
-                        className="text-muted-foreground mt-auto flex flex-row gap-2 "
+                        className="text-muted-foreground mt-auto flex flex-row gap-2 **:text-[0.95em]"
                     >
                         <a href="/blog" class="group">
                             <Badge
@@ -112,12 +78,16 @@ const WORK_ITEMS: LinkItem[] = [
                     </CardFooter>
                 </Card>
 
-                <Card className="dark:border-0 rounded-xl">
+                <Card
+                    className="dark:border-0 rounded-xl col-span-2 sm:col-span-1"
+                >
                     <CardHeader>
                         <CardTitle>
-                            <h2 class="text-2xl tracking-tight">Work</h2>
+                            <h2 class="text-2xl tracking-tight">Currently</h2>
                         </CardTitle>
-                        <CardDescription>
+                        <CardDescription
+                            className="text-lg sm:text-sm tracking-tight sm:tracking-normal"
+                        >
                             Orchestrating merchant payouts at
                             <a
                                 href="https://paypal.com/us/braintree"
@@ -135,12 +105,16 @@ const WORK_ITEMS: LinkItem[] = [
                     </CardFooter>
                 </Card>
 
-                <Card className="dark:border-0 rounded-xl">
+                <Card
+                    className="dark:border-0 rounded-xl col-span-2 sm:col-span-1"
+                >
                     <CardHeader>
                         <CardTitle>
                             <h2 class="text-2xl tracking-tight">Projects</h2>
                         </CardTitle>
-                        <CardDescription>
+                        <CardDescription
+                            className="text-lg sm:text-sm tracking-tight sm:tracking-normal"
+                        >
                             Lately building personal tools in
                             <a
                                 href="https://www.rust-lang.org/"
