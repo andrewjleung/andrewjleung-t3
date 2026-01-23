@@ -1,0 +1,17 @@
+---
+const { title, description, ...props } = Astro.props;
+---
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<meta name="generator" content={Astro.generator}>
+<title>{title}</title>
+<meta name="description" content={description}>
+
+<meta property="og:title" content={title}>
+<meta property="og:type" content="website">
+<meta property="og:url" content="http://www.andrewjleung.me/">
+<meta property="og:description" content={description}>
+<meta property="og:image" content="https://www.andrewjleung.me/favicon.ico">
+<meta property="og:image:alt" content="A profile picture of Andrew">

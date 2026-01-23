@@ -6,10 +6,12 @@ import Breadcrumbs from "@/components/breadcrumbs.astro";
 
 export async function getStaticPaths() {
     const posts = await getCollection("blog");
-    return posts.map((post) => ({
-        params: { id: post.id },
-        props: { post },
-    }));
+    return posts
+        .filter((post) => post.data.live)
+        .map((post) => ({
+            params: { id: post.id },
+            props: { post },
+        }));
 }
 // 2. For your template, you can get the entry directly from the prop
 const { post } = Astro.props;
@@ -20,7 +22,10 @@ const formattedDate = formatDistanceToNowStrict(post.data.publishDate, {
 });
 ---
 
-<Layout>
+<Layout
+    title={`Andrew Leung – Blog – ${post.data.title}`}
+    description={post.data.description}
+>
     <header class="animate-fade-in-up sm:pt-2 sm:border-t mb-6">
         <Breadcrumbs />
         <h2 class="text-4xl">{post.data.title}</h2>

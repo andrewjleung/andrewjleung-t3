@@ -3,7 +3,13 @@ import "@/styles/global.css";
 import "@fontsource-variable/geist";
 import "@/styles/global.css";
 import { ModeToggle } from "@/components/ModeToggle";
-import { Header } from "@/components/header";
+import Head from "@/components/Head.astro";
+
+const {
+    title = "Andrew Leung",
+    description = "Yet another tech portfolio and blog.",
+    ...props
+} = Astro.props;
 ---
 
 <script is:inline>
@@ -36,11 +42,7 @@ import { Header } from "@/components/header";
 <!doctype html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width">
-        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-        <meta name="generator" content={Astro.generator}>
-        <title>Andrew Leung</title>
+        <Head title={title} description={description}/>
     </head>
     <body class="h-screen sm:*:max-w-2xl">
         <div id="container" class="py-8 px-6 lg:px-0 sm:py-42 mx-auto flex flex-col min-h-full h-fit justify-between">

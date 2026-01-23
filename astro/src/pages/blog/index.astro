@@ -23,7 +23,7 @@ const blogPosts = (await getCollection("blog"))
     }));
 ---
 
-<Layout>
+<Layout title="Andrew Leung – Blog">
     <main class="flex flex-col gap-5">
         <header class="animate-fade-in-up sm:pt-2 sm:border-t mb-5">
             <Breadcrumbs />
@@ -46,7 +46,6 @@ const blogPosts = (await getCollection("blog"))
 
                 <div class="sm:col-span-1 flex flex-col">
                     <h3 class="sm:text-lg text-2xl">{post.data.title}</h3>
-                    <h4 class="text-muted-foreground sm:text-xs text-sm font-normal">{post.data.formattedDate}</h4>
                 </div>
 
                 <div class="sm:col-span-5 pt-2 sm:pt-0.5 text-lg line-clamp-3 sm:line-clamp-none">
