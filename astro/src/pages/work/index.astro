@@ -45,14 +45,14 @@ const WORK_ITEMS: LinkItem[] = [
         <VerticalSpotlightList numItems={WORK_ITEMS.length} client:load>
             {WORK_ITEMS.map(w =>(
                 <VerticalSpotlightListItem key={`work-item-${w.name.toLowerCase()}`} className="group not-last:mb-0.5">
-                    <a href={w.href} class="md:mb-0 mb-6 flex flex-col-reverse md:flex-row md:items-center">
+                    <a href={w.href} class="md:mb-0 mb-6 flex flex-col-reverse md:flex-row md:items-center transition-all">
                         <span
-                            class="font-semibold text-3xl sm:text-4xl tracking-tight duration-200 ease-out md:group-hover:translate-x-2 whitespace-nowrap"
+                            class="font-semibold text-3xl sm:text-4xl tracking-tight duration-200 ease-out md:group-hover:translate-x-2 whitespace-nowrap transition-all"
                         >
                             {w.name}
                         </span>
                         <span
-                            class="text-xs md:text-sm md:ml-auto text-muted-foreground md:opacity-0 md:group-hover:opacity-100 ease-in-out md:ease-out duration-100 md:duration-400 transition-all mr-2 whitespace-nowrap"
+                            class="text-xs md:text-sm md:ml-auto text-muted-foreground md:opacity-0 md:group-hover:opacity-100 md:ease-out md:duration-300 md:transition-all mr-2 whitespace-nowrap"
                         >
                             {w.detail}  
                         </span> 
