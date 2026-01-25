@@ -1,11 +1,9 @@
-import { Observer } from "gsap/Observer";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { useState, type MouseEventHandler, type RefObject } from "react";
 import clsx from "clsx";
 
 gsap.registerPlugin(useGSAP);
-gsap.registerPlugin(Observer);
 
 const MAX_PERCENTAGE = 100;
 const DEFAULT_ANIMATION_DURATION = 0.1;
