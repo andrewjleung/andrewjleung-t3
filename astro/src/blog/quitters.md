@@ -1,6 +1,6 @@
 ---
 title: "Quitters"
-description: "Present and past perspectives on making music, being a musician, finding meaning in that, and losing meaning in that. Undertones of DAW hatred."
+description: "Present and past perspectives on making music, being a musician, finding meaning in that, losing meaning in that. Undertones of DAW hatred."
 publishDate: "2022-08-26"
 live: true
 ---
