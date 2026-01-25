@@ -52,14 +52,18 @@ const {
     <body class={clsx(
         "h-screen w-screen px-6 lg:px-0 flex flex-col items-center justify-between",
         "*:w-full md:*:max-w-2xl",
-        "md:*:first:pt-2 md:*:first:border-t *:first:mt-8 md:*:first:mt-24"
     )}>
-        {showHeader && <header class="animate-fade-in-up mb-5">
+        {showHeader && <header class="animate-fade-in-up mb-5 md:pt-2 md:border-t mt-8 md:mt-24 peer header">
             <Breadcrumbs />
             <h2 class="text-4xl">{pageTitle}</h2>
         </header>}
         
-        <main class={clsx("flex flex-col gap-5 md:mb-36 w-full grow mb-8")}>
+        <main class={clsx(
+            "flex flex-col gap-5 md:mb-36 w-full grow mb-8", 
+            "md:pt-2 md:peer-[.header]:pt-0",
+            "md:border-t md:peer-[.header]:border-0",
+            "mt-8 md:mt-24 peer-[.header]:mt-0"
+        )}>
             <slot />
         </main>
 
