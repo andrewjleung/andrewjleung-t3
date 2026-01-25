@@ -12,6 +12,7 @@
     "dependencies": {
         "@astrojs/markdoc": "^0.15.10",
         "@astrojs/react": "^4.4.2",
+        "@base-ui/react": "^1.1.0",
         "@fontsource-variable/geist": "^5.2.8",
         "@gsap/react": "^2.1.2",
         "@icons-pack/react-simple-icons": "^13.8.0",
