@@ -110,9 +110,9 @@ export function useVerticalSpotlight<T extends Element>(
     return {
         onMove,
         onLeave,
-        className: clsx("sm:mask-intersect sm:not-hover:mask-b-from-0", {
-            "sm:mask-b-from-0": !moved,
-            "sm:hover:mask-y-from-0": moved,
+        className: clsx("md:mask-intersect md:not-hover:mask-b-from-0", {
+            "md:mask-b-from-0": !moved,
+            "md:hover:mask-y-from-0": moved,
         }),
     };
 }

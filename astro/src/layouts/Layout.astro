@@ -4,10 +4,15 @@ import "@fontsource-variable/geist";
 import "@/styles/global.css";
 import { ModeToggle } from "@/components/ModeToggle";
 import Head from "@/components/Head.astro";
+import Breadcrumbs from "@/components/breadcrumbs.astro";
+import Main from "@/components/main.astro";
+import clsx from "clsx";
 
 const {
     title = "Andrew Leung",
     description = "Yet another tech portfolio and blog.",
+    pageTitle,
+    showHeader = false,
     ...props
 } = Astro.props;
 ---
@@ -44,70 +49,81 @@ const {
     <head>
         <Head title={title} description={description}/>
     </head>
-    <body class="h-screen sm:*:max-w-2xl">
-        <div id="container" class="py-8 px-6 lg:px-0 sm:py-42 mx-auto flex flex-col min-h-full h-fit justify-between">
+    <body class={clsx(
+        "h-screen w-screen px-6 lg:px-0 flex flex-col items-center justify-between",
+        "*:w-full md:*:max-w-2xl",
+        "md:*:first:pt-2 md:*:first:border-t *:first:mt-8 md:*:first:mt-24"
+    )}>
+        {showHeader && <header class="animate-fade-in-up mb-5">
+            <Breadcrumbs />
+            <h2 class="text-4xl">{pageTitle}</h2>
+        </header>}
+        
+        <main class={clsx("flex flex-col gap-5 md:mb-36 w-full grow mb-8")}>
             <slot />
+        </main>
 
-            <footer class="w-full pt-2">
-                <section id="links" class="grid grid-cols-4 pt-2 border-t **:text-sm sm:**:text-xs mb-10">
-                    <div class="col-span-1 flex flex-col gap-1 *:gap-1">
-                        <h2 class="">Pages</h2>
-                        <nav
-                            class="flex flex-col *:hover:text-foreground transition-all duration-100 ease-out text-muted-foreground"
+        <footer class="pb-8 md:mb-24 translate-y-32 sm:translate-y-0">
+            <section id="links" class="grid grid-cols-2 sm:grid-cols-4 pt-2 border-t **:text-sm sm:**:text-xs mb-6 sm:mb-8 gap-8">
+                <div class="col-span-1 flex flex-col gap-1 *:gap-1">
+                    <h2 class="">Pages</h2>
+                    <nav
+                        class="flex flex-col *:hover:text-foreground transition-all duration-100 ease-out text-muted-foreground"
+                    >
+                        <a href="/">Home</a>
+                        <a href="/blog">Blog</a>
+                        <a href="/work">Work</a>
+                    </nav>
+                </div>
+
+                <div class="col-span-1 flex flex-col gap-1 *:gap-1">
+                    <h2 class="">Personal</h2>
+                    <nav
+                        class="flex flex-col *:hover:text-foreground transition-all duration-100 ease-out text-muted-foreground"
+                    >
+                        <a href="https://github.com/andrewjleung">GitHub</a>
+                        <a href="https://open.spotify.com/artist/00zDjeTQDVOFlNttOnv9bc"
+                        >Spotify</a
                         >
-                            <a href="/">Home</a>
-                            <a href="/blog">Blog</a>
-                            <a href="/work">Work</a>
-                        </nav>
-                    </div>
-
-                    <div class="col-span-1 flex flex-col gap-1 *:gap-1">
-                        <h2 class="">Personal</h2>
-                        <nav
-                            class="flex flex-col *:hover:text-foreground transition-all duration-100 ease-out text-muted-foreground"
+                        <a
+                            href="https://www.youtube.com/channel/UCVxaN-2GATE-3Ag9RTGrIXw"
+                        >YouTube</a
                         >
-                            <a href="https://github.com/andrewjleung">GitHub</a>
-                            <a href="https://open.spotify.com/artist/00zDjeTQDVOFlNttOnv9bc"
-                            >Spotify</a
-                            >
-                            <a
-                                href="https://www.youtube.com/channel/UCVxaN-2GATE-3Ag9RTGrIXw"
-                            >YouTube</a
-                            >
-                        </nav>
-                    </div>
+                    </nav>
+                </div>
 
-                    <div class="col-span-1 flex flex-col gap-1 *:gap-1">
-                        <h2 class="">Professional</h2>
-                        <nav
-                            class="flex flex-col *:hover:text-foreground  transition-all duration-100 ease-out text-muted-foreground"
-                        >
-                            <a href="mailto:andrewleung104@gmail.com">Contact</a>
-                            <a href="https://linkedin.com/in/andrewjleung-">LinkedIn</a>
-                            <a href="/resume" class="flex flex-row items-center">Resume</a>
-                        </nav>
-                    </div>
-                </section>
+                <div class="col-span-1 flex flex-col gap-1 *:gap-1">
+                    <h2 class="">Professional</h2>
+                    <nav
+                        class="flex flex-col *:hover:text-foreground  transition-all duration-100 ease-out text-muted-foreground"
+                    >
+                        <a href="mailto:andrewleung104@gmail.com">Contact</a>
+                        <a href="https://linkedin.com/in/andrewjleung-">LinkedIn</a>
+                        <a href="/resume" class="flex flex-row items-center">Resume</a>
+                    </nav>
+                </div>
+            </section>
 
-                <section class="w-full mt-auto pt-2 *:text-[0.75em] sm:*:text-[0.7em] border-t grid grid-cols-1 sm:grid-cols-2 *:text-muted-foreground gap-1 sm:gap-0">
-                    <div class="col-span-1 flex flex-col gap-1 whitespace-nowrap">
-                        © {new Date().getFullYear()} Andrew Leung. All rights reserved.
-                        <div>
-                            <a href="https://github.com/andrewjleung/web" class="whitespace-nowrap hover:text-foreground">Source on GitHub</a>
-                        </div>
+            <section class="w-full mt-auto pt-2 *:text-[0.75em] sm:*:text-[0.7em] border-t grid grid-cols-1 sm:grid-cols-2 *:text-muted-foreground gap-1 sm:gap-0">
+                <div class="col-span-1 flex flex-col gap-1">
+                    <div>
+                        <span class="sm:whitespace-nowrap">© {new Date().getFullYear()} Andrew Leung.</span> All rights reserved.
                     </div>
+                    <div>
+                        <a href="https://github.com/andrewjleung/web" class="whitespace-nowrap hover:text-foreground">Source on GitHub</a>
+                    </div>
+                </div>
 
-                    <div class="col-span-1 sm:text-right flex flex-col gap-1">
-                        <div>
+                <div class="col-span-1 sm:text-right flex flex-col gap-1">
+                    <div>
                         <a href="#" class="whitespace-nowrap hover:text-foreground">Back to top</a>
-                        </div>
-                        <div>
-                            <ModeToggle client:idle />
-                        </div>
                     </div>
-                </section>
-            </footer>
-        </div>
+                    <div>
+                        <ModeToggle client:idle />
+                    </div>
+                </div>
+            </section>
+        </footer>
     </body>
 </html>
 

@@ -25,14 +25,14 @@ const formattedDate = formatDistanceToNowStrict(post.data.publishDate, {
 <Layout
     title={`Andrew Leung – Blog – ${post.data.title}`}
     description={post.data.description}
+    pageTitle={post.data.title}
+    showHeader
 >
-    <header class="animate-fade-in-up sm:pt-2 sm:border-t mb-6">
-        <Breadcrumbs />
-        <h2 class="text-4xl">{post.data.title}</h2>
-        <h3 class="text-muted-foreground font-normal">{formattedDate}</h3>
-    </header>
+    <h3 class="text-muted-foreground font-normal -mt-5 animate-fade-in-up">
+        {formattedDate}
+    </h3>
 
-    <article class="animate-fade-in-up-1 prose-lg mb-16">
+    <article class="animate-fade-in-up-1 prose-lg">
         <Content />
     </article>
 </Layout>

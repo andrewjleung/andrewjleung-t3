@@ -41,31 +41,26 @@ const WORK_ITEMS: LinkItem[] = [
 ---
 
 <Layout title="Andrew Leung – Work">
-    <main class="flex flex-col gap-5">
-        <section
-            id="work-history"
-            class="mb-36 animate-fade-in-up sm:pt-2 sm:border-t"
-        >
-            <VerticalSpotlightList numItems={WORK_ITEMS.length} client:load>
-                {WORK_ITEMS.map(w =>(
+    <section id="work-history" class="animate-fade-in-up">
+        <VerticalSpotlightList numItems={WORK_ITEMS.length} client:load>
+            {WORK_ITEMS.map(w =>(
                 <VerticalSpotlightListItem key={`work-item-${w.name.toLowerCase()}`} className="group not-last:mb-0.5">
-                    <a href={w.href} class="sm:mb-0 mb-6 flex flex-col-reverse sm:flex-row sm:items-center">
+                    <a href={w.href} class="md:mb-0 mb-6 flex flex-col-reverse md:flex-row md:items-center">
                         <span
-                            class="font-semibold text-3xl sm:text-4xl tracking-tight duration-200 ease-out sm:group-hover:translate-x-2 whitespace-nowrap"
+                            class="font-semibold text-3xl sm:text-4xl tracking-tight duration-200 ease-out md:group-hover:translate-x-2 whitespace-nowrap"
                         >
                             {w.name}
                         </span>
                         <span
-                            class="text-xs sm:text-sm sm:ml-auto text-muted-foreground sm:opacity-0 sm:group-hover:opacity-100 ease-in-out sm:ease-out duration-100 sm:duration-400 transition-all mr-2 whitespace-nowrap"
+                            class="text-xs md:text-sm md:ml-auto text-muted-foreground md:opacity-0 md:group-hover:opacity-100 ease-in-out md:ease-out duration-100 md:duration-400 transition-all mr-2 whitespace-nowrap"
                         >
                             {w.detail}  
                         </span> 
                     </a>
                 </VerticalSpotlightListItem>
                 ) )}
-            </VerticalSpotlightList>
-        </section>
-    </main>
+        </VerticalSpotlightList>
+    </section>
 </Layout>
 
 <style>

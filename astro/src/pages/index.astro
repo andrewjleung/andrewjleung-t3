@@ -43,50 +43,49 @@ const DIRECTORY: DirectoryItem[] = [
 ---
 
 <Layout>
-    <main class="flex flex-col h-full">
-        <section class="flex flex-col hidden">
-            <h1
-                class="text-4xl tracking-tight animate-fade-in-up sm:pt-2 sm:border-t text-balance sm:text-normal"
+    <section class="flex flex-col hidden">
+        <h1
+            class="text-4xl tracking-tight animate-fade-in-up sm:pt-2 sm:border-t text-balance sm:text-normal"
+        >
+            Welcome in!
+            <br>
+            Shoes by the door, if you please.
+        </h1>
+
+        <h2 class="text-2xl tracking-tight">I'm Andrew.</h2>
+
+        <p class="text-lg tracking-tight">
+            I aim to build simple, satisfying software, for fun and against
+            friction. I've been writing code for nearly a decade, professionally
+            for the last three years.
+        </p>
+
+        <p class="text-lg tracking-tight">
+            Currently orchestrating merchant payouts at
+            <a
+                href="https://paypal.com/us/braintree"
+                class="hover:cursor-pointer underline hover:text-foreground"
             >
-                Welcome in!
-                <br>
-                Shoes by the door, if you please.
-            </h1>
+                PayPal Braintree</a
+            >. Lately building personal tools in
+            <a
+                href="https://www.rust-lang.org/"
+                class="hover:cursor-pointer underline hover:text-foreground"
+            >
+                Rust</a
+            >. Whatever gets the job done. Whatever makes the job fun.
+        </p>
+    </section>
 
-            <h2 class="text-2xl tracking-tight">I'm Andrew.</h2>
-
-            <p class="text-lg tracking-tight">
-                I aim to build simple, satisfying software, for fun and against
-                friction. I've been writing code for nearly a decade,
-                professionally for the last three years.
-            </p>
-
-            <p class="text-lg tracking-tight">
-                Currently orchestrating merchant payouts at
-                <a
-                    href="https://paypal.com/us/braintree"
-                    class="hover:cursor-pointer underline hover:text-foreground"
-                >
-                    PayPal Braintree</a
-                >. Lately building personal tools in
-                <a
-                    href="https://www.rust-lang.org/"
-                    class="hover:cursor-pointer underline hover:text-foreground"
-                >
-                    Rust</a
-                >. Whatever gets the job done. Whatever makes the job fun.
-            </p>
-        </section>
-
-        <section id="directory" class="sm:pt-2 sm:border-t animate-fade-in-up">
-            <VerticalSpotlightList numItems={DIRECTORY.length} client:load>
-                {DIRECTORY.map(w =>(
+    <section id="directory" class="animate-fade-in-up w-full">
+        <VerticalSpotlightList numItems={DIRECTORY.length} client:load>
+            {DIRECTORY.map(w =>(
                 <VerticalSpotlightListItem className="group not-last:mb-0.5">
                     <a href={w.href} class="flex flex-col-reverse sm:flex-row sm:items-center">
                         <span
                             class={clsx(
                                 "font-semibold text-4xl tracking-tight duration-200 ease-out sm:group-hover:translate-x-2 whitespace-nowrap",
-                                { "sm:no-underline underline": w.href != undefined }
+                                { "md:no-underline underline": w.href != undefined }
                             )}
                         >
                             {w.name}
@@ -99,9 +98,8 @@ const DIRECTORY: DirectoryItem[] = [
                     </a>
                 </VerticalSpotlightListItem>
                 ) )}
-            </VerticalSpotlightList>
-        </section>
-    </main>
+        </VerticalSpotlightList>
+    </section>
 </Layout>
 
 <style>
