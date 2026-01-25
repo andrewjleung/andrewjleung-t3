@@ -1,7 +1,8 @@
 import { Observer } from "gsap/Observer";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
-import type { MouseEventHandler, RefObject } from "react";
+import { useState, type MouseEventHandler, type RefObject } from "react";
+import clsx from "clsx";
 
 gsap.registerPlugin(useGSAP);
 gsap.registerPlugin(Observer);
@@ -66,6 +67,7 @@ export function useVerticalSpotlight<T extends Element>(
     config?: Partial<UseVerticalSpotlightConfig>,
 ): UseVerticalSpotlightReturn<T> {
     const completeConfig = mergeConfigWithDefaults(config);
+    const [moved, setMoved] = useState(false);
 
     const threshold =
         MAX_PERCENTAGE /
@@ -78,6 +80,7 @@ export function useVerticalSpotlight<T extends Element>(
     const { contextSafe } = useGSAP({ scope: ref });
 
     const onMove: MouseEventHandler<T> = contextSafe((e) => {
+        setMoved(true);
         const rect = e.currentTarget.getBoundingClientRect();
         const bottomFromPosition = gsap.utils.mapRange(
             rect.top,
@@ -98,6 +101,7 @@ export function useVerticalSpotlight<T extends Element>(
     });
 
     const onLeave: MouseEventHandler<T> = contextSafe(() => {
+        setMoved(true);
         gsap.to(ref.current, {
             ease: "power1.out",
             "--tw-mask-bottom-from-position": "0%",
@@ -108,7 +112,9 @@ export function useVerticalSpotlight<T extends Element>(
     return {
         onMove,
         onLeave,
-        className:
-            "sm:mask-intersect sm:not-hover:mask-b-from-0 sm:hover:mask-y-from-0",
+        className: clsx("sm:mask-intersect sm:not-hover:mask-b-from-0", {
+            "sm:mask-b-from-0": !moved,
+            "sm:hover:mask-y-from-0": moved,
+        }),
     };
 }
