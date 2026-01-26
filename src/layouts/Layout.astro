@@ -8,39 +8,36 @@ import Breadcrumbs from "@/components/breadcrumbs.astro";
 import clsx from "clsx";
 
 const {
-    title = "Andrew Leung",
-    description = "Yet another tech portfolio and blog.",
-    pageTitle,
-    showHeader = false,
-    ...props
+	title = "Andrew Leung",
+	description = "Yet another tech portfolio and blog.",
+	pageTitle,
+	showHeader = false,
+	...props
 } = Astro.props;
 ---
 
 <script is:inline>
-    const getThemePreference = () => {
-        if (
-            typeof localStorage !== "undefined" &&
-            localStorage.getItem("theme")
-        ) {
-            return localStorage.getItem("theme");
-        }
-        return window.matchMedia("(prefers-color-scheme: dark)").matches
-            ? "dark"
-            : "light";
-    };
-    const isDark = getThemePreference() === "dark";
-    document.documentElement.classList[isDark ? "add" : "remove"]("dark");
+	const getThemePreference = () => {
+		if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
+			return localStorage.getItem("theme");
+		}
+		return window.matchMedia("(prefers-color-scheme: dark)").matches
+			? "dark"
+			: "light";
+	};
+	const isDark = getThemePreference() === "dark";
+	document.documentElement.classList[isDark ? "add" : "remove"]("dark");
 
-    if (typeof localStorage !== "undefined") {
-        const observer = new MutationObserver(() => {
-            const isDark = document.documentElement.classList.contains("dark");
-            localStorage.setItem("theme", isDark ? "dark" : "light");
-        });
-        observer.observe(document.documentElement, {
-            attributes: true,
-            attributeFilter: ["class"],
-        });
-    }
+	if (typeof localStorage !== "undefined") {
+		const observer = new MutationObserver(() => {
+			const isDark = document.documentElement.classList.contains("dark");
+			localStorage.setItem("theme", isDark ? "dark" : "light");
+		});
+		observer.observe(document.documentElement, {
+			attributes: true,
+			attributeFilter: ["class"],
+		});
+	}
 </script>
 
 <!doctype html>
@@ -66,7 +63,7 @@ const {
             <slot />
         </main>
 
-        <footer class="pb-8 md:mb-24 translate-y-32 sm:translate-y-0 w-full md:max-w-2xl">
+        <footer class="pb-8 md:pb-24 translate-y-32 sm:translate-y-0 w-full md:max-w-2xl">
             <section id="links" class="grid grid-cols-2 sm:grid-cols-4 pt-2 border-t **:text-sm sm:**:text-xs mb-6 sm:mb-8 gap-8">
                 <div class="col-span-1 flex flex-col gap-1 *:gap-1">
                     <h2 class="">Pages</h2>
