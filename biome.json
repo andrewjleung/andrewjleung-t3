@@ -3,7 +3,11 @@
     "assist": {
         "enabled": true,
         "actions": {
-            "recommended": true
+            "recommended": true,
+            "source": {
+                "organizeImports": "on",
+                "useSortedAttributes": "on"
+            }
         }
     },
     "css": {
@@ -14,7 +18,10 @@
     "formatter": {
         "enabled": true,
         "formatWithErrors": true,
-        "useEditorconfig": true
+        "useEditorconfig": true,
+        "indentStyle": "space",
+        "indentWidth": 4,
+        "lineWidth": 80
     },
     "html": {
         "experimentalFullSupportEnabled": true,
@@ -24,7 +31,14 @@
         "formatter": {
             "enabled": true,
             "indentScriptAndStyle": true
+        },
+        "assist": {
+            "enabled": true
         }
+    },
+    "json": {
+        "parser": { "allowComments": true, "allowTrailingCommas": true },
+        "formatter": { "trailingCommas": "none" }
     },
     "linter": {
         "enabled": true,

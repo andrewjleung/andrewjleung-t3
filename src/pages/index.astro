@@ -1,10 +1,10 @@
 ---
-import Layout from "@/layouts/Layout.astro";
+import clsx from "clsx";
 import {
     VerticalSpotlightList,
     VerticalSpotlightListItem,
 } from "@/components/vertical-spotlight-list";
-import clsx from "clsx";
+import Layout from "@/layouts/Layout.astro";
 
 type DirectoryItem = {
     name: string;
@@ -43,40 +43,6 @@ const DIRECTORY: DirectoryItem[] = [
 ---
 
 <Layout>
-    <section class="flex flex-col hidden">
-        <h1
-            class="text-4xl tracking-tight animate-fade-in-up sm:pt-2 sm:border-t text-balance sm:text-normal"
-        >
-            Welcome in!
-            <br>
-            Shoes by the door, if you please.
-        </h1>
-
-        <h2 class="text-2xl tracking-tight">I'm Andrew.</h2>
-
-        <p class="text-lg tracking-tight">
-            I aim to build simple, satisfying software, for fun and against
-            friction. I've been writing code for nearly a decade, professionally
-            for the last three years.
-        </p>
-
-        <p class="text-lg tracking-tight">
-            Currently orchestrating merchant payouts at
-            <a
-                href="https://paypal.com/us/braintree"
-                class="hover:cursor-pointer underline hover:text-foreground"
-            >
-                PayPal Braintree</a
-            >. Lately building personal tools in
-            <a
-                href="https://www.rust-lang.org/"
-                class="hover:cursor-pointer underline hover:text-foreground"
-            >
-                Rust</a
-            >. Whatever gets the job done. Whatever makes the job fun.
-        </p>
-    </section>
-
     <section id="directory" class="animate-fade-in-up w-full">
         <VerticalSpotlightList numItems={DIRECTORY.length} client:load>
             {DIRECTORY.map(w =>(
