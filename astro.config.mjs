@@ -1,5 +1,6 @@
 // @ts-check
 
+import * as path from "node:path";
 import markdoc from "@astrojs/markdoc";
 import react from "@astrojs/react";
 import tailwindcss from "@tailwindcss/vite";
@@ -9,6 +10,11 @@ import { defineConfig } from "astro/config";
 export default defineConfig({
     vite: {
         plugins: [tailwindcss()],
+        resolve: {
+            alias: {
+                "@": path.resolve(path.dirname(""), "./src"),
+            },
+        },
     },
     integrations: [markdoc(), react()],
     redirects: {
