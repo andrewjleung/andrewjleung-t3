@@ -1,3 +1,4 @@
 [tools]
 biome = "latest"
 node = "latest"
+"npm:vercel" = "latest"
