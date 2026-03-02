@@ -1,0 +1,70 @@
+---
+import {
+    VerticalSpotlightList,
+    VerticalSpotlightListItem,
+} from "@/components/vertical-spotlight-list";
+import Layout from "@/layouts/layout.astro";
+
+type LinkItem = {
+    name: string;
+    detail?: string;
+    href?: string;
+};
+
+const ITEMS: LinkItem[] = [
+    {
+        name: "Email",
+        href: "mailto:andrewleung104@gmail.com",
+    },
+    {
+        name: "GitHub",
+        href: "https://github.com/andrewjleung",
+    },
+    {
+        name: "LinkedIn",
+        href: "https://linkedin.com/in/andrewjleung-",
+    },
+    {
+        name: "Portfolio",
+        href: "/",
+    },
+    {
+        name: "Resume",
+        href: "/resume",
+    },
+    {
+        name: "Spotify",
+        href: "https://open.spotify.com/artist/00zDjeTQDVOFlNttOnv9bc",
+    },
+    {
+        name: "YouTube",
+        href: "https://www.youtube.com/channel/UCVxaN-2GATE-3Ag9RTGrIXw",
+    },
+];
+---
+
+<Layout title="Andrew Leung – Work">
+    <section id="work-history" class="animate-fade-in-up">
+        <VerticalSpotlightList numItems={ITEMS.length} client:load>
+            {ITEMS.map(w =>(
+                <VerticalSpotlightListItem key={`work-item-${w.name.toLowerCase()}`} className="group not-last:mb-0.5">
+                    <a href={w.href} class="md:mb-0 mb-6 flex flex-col-reverse md:flex-row md:items-center transition-all">
+                        <span
+                            class="font-semibold text-3xl sm:text-4xl tracking-tight duration-200 ease-out md:group-hover:translate-x-2 whitespace-nowrap transition-all"
+                        >
+                            {w.name}
+                        </span>
+                        <span
+                            class="text-xs md:text-sm md:ml-auto text-muted-foreground md:opacity-0 md:group-hover:opacity-100 md:ease-out md:duration-300 md:transition-all mr-2 whitespace-nowrap"
+                        >
+                            {w.detail}  
+                        </span> 
+                    </a>
+                </VerticalSpotlightListItem>
+                ) )}
+        </VerticalSpotlightList>
+    </section>
+</Layout>
+
+<style>
+</style>
