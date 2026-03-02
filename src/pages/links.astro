@@ -1,4 +1,5 @@
 ---
+import clsx from "clsx";
 import {
     VerticalSpotlightList,
     VerticalSpotlightListItem,
@@ -43,22 +44,25 @@ const ITEMS: LinkItem[] = [
 ];
 ---
 
-<Layout title="Andrew Leung – Work">
-    <section id="work-history" class="animate-fade-in-up">
+<Layout title="Andrew Leung – Links">
+    <section id="links" class="animate-fade-in-up">
         <VerticalSpotlightList numItems={ITEMS.length} client:load>
-            {ITEMS.map(w =>(
-                <VerticalSpotlightListItem key={`work-item-${w.name.toLowerCase()}`} className="group not-last:mb-0.5">
-                    <a href={w.href} class="md:mb-0 mb-6 flex flex-col-reverse md:flex-row md:items-center transition-all">
+            {ITEMS.map(item =>(
+                <VerticalSpotlightListItem className="group not-last:mb-0.5">
+                    <a href={item.href} class="flex flex-col-reverse sm:flex-row sm:items-center">
                         <span
-                            class="font-semibold text-3xl sm:text-4xl tracking-tight duration-200 ease-out md:group-hover:translate-x-2 whitespace-nowrap transition-all"
+                            class={clsx(
+                                "font-semibold text-4xl tracking-tight duration-200 ease-out sm:group-hover:translate-x-2 whitespace-nowrap",
+                                { "md:no-underline underline": item.href != undefined }
+                            )}
                         >
-                            {w.name}
+                            {item.name}
                         </span>
-                        <span
-                            class="text-xs md:text-sm md:ml-auto text-muted-foreground md:opacity-0 md:group-hover:opacity-100 md:ease-out md:duration-300 md:transition-all mr-2 whitespace-nowrap"
+                        {item.detail && <span
+                            class="text-sm ml-auto text-muted-foreground sm:opacity-0 sm:group-hover:opacity-100 ease-in-out sm:ease-out duration-100 sm:duration-400 transition-all mr-2 whitespace-nowrap"
                         >
-                            {w.detail}  
-                        </span> 
+                            {item.detail}  
+                        </span>} 
                     </a>
                 </VerticalSpotlightListItem>
                 ) )}
