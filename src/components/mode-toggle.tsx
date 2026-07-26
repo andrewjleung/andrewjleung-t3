@@ -5,7 +5,7 @@ import {
 	DropdownMenuContent,
 	DropdownMenuItem,
 	DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "./ui/dropdown-menu";
 
 export function ModeToggle() {
 	const [theme, setThemeState] = React.useState<

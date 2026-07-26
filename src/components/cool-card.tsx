@@ -1,8 +1,8 @@
 import clsx from "clsx";
 import { Asterisk } from "lucide-react";
 import { type ComponentProps, type MouseEventHandler, useRef } from "react";
-import { useAversion } from "@/components/Aversion";
-import { Card, CardContent } from "@/components/ui/card";
+import { useAversion } from "./aversion";
+import { Card } from "./ui/card";
 
 export function CoolCard({
     className,

@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import type { ComponentPropsWithoutRef } from "react";
 import { useRef } from "react";
-import { useVerticalSpotlight } from "@/lib/hooks/use-vertical-spotlight";
+import { useVerticalSpotlight } from "../lib/hooks/use-vertical-spotlight";
 
 export function VerticalSpotlightList({
     children,

@@ -13,11 +13,6 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 export default defineConfig({
     vite: {
         plugins: [tailwindcss()],
-        resolve: {
-            alias: {
-                "@": path.resolve(__dirname, "./src"),
-            },
-        },
     },
     integrations: [markdoc(), react()],
     redirects: {
