@@ -4,12 +4,8 @@
     "exclude": ["dist"],
     "compilerOptions": {
         "allowJs": true,
-        "baseUrl": ".",
         "jsx": "react-jsx",
         "jsxImportSource": "react",
-        "strictNullChecks": true,
-        "paths": {
-            "@/*": ["src/*"]
-        }
+        "strictNullChecks": true
     }
 }
