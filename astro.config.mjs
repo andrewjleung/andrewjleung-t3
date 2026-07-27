@@ -7,18 +7,24 @@ import react from "@astrojs/react";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
 
+import vercel from "@astrojs/vercel";
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // https://astro.build/config
 export default defineConfig({
-    vite: {
-        plugins: [tailwindcss()],
-    },
-    integrations: [markdoc(), react()],
-    redirects: {
-        "/resume":
-            "https://andrewjleung.github.io/resumes/AndrewLeung_Resume.pdf",
-        "/github": "https://github.com/andrewjleung",
-        "/linkedin": "https://linkedin.com/in/andrewjleung-",
-    },
+  vite: {
+      plugins: [tailwindcss()],
+  },
+
+  integrations: [markdoc(), react()],
+
+  redirects: {
+      "/resume":
+          "https://andrewjleung.github.io/resumes/AndrewLeung_Resume.pdf",
+      "/github": "https://github.com/andrewjleung",
+      "/linkedin": "https://linkedin.com/in/andrewjleung-",
+  },
+
+  adapter: vercel(),
 });
