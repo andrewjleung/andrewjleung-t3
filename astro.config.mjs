@@ -1,30 +1,36 @@
 // @ts-check
 
-import path from "node:path";
-import { fileURLToPath } from "node:url";
 import markdoc from "@astrojs/markdoc";
 import react from "@astrojs/react";
+import vercelAdapter from "@astrojs/vercel";
 import tailwindcss from "@tailwindcss/vite";
-import { defineConfig } from "astro/config";
-
-import vercel from "@astrojs/vercel";
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+import { defineConfig, fontProviders } from "astro/config";
 
 // https://astro.build/config
 export default defineConfig({
-  vite: {
-      plugins: [tailwindcss()],
-  },
+    vite: {
+        plugins: [tailwindcss()],
+    },
 
-  integrations: [markdoc(), react()],
+    integrations: [markdoc(), react()],
 
-  redirects: {
-      "/resume":
-          "https://andrewjleung.github.io/resumes/AndrewLeung_Resume.pdf",
-      "/github": "https://github.com/andrewjleung",
-      "/linkedin": "https://linkedin.com/in/andrewjleung-",
-  },
+    redirects: {
+        "/resume":
+            "https://andrewjleung.github.io/resumes/AndrewLeung_Resume.pdf",
+        "/github": "https://github.com/andrewjleung",
+        "/linkedin": "https://linkedin.com/in/andrewjleung-",
+    },
 
-  adapter: vercel(),
+    adapter: vercelAdapter(),
+
+    fonts: [
+        {
+            provider: fontProviders.fontshare(),
+            name: "Switzer",
+            cssVariable: "--font-switzer",
+            styles: ["normal"],
+            weights: ["100 900"],
+        },
+    ],
 });
+

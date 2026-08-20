@@ -1,10 +1,10 @@
 ---
 import "../styles/global.css";
-import "@fontsource-variable/geist";
 import clsx from "clsx";
 import Breadcrumbs from "../components/breadcrumbs.astro";
 import Head from "../components/head.astro";
 import { ModeToggle } from "../components/mode-toggle";
+import { Font } from "astro:assets";
 
 const {
     title = "Andrew Leung",
@@ -44,14 +44,15 @@ const {
 <!doctype html>
 <html lang="en">
     <head>
+        <Font cssVariable="--font-switzer"/>
         <Head title={title} description={description}/>
     </head>
     <body class={clsx(
         "h-screen px-6 lg:px-0 flex flex-col items-center justify-between",
     )}>
-        {showHeader && <header class="animate-fade-in-up mb-5 md:pt-2 md:border-t mt-8 md:mt-24 peer header w-full md:max-w-2xl">
+        {showHeader && <header class="mb-5 md:pt-2 md:border-t mt-8 md:mt-24 peer header w-full md:max-w-2xl">
             <Breadcrumbs />
-            <h2 class="text-4xl">{pageTitle}</h2>
+            <h2 class="animate-fade-in-up text-4xl">{pageTitle}</h2>
         </header>}
         
         <main class={clsx(

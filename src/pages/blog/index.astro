@@ -23,30 +23,18 @@ const blogPosts = (await getCollection("blog"))
 ---
 
 <Layout title="Andrew Leung – Blog" pageTitle="Blog" showHeader>
-    <section class="flex flex-col gap-3">
+    <section class="flex flex-col gap-4 pt-4">
         {blogPosts.map(post => (
-            <a
-                href={`/blog/${post.id}`}
-                class="grid sm:grid-cols-6 grid-cols-1 relative group ease-out duration-200 sm:hover:translate-x-2 border-t py-2 animate-fade-in-up-1"
-            >
-                <div
-                    class="absolute right-full mr-4 pt-2 opacity-0 group-hover:opacity-100 duration-100 ease-in-out hidden sm:block"
-                >
-                    <ArrowRight
-                        className="stroke-2 scale-75 stroke-foreground"
-                    />
-                </div>
+        <a
+            href={`/blog/${post.id}`}
+            class="group flex-row group ease-out duration-200 sm:hover:translate-x-2 border-t py-2 animate-fade-in-up-1"
+        >
+            <h3 class="">{post.data.title}</h3>
 
-                <div class="sm:col-span-1 flex flex-col">
-                    <h3 class="sm:text-lg text-2xl">{post.data.title}</h3>
-                </div>
-
-                <div class="sm:col-span-5 pt-2 sm:pt-0.5 text-lg line-clamp-3 sm:line-clamp-none">
-                    <p class="">
-                        {post.data.description}
-                    </p>
-                </div>
-            </a>
-            ))}
+            <p class="pt-2 sm:pt-0.5 line-clamp-3 sm:line-clamp-none">
+                {post.data.description}
+            </p>
+        </a>
+        ))}
     </section>
 </Layout>
